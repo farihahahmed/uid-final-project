@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block progress %}
+<div class="progress-wrap">
+  <div style="font-size:0.8rem; color:#9ca3af; margin-bottom:4px;">
+    Meal Prep — step {{ step }} of {{ total }}
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: {{ (step / total * 100)|int }}%"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main-card">
+
+  <h2 class="slide-title">{{ slide.title }}</h2>
+  {% if slide.subtitle %}
+    <p class="slide-subtitle">{{ slide.subtitle }}</p>
+  {% endif %}
+
+  {% if slide.image %}
+    <img src="{{ url_for('static', filename='images/' + slide.image) }}"
+         class="recipe-img" alt="{{ slide.title }}">
+  {% else %}
+    <div class="img-placeholder">[ image goes here ]</div>
+  {% endif %}
+
+  <p class="slide-body">{{ slide.body }}</p>
+
+  <div class="nav-btns">
+    {% if prev_url %}
+      <a href="{{ prev_url }}" class="btn-prev">← Back</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+    <a href="{{ next_url }}" class="btn-next">
+      {% if step == total %}Choose Your Recipe →{% else %}Next →{% endif %}
+    </a>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,422 @@
+{
+  "mealprep": [
+    {
+      "title": "Before we start…",
+      "subtitle": "let's meal plan!",
+      "body": "Our goal is to do 1 grocery run a month only! All three recipes are dump-and-bake, one-pan, and budget-friendly.",
+      "image": null
+    },
+    {
+      "title": "Our goal",
+      "subtitle": "1 grocery run a month only!",
+      "body": "We designed this meal plan so every ingredient is used before it expires.",
+      "image": null
+    },
+    {
+      "title": "We have 3 recipes this month",
+      "subtitle": "Breakfast/Snack + Lunch/Dinner",
+      "body": "Brown Sugar Apple Muffins for breakfast. Chicken Casserole OR Chicken Fajitas for lunch and dinner.",
+      "image": null
+    },
+    {
+      "title": "Our goal is to be as lazy as possible!",
+      "subtitle": "We want to minimize cook time",
+      "body": "Make your breakfast muffins on Sundays — just 40 minutes, once a week.",
+      "image": null
+    },
+    {
+      "title": "Enjoy muffins all week",
+      "subtitle": "14 servings → 2 muffins a day × 7 days",
+      "body": "Bake once on Sunday and you're covered for the entire week.",
+      "image": null
+    },
+    {
+      "title": "For lunch/dinner…",
+      "subtitle": "Choose between Casserole 🥘 or Fajitas 🥙",
+      "body": "Pick whichever one sounds good. Each batch lasts 3–4 days.",
+      "image": null
+    },
+    {
+      "title": "Cook twice a week",
+      "subtitle": "Sundays and Wednesdays — 45 mins each",
+      "body": "Muffins and your lunch/dinner can bake at the same time — total cook time is only 90 mins/week!",
+      "image": null
+    },
+    {
+      "title": "Total monthly cost: $265",
+      "subtitle": "Muffins $49 · Casserole $113 · Fajitas $103",
+      "body": "One grocery run. One month of meals. Huge savings.",
+      "image": null
+    },
+    {
+      "title": "They're all one-pan recipes!",
+      "subtitle": "Requiring minimal dishes to wash",
+      "body": "Less cleanup, less stress.",
+      "image": null
+    },
+    {
+      "title": "And they're all dump-and-bake!",
+      "subtitle": "Requiring minimal cooking ability",
+      "body": "No fancy technique needed — just chop, dump, and bake.",
+      "image": null
+    }
+  ],
+
+  "recipes": {
+    "muffins": {
+      "display_name": "Brown Sugar Apple Muffins",
+      "emoji": "🧁",
+      "color": "#f9a8d4",
+      "steps": [
+        {
+          "title": "Step 1: Grocery Shop!",
+          "subtitle": "We need 10 items in total",
+          "body": "All-Purpose Flour $3.49 · Baking Soda $0.99 · Sea Salt $3.29 · Light Brown Sugar $4.49 · Buttermilk $1.99 · Unsalted Butter $4.29 · Vanilla Extract $8.79 · Honeycrisp Apples $8.99 · Ground Cinnamon $4.29 · Large Eggs $4.49",
+          "image": null
+        },
+        {
+          "title": "Step 2: Preheat the oven",
+          "subtitle": "to 375°F (190°C)",
+          "body": "Set your oven to 375°F before you do anything else so it's ready when you need it.",
+          "image": null
+        },
+        {
+          "title": "Step 3: Grease a 14-cup muffin tin",
+          "subtitle": "or line with paper cups",
+          "body": "Spray each cup with non-stick spray, or drop in paper liners.",
+          "image": null
+        },
+        {
+          "title": "Step 4: Make the flour mixture",
+          "subtitle": "Stir together in a large bowl",
+          "body": "2¼ cups flour · 1 tsp baking soda · ½ tsp salt",
+          "image": null
+        },
+        {
+          "title": "Step 5: Make the brown sugar mixture",
+          "subtitle": "Stir in a separate bowl until sugar dissolves",
+          "body": "1½ cups brown sugar · 1 cup buttermilk · 3 tbsp butter · 1 egg · 1 tsp vanilla",
+          "image": null
+        },
+        {
+          "title": "Step 6: Combine",
+          "subtitle": "Pour wet mixture into flour mixture",
+          "body": "Stir until just combined — don't overmix.",
+          "image": null
+        },
+        {
+          "title": "Step 7: Add the apples",
+          "subtitle": "Dice apples and fold them in",
+          "body": "Peel and dice your apples into small cubes, then stir them into the batter.",
+          "image": null
+        },
+        {
+          "title": "Step 8: Fill the muffin tin",
+          "subtitle": "Spoon batter into each cup, filling to the top",
+          "body": "Use a spoon or ice cream scoop for even filling.",
+          "image": null
+        },
+        {
+          "title": "Step 9: Make the topping",
+          "subtitle": "Stir together in a small bowl",
+          "body": "½ cup brown sugar · ⅓ cup flour · 2 tbsp butter · cinnamon to taste",
+          "image": null
+        },
+        {
+          "title": "Step 10: Add the topping",
+          "subtitle": "Sprinkle mixture on top of muffins",
+          "body": "Use your fingers to crumble the topping evenly over each muffin.",
+          "image": null
+        },
+        {
+          "title": "Step 11: Bake!",
+          "subtitle": "25 minutes",
+          "body": "Bake until a toothpick inserted in the center comes out clean.",
+          "image": null
+        },
+        {
+          "title": "Step 12: Serve",
+          "subtitle": "Enjoy as breakfast or snack!",
+          "body": "Bored of apples? Swap in pears, peaches, mango, canned pears, or canned peaches — recipe stays the same!",
+          "image": null
+        }
+      ]
+    },
+
+    "casserole": {
+      "display_name": "Chicken Casserole",
+      "emoji": "🥘",
+      "color": "#fcd34d",
+      "steps": [
+        {
+          "title": "Step 1: Grocery Shop!",
+          "subtitle": "14 items — comes out to $113 (4 batches!)",
+          "body": "Cream of Chicken Soup · Cottage Cheese · Sour Cream · Cream Cheese · Creole Seasoning · Onion Powder · Garlic Powder · Rotisserie Pulled Chicken · Italian Parsley · Ground Cinnamon · Golden Round Crackers · Unsalted Butter · Shredded Mozzarella · Scallions",
+          "image": null
+        },
+        {
+          "title": "Step 2: Preheat the oven",
+          "subtitle": "to 350°F (175°C)",
+          "body": "Let your oven fully preheat before the casserole goes in.",
+          "image": null
+        },
+        {
+          "title": "Step 3: Make the cream mixture",
+          "subtitle": "Stir together in a medium bowl",
+          "body": "Cream of chicken soup · cottage cheese · sour cream · cream cheese · Creole seasoning · onion powder · ½ tsp garlic powder",
+          "image": null
+        },
+        {
+          "title": "Step 4: Add the chicken",
+          "subtitle": "Fold in chicken and parsley until evenly coated",
+          "body": "Use rotisserie pulled chicken for the easiest prep.",
+          "image": null
+        },
+        {
+          "title": "Step 5: Make the cracker topping",
+          "subtitle": "Combine in a medium bowl",
+          "body": "Crackers · melted butter · remaining ½ tsp garlic powder",
+          "image": null
+        },
+        {
+          "title": "Step 6: Assemble",
+          "subtitle": "Spoon into baking dish, top with mozzarella, then crackers",
+          "body": "Use an 11×7-inch or 9-inch square baking dish.",
+          "image": null
+        },
+        {
+          "title": "Step 7: Bake!",
+          "subtitle": "About 35 minutes",
+          "body": "Bake until crackers are golden brown and edges are bubbly.",
+          "image": null
+        },
+        {
+          "title": "Step 8: Serve",
+          "subtitle": "Garnish with scallions — enjoy as lunch or dinner!",
+          "body": "Swap the protein: turkey, tuna, or salmon all work. Add veggies: corn, broccoli, spinach, mushrooms, or peas.",
+          "image": null
+        }
+      ]
+    },
+
+    "fajitas": {
+      "display_name": "Chicken Fajitas",
+      "emoji": "🥙",
+      "color": "#86efac",
+      "steps": [
+        {
+          "title": "Step 1: Grocery Shop!",
+          "subtitle": "14 items — comes out to ~$103 (4 batches!)",
+          "body": "Vegetable Oil · Chili Powder · Oregano · Garlic Powder · Onion Powder · Seafood Spice Rub · Scallions · Black Pepper · Cayenne Pepper · Chicken Breast Tenders · Three Pepper Blend · Yellow Onion · Cilantro · Organic Limes",
+          "image": null
+        },
+        {
+          "title": "Step 2: Preheat the oven",
+          "subtitle": "to 400°F (200°C)",
+          "body": "A hot oven is key for getting the peppers nicely roasted.",
+          "image": null
+        },
+        {
+          "title": "Step 3: Marinate",
+          "subtitle": "30 minutes to 2 hours in the fridge",
+          "body": "Combine oil, chili powder, oregano, garlic powder, onion powder, cumin, salt, black pepper, and cayenne in a large zip-lock bag. Add chicken tenders, bell peppers, and onion.",
+          "image": null
+        },
+        {
+          "title": "Step 4: Spread on a sheet pan",
+          "subtitle": "Line with aluminum foil first",
+          "body": "Spread the marinated chicken and veggies in a single layer on the prepared pan.",
+          "image": null
+        },
+        {
+          "title": "Step 5: Roast",
+          "subtitle": "15–20 minutes, stirring halfway",
+          "body": "Chicken should reach 165°F internal temperature. Peppers should be softened.",
+          "image": null
+        },
+        {
+          "title": "Step 6: Finish",
+          "subtitle": "Sprinkle cilantro and squeeze lime juice over everything",
+          "body": "Stir to distribute the citrus and herbs evenly.",
+          "image": null
+        },
+        {
+          "title": "Step 7: Serve",
+          "subtitle": "Hot with warm tortillas and your favorite toppings",
+          "body": "Swap it up: shrimp, steak, or tofu for protein. Zucchini or mushrooms for veggies. Curry, Cajun, or jerk for a totally different spice profile.",
+          "image": null
+        }
+      ]
+    }
+  },
+
+  "quiz": {
+    "muffins": [
+      {
+        "type": "drag_drop",
+        "title": "Preheat the oven!",
+        "instruction": "Click the knob to set the correct temperature",
+        "interaction": "knob",
+        "correct_value": 375,
+        "options": [250, 300, 350, 375, 400, 450],
+        "hint": "It's between 350 and 400 — closer to 400!",
+        "feedback_correct": "That's right — 375°F!",
+        "feedback_wrong": "Not quite! Think between 350 and 400."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Make the flour mixture!",
+        "instruction": "Drag the correct ingredients into the bowl",
+        "interaction": "drag",
+        "correct_ids": ["flour", "baking_soda", "salt"],
+        "all_items": [
+          {"id": "flour",       "label": "Flour",          "emoji": "🌾"},
+          {"id": "baking_soda", "label": "Baking Soda",    "emoji": "🧪"},
+          {"id": "salt",        "label": "Salt",           "emoji": "🧂"},
+          {"id": "brown_sugar", "label": "Brown Sugar",    "emoji": "🍯"},
+          {"id": "buttermilk",  "label": "Buttermilk",     "emoji": "🥛"},
+          {"id": "butter",      "label": "Butter",         "emoji": "🧈"},
+          {"id": "egg",         "label": "Egg",            "emoji": "🥚"},
+          {"id": "vanilla",     "label": "Vanilla",        "emoji": "🍶"},
+          {"id": "apple",       "label": "Apple",          "emoji": "🍎"}
+        ],
+        "hint": "It's like Coca-Cola… a powder you can't bake without!",
+        "feedback_correct": "You got flour, baking soda, and salt — nice work!",
+        "feedback_wrong": "Almost! Check what goes in the dry mixture."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Make the brown sugar mixture!",
+        "instruction": "Drag the correct ingredients into the bowl",
+        "interaction": "drag",
+        "correct_ids": ["brown_sugar", "buttermilk", "butter", "egg", "vanilla"],
+        "all_items": [
+          {"id": "flour",       "label": "Flour",          "emoji": "🌾"},
+          {"id": "baking_soda", "label": "Baking Soda",    "emoji": "🧪"},
+          {"id": "salt",        "label": "Salt",           "emoji": "🧂"},
+          {"id": "brown_sugar", "label": "Brown Sugar",    "emoji": "🍯"},
+          {"id": "buttermilk",  "label": "Buttermilk",     "emoji": "🥛"},
+          {"id": "butter",      "label": "Butter",         "emoji": "🧈"},
+          {"id": "egg",         "label": "Egg",            "emoji": "🥚"},
+          {"id": "vanilla",     "label": "Vanilla",        "emoji": "🍶"},
+          {"id": "apple",       "label": "Apple",          "emoji": "🍎"}
+        ],
+        "hint": "It's a liquid — without it the brown sugar won't dissolve!",
+        "feedback_correct": "Perfect — brown sugar, buttermilk, butter, egg, and vanilla!",
+        "feedback_wrong": "Not quite — think about what goes in the WET mixture."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Make the crumble topping!",
+        "instruction": "Drag the correct ingredients into the bowl",
+        "interaction": "drag",
+        "correct_ids": ["brown_sugar", "flour", "butter", "cinnamon"],
+        "all_items": [
+          {"id": "flour",       "label": "Flour",          "emoji": "🌾"},
+          {"id": "baking_soda", "label": "Baking Soda",    "emoji": "🧪"},
+          {"id": "salt",        "label": "Salt",           "emoji": "🧂"},
+          {"id": "brown_sugar", "label": "Brown Sugar",    "emoji": "🍯"},
+          {"id": "buttermilk",  "label": "Buttermilk",     "emoji": "🥛"},
+          {"id": "butter",      "label": "Butter",         "emoji": "🧈"},
+          {"id": "egg",         "label": "Egg",            "emoji": "🥚"},
+          {"id": "vanilla",     "label": "Vanilla",        "emoji": "🍶"},
+          {"id": "apple",       "label": "Apple",          "emoji": "🍎"},
+          {"id": "cinnamon",    "label": "Cinnamon",       "emoji": "🪵"}
+        ],
+        "hint": "It's a fragrant spice — think fall vibes!",
+        "feedback_correct": "Brown sugar, flour, butter, and cinnamon — you've got the topping!",
+        "feedback_wrong": "Almost! Don't forget the fragrant spice."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Bake!",
+        "instruction": "Click the correct bake time on the timer",
+        "interaction": "knob",
+        "correct_value": 25,
+        "options": [15, 20, 25, 30, 35, 40],
+        "hint": "It's a tiny bit more than 20 minutes!",
+        "feedback_correct": "25 minutes — let it bake!",
+        "feedback_wrong": "Not quite! A tiny bit more than 20."
+      }
+    ],
+
+    "casserole": [
+      {
+        "type": "drag_drop",
+        "title": "Make the cream mixture!",
+        "instruction": "Drag the correct ingredients into the bowl",
+        "interaction": "drag",
+        "correct_ids": ["cream_soup", "cottage_cheese", "sour_cream", "cream_cheese", "seasoning", "onion_powder", "garlic_powder"],
+        "all_items": [
+          {"id": "cream_soup",     "label": "Cream of Chicken Soup", "emoji": "🥫"},
+          {"id": "cottage_cheese", "label": "Cottage Cheese",        "emoji": "🧀"},
+          {"id": "sour_cream",     "label": "Sour Cream",            "emoji": "🥛"},
+          {"id": "cream_cheese",   "label": "Cream Cheese",          "emoji": "🧀"},
+          {"id": "seasoning",      "label": "Creole Seasoning",      "emoji": "🌶️"},
+          {"id": "onion_powder",   "label": "Onion Powder",          "emoji": "🧅"},
+          {"id": "garlic_powder",  "label": "Garlic Powder",         "emoji": "🧄"},
+          {"id": "chicken",        "label": "Pulled Chicken",        "emoji": "🍗"},
+          {"id": "crackers",       "label": "Crackers",              "emoji": "🍘"},
+          {"id": "mozzarella",     "label": "Mozzarella",            "emoji": "🧀"}
+        ],
+        "hint": "Everything but the chicken, crackers, and cheese goes in here!",
+        "feedback_correct": "Perfect cream mixture!",
+        "feedback_wrong": "Check again — think creamy base ingredients."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Placeholder Quiz Step 2",
+        "instruction": "Coming soon — drag the correct items",
+        "interaction": "drag",
+        "correct_ids": ["chicken"],
+        "all_items": [
+          {"id": "chicken",  "label": "Pulled Chicken", "emoji": "🍗"},
+          {"id": "crackers", "label": "Crackers",       "emoji": "🍘"}
+        ],
+        "hint": "Placeholder hint",
+        "feedback_correct": "Correct!",
+        "feedback_wrong": "Try again."
+      }
+    ],
+
+    "fajitas": [
+      {
+        "type": "drag_drop",
+        "title": "Make the marinade!",
+        "instruction": "Drag the correct ingredients into the bag",
+        "interaction": "drag",
+        "correct_ids": ["oil", "chili_powder", "oregano", "garlic_powder", "onion_powder", "black_pepper", "cayenne"],
+        "all_items": [
+          {"id": "oil",          "label": "Vegetable Oil",  "emoji": "🫙"},
+          {"id": "chili_powder", "label": "Chili Powder",   "emoji": "🌶️"},
+          {"id": "oregano",      "label": "Oregano",        "emoji": "🌿"},
+          {"id": "garlic_powder","label": "Garlic Powder",  "emoji": "🧄"},
+          {"id": "onion_powder", "label": "Onion Powder",   "emoji": "🧅"},
+          {"id": "black_pepper", "label": "Black Pepper",   "emoji": "🫙"},
+          {"id": "cayenne",      "label": "Cayenne",        "emoji": "🌶️"},
+          {"id": "chicken",      "label": "Chicken",        "emoji": "🍗"},
+          {"id": "peppers",      "label": "Bell Peppers",   "emoji": "🫑"},
+          {"id": "cilantro",     "label": "Cilantro",       "emoji": "🌿"},
+          {"id": "lime",         "label": "Lime",           "emoji": "🍋"}
+        ],
+        "hint": "The marinade is all the spices + oil — not the fresh stuff!",
+        "feedback_correct": "Great marinade — now let it sit!",
+        "feedback_wrong": "Think spices and oil only for the marinade."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Placeholder Quiz Step 2",
+        "instruction": "Coming soon — drag the correct items",
+        "interaction": "drag",
+        "correct_ids": ["chicken"],
+        "all_items": [
+          {"id": "chicken", "label": "Chicken", "emoji": "🍗"},
+          {"id": "lime",    "label": "Lime",    "emoji": "🍋"}
+        ],
+        "hint": "Placeholder hint",
+        "feedback_correct": "Correct!",
+        "feedback_wrong": "Try again."
+      }
+    ]
+  }
+}

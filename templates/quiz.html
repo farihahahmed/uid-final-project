@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block progress %}
+<div class="progress-wrap">
+  <div style="font-size:0.8rem; color:#9ca3af; margin-bottom:4px;">
+    Quiz — step {{ step }} of {{ total }}
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: {{ (step / total * 100)|int }}%;"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main-card">
+
+  <h2 class="slide-title">{{ question.title }}</h2>
+  <p class="slide-subtitle">{{ question.instruction }}</p>
+
+  <!-- ── DRAG-AND-DROP INTERACTION ── -->
+  {% if question.interaction == 'drag' %}
+
+    <span class="bowl-emoji">🥣</span>
+
+    <!-- Drop zone -->
+    <div class="drop-target" id="drop-zone">
+      <span class="placeholder-text" id="drop-placeholder">drag ingredients here</span>
+    </div>
+
+    <p style="font-size:0.85rem; color:#9ca3af; text-align:center; margin:6px 0 12px;">
+      ↑ drop zone &nbsp;|&nbsp; drag from below ↓
+    </p>
+
+    <!-- Draggable items -->
+    <div class="drag-zone" id="drag-zone">
+      {% for item in question.all_items %}
+        <div class="drag-item"
+             draggable="true"
+             data-id="{{ item.id }}"
+             id="item-{{ item.id }}">
+          <span>{{ item.emoji }}</span>
+          <span>{{ item.label }}</span>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="btn-check-answer" id="check-btn">Check ✓</button>
+
+    <div class="feedback-box" id="feedback-box">
+      <span id="feedback-text"></span>
+      <br><small id="hint-text" style="opacity:0.75;"></small>
+    </div>
+
+  {% endif %}
+
+  <!-- ── KNOB / BUTTON PICKER INTERACTION ── -->
+  {% if question.interaction == 'knob' %}
+
+    <div style="font-size:4rem; text-align:center; margin:16px 0;">⏲️</div>
+
+    <div class="knob-options" id="knob-options">
+      {% for opt in question.options %}
+        <button class="knob-btn" data-value="{{ opt }}">{{ opt }}</button>
+      {% endfor %}
+    </div>
+
+    <button class="btn-check-answer" id="check-btn">Check ✓</button>
+
+    <div class="feedback-box" id="feedback-box">
+      <span id="feedback-text"></span>
+      <br><small id="hint-text" style="opacity:0.75;"></small>
+    </div>
+
+  {% endif %}
+
+  <!-- Nav -->
+  <div class="nav-btns" style="margin-top:28px;">
+    {% if prev_url %}
+      <a href="{{ prev_url }}" class="btn-prev">← Back</a>
+    {% else %}
+      <span></span>
+    {% endif %}
+
+    <a href="{{ next_url }}" class="btn-next" id="next-btn" style="pointer-events:none; opacity:0.4;">
+      {{ next_label }}
+    </a>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// ── Data from Flask ──────────────────────────────────────────────────────────
+const INTERACTION  = {{ question.interaction | tojson }};
+const CORRECT_IDS  = {{ question.correct_ids  | default([]) | tojson }};
+const CORRECT_VAL  = {{ question.correct_value | default(0) | tojson }};
+const FEEDBACK_OK  = {{ question.feedback_correct | tojson }};
+const FEEDBACK_BAD = {{ question.feedback_wrong   | tojson }};
+const HINT         = {{ question.hint | tojson }};
+const RECIPE       = {{ recipe_name | tojson }};
+const STEP         = {{ step }};
+
+const SAVE_URL = `/quiz/${RECIPE}/${STEP}/answer`;
+
+// ── Helper: unlock next button ───────────────────────────────────────────────
+function unlockNext() {
+  $('#next-btn').css({ 'pointer-events': 'all', opacity: 1 });
+}
+
+// ── Helper: show feedback ────────────────────────────────────────────────────
+function showFeedback(correct, msg, hint) {
+  const box = $('#feedback-box');
+  box.removeClass('correct wrong').addClass(correct ? 'correct' : 'wrong');
+  $('#feedback-text').text(msg);
+  $('#hint-text').text(correct ? '' : hint);
+  box.show();
+}
+
+// ── Save answer via AJAX ─────────────────────────────────────────────────────
+function saveAnswer(payload) {
+  $.ajax({
+    url: SAVE_URL,
+    method: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(payload),
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// DRAG AND DROP
+// ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'drag') {
+
+  let droppedIds = [];
+
+  // ── Drag events on items ──────────────────────────────────────────────────
+  document.querySelectorAll('.drag-item').forEach(item => {
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.dataset.id);
+      item.classList.add('dragging');
+    });
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+  });
+
+  // ── Drop zone events ──────────────────────────────────────────────────────
+  const dropZone = document.getElementById('drop-zone');
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+
+    const id   = e.dataTransfer.getData('text/plain');
+    const item = document.getElementById('item-' + id);
+    if (!item) return;
+
+    // Move item into drop zone
+    document.getElementById('drop-placeholder').style.display = 'none';
+    dropZone.appendChild(item);
+    droppedIds.push(id);
+  });
+
+  // ── Click item in drop zone to return it ─────────────────────────────────
+  dropZone.addEventListener('click', e => {
+    const item = e.target.closest('.drag-item');
+    if (!item) return;
+    document.getElementById('drag-zone').appendChild(item);
+    droppedIds = droppedIds.filter(i => i !== item.dataset.id);
+    if (dropZone.querySelectorAll('.drag-item').length === 0) {
+      document.getElementById('drop-placeholder').style.display = '';
+    }
+  });
+
+  // ── Check answer ──────────────────────────────────────────────────────────
+  document.getElementById('check-btn').addEventListener('click', () => {
+    const correct = CORRECT_IDS.slice().sort().join(',');
+    const given   = droppedIds.slice().sort().join(',');
+    const isRight = correct === given;
+
+    showFeedback(isRight, isRight ? FEEDBACK_OK : FEEDBACK_BAD, HINT);
+    saveAnswer({ dropped: droppedIds, correct: isRight });
+
+    if (isRight) unlockNext();
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// KNOB / BUTTON PICKER
+// ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'knob') {
+  let selected = null;
+
+  document.querySelectorAll('.knob-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.knob-btn').forEach(b =>
+        b.classList.remove('selected-correct', 'selected-wrong')
+      );
+      selected = parseInt(btn.dataset.value);
+      btn.classList.add(selected === CORRECT_VAL ? 'selected-correct' : 'selected-wrong');
+    });
+  });
+
+  document.getElementById('check-btn').addEventListener('click', () => {
+    if (selected === null) {
+      showFeedback(false, 'Pick an option first!', '');
+      return;
+    }
+    const isRight = selected === CORRECT_VAL;
+    showFeedback(isRight, isRight ? FEEDBACK_OK : FEEDBACK_BAD, HINT);
+    saveAnswer({ selected, correct: isRight });
+    if (isRight) unlockNext();
+  });
+}
+</script>
+{% endblock %}

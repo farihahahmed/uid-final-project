@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% set recipe_name = recipe_name %}
+
+{% block progress %}
+<div class="progress-wrap">
+  <div style="font-size:0.8rem; color:#9ca3af; margin-bottom:4px;">
+    {{ recipe_meta.display_name }} — step {{ step_num }} of {{ total }}
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: {{ (step_num / total * 100)|int }}%; background: linear-gradient(90deg, {{ recipe_meta.color }}, #2dd4bf);"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="main-card">
+
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+    <span style="font-size:1.8rem;">{{ recipe_meta.emoji }}</span>
+    <h2 class="slide-title" style="margin:0;">{{ step.title }}</h2>
+  </div>
+
+  {% if step.subtitle %}
+    <p class="slide-subtitle">{{ step.subtitle }}</p>
+  {% endif %}
+
+  {% if step.image %}
+    <img src="{{ url_for('static', filename='images/' + step.image) }}"
+         class="recipe-img" alt="{{ step.title }}">
+  {% else %}
+    <div class="img-placeholder">[ image goes here ]</div>
+  {% endif %}
+
+  <p class="slide-body">{{ step.body }}</p>
+
+  <div class="nav-btns">
+    {% if prev_url %}
+      <a href="{{ prev_url }}" class="btn-prev">← Back</a>
+    {% else %}
+      <a href="{{ url_for('choose_recipe') }}" class="btn-prev">← Recipes</a>
+    {% endif %}
+
+    <a href="{{ next_url }}" class="btn-next">{{ next_label }}</a>
+  </div>
+
+</div>
+{% endblock %}
