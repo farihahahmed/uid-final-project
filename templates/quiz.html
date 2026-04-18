@@ -12,78 +12,138 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-card">
+<div class="main-card quiz-main">
 
-  <h2 class="slide-title">{{ question.title }}</h2>
-  <p class="slide-subtitle">{{ question.instruction }}</p>
-
-  <!-- ── DRAG-AND-DROP INTERACTION ── -->
-  {% if question.interaction == 'drag' %}
-
-    <span class="bowl-emoji">🥣</span>
-
-    <!-- Drop zone -->
-    <div class="drop-target" id="drop-zone">
-      <span class="placeholder-text" id="drop-placeholder">drag ingredients here</span>
+  <div class="quiz-header">
+    <div class="quiz-header-text">
+      <h2 class="slide-title">{{ question.title }}</h2>
+      <p class="slide-subtitle">{{ question.instruction }}</p>
     </div>
+    <div class="quiz-header-nav">
+      {% if prev_url %}
+        <a href="{{ prev_url }}" class="btn-prev">← Back</a>
+      {% endif %}
+      <a href="{{ next_url }}" class="btn-next disabled-link" id="next-btn">
+        {{ next_label }}
+      </a>
+    </div>
+  </div>
 
-    <p class="small text-secondary text-center my-2">
-      ↑ drop zone &nbsp;|&nbsp; drag from below ↓
-    </p>
+  <div class="quiz-grid">
 
-    <!-- Draggable items -->
-    <div class="drag-zone" id="drag-zone">
-      {% for item in question.all_items %}
-        <div class="drag-item"
-             draggable="true"
-             data-id="{{ item.id }}"
-             id="item-{{ item.id }}">
-          <span>{{ item.emoji }}</span>
-          <span>{{ item.label }}</span>
+    <!-- ── INGREDIENTS CARD (LEFT) ── -->
+    <section class="quiz-card quiz-ingredients">
+      <h3 class="quiz-card-header">Ingredients</h3>
+      <div class="quiz-card-hint">(scroll below for more)</div>
+      <div class="quiz-card-body">
+        {% if question.all_items %}
+          <div class="drag-zone" id="drag-zone">
+            {% for item in question.all_items %}
+              <div class="drag-item{% if item.image %} drag-item-card{% endif %}"
+                   {% if question.interaction == 'drag' %}draggable="true"{% endif %}
+                   data-id="{{ item.id }}"
+                   id="item-{{ item.id }}">
+                {% if item.image %}
+                  <img src="{{ url_for('static', filename='images/' + item.image) }}"
+                       class="drag-item-image" alt="{{ item.label }}" draggable="false">
+                  <span class="drag-item-text">
+                    {% if item.quantity %}{{ item.quantity }} {% endif %}{{ item.label }}
+                  </span>
+                {% else %}
+                  <span>{{ item.emoji }}</span>
+                  <span>{{ item.label }}</span>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- ── COOK STATION CARD (MIDDLE) ── -->
+    <section class="quiz-card quiz-cook-station">
+      <h3 class="quiz-card-header">Cook station</h3>
+      <div class="quiz-card-body">
+        {% if question.interaction == 'drag' %}
+          <span class="bowl-emoji">🥣</span>
+          <div class="drop-target" id="drop-zone">
+            <span class="placeholder-text" id="drop-placeholder">drag ingredients here</span>
+          </div>
+        {% endif %}
+
+        {% if question.interaction == 'knob' %}
+          {% set knob_label = 'Oven temp' if question.correct_value > 100 else 'Bake timer' %}
+          <div class="oven-game" id="oven-game">
+            <div class="oven-console">
+              <div class="oven-preview">
+                <img
+                  src="{{ url_for('static', filename='images/oven-dark-clipart.png') }}"
+                  class="oven-preview-image"
+                  alt=""
+                >
+              </div>
+
+              <div class="oven-controls">
+                <div class="oven-knob-stage">
+                  <div class="oven-knob-glow"></div>
+                  <img
+                    src="{{ url_for('static', filename='images/oven-knob.png') }}"
+                    class="oven-knob-image"
+                    id="oven-knob-image"
+                    alt="Oven knob"
+                  >
+                </div>
+
+                <div class="oven-slider-panel">
+                  <div class="oven-slider-title">Slide to set it</div>
+                  <input
+                    type="range"
+                    id="oven-slider"
+                    class="oven-slider"
+                    min="0"
+                    max="{{ question.options|length - 1 }}"
+                    step="1"
+                    value="0"
+                    aria-label="{{ knob_label }}"
+                  >
+                  <div
+                    class="oven-slider-labels"
+                    style="grid-template-columns: repeat({{ question.options|length }}, minmax(0, 1fr));"
+                  >
+                    {% for opt in question.options %}
+                      <button
+                        type="button"
+                        class="oven-slider-label"
+                        data-index="{{ loop.index0 }}"
+                        data-value="{{ opt }}"
+                      >
+                        {{ opt }}
+                      </button>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+
+        <button class="btn-check-answer" id="check-btn">Check ✓</button>
+
+        <div class="feedback-box" id="feedback-box">
+          <span id="feedback-text"></span>
+          <br><small id="hint-text" class="opacity-75"></small>
         </div>
-      {% endfor %}
-    </div>
+      </div>
+    </section>
 
-    <button class="btn-check-answer" id="check-btn">Check ✓</button>
+    <!-- ── SET ASIDE CARD (RIGHT) ── -->
+    <section class="quiz-card quiz-set-aside">
+      <h3 class="quiz-card-header">Set aside</h3>
+      <div class="quiz-card-body">
+        <div class="set-aside-zone" id="set-aside-zone"></div>
+      </div>
+    </section>
 
-    <div class="feedback-box" id="feedback-box">
-      <span id="feedback-text"></span>
-      <br><small id="hint-text" class="opacity-75"></small>
-    </div>
-
-  {% endif %}
-
-  <!-- ── KNOB / BUTTON PICKER INTERACTION ── -->
-  {% if question.interaction == 'knob' %}
-
-    <div class="display-3 text-center my-3">⏲️</div>
-
-    <div class="knob-options" id="knob-options">
-      {% for opt in question.options %}
-        <button class="knob-btn" data-value="{{ opt }}">{{ opt }}</button>
-      {% endfor %}
-    </div>
-
-    <button class="btn-check-answer" id="check-btn">Check ✓</button>
-
-    <div class="feedback-box" id="feedback-box">
-      <span id="feedback-text"></span>
-      <br><small id="hint-text" class="opacity-75"></small>
-    </div>
-
-  {% endif %}
-
-  <!-- Nav -->
-  <div class="nav-btns pt-4">
-    {% if prev_url %}
-      <a href="{{ prev_url }}" class="btn-prev">← Back</a>
-    {% else %}
-      <span></span>
-    {% endif %}
-
-    <a href="{{ next_url }}" class="btn-next disabled-link" id="next-btn">
-      {{ next_label }}
-    </a>
   </div>
 
 </div>
@@ -95,6 +155,7 @@
 const INTERACTION  = {{ question.interaction | tojson }};
 const CORRECT_IDS  = {{ question.correct_ids  | default([]) | tojson }};
 const CORRECT_VAL  = {{ question.correct_value | default(0) | tojson }};
+const OPTIONS      = {{ question.options | default([]) | tojson }};
 const FEEDBACK_OK  = {{ question.feedback_correct | tojson }};
 const FEEDBACK_BAD = {{ question.feedback_wrong   | tojson }};
 const HINT         = {{ question.hint | tojson }};
@@ -198,23 +259,55 @@ if (INTERACTION === 'drag') {
 // ════════════════════════════════════════════════════════════════════════════
 if (INTERACTION === 'knob') {
   let selected = null;
+  let interacted = false;
 
-  document.querySelectorAll('.knob-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.knob-btn').forEach(b =>
-        b.classList.remove('selected-correct', 'selected-wrong')
-      );
-      selected = parseInt(btn.dataset.value);
-      btn.classList.add(selected === CORRECT_VAL ? 'selected-correct' : 'selected-wrong');
+  const slider = document.getElementById('oven-slider');
+  const knob = document.getElementById('oven-knob-image');
+  const ovenGame = document.getElementById('oven-game');
+  const optionLabels = Array.from(document.querySelectorAll('.oven-slider-label'));
+
+  function syncKnob(index) {
+    const maxIndex = Math.max(OPTIONS.length - 1, 1);
+    const progress = (index / maxIndex) * 100;
+    const rotation = -115 + (index / maxIndex) * 230;
+
+    slider.style.setProperty('--slider-progress', `${progress}%`);
+    knob.style.transform = `rotate(${rotation}deg)`;
+
+    optionLabels.forEach((label, labelIndex) => {
+      label.classList.toggle('is-active', labelIndex === index);
+    });
+  }
+
+  syncKnob(parseInt(slider.value, 10));
+
+  slider.addEventListener('input', () => {
+    const index = parseInt(slider.value, 10);
+    interacted = true;
+    selected = OPTIONS[index];
+    ovenGame.classList.remove('is-correct', 'is-wrong');
+    syncKnob(index);
+  });
+
+  optionLabels.forEach(label => {
+    label.addEventListener('click', () => {
+      const index = parseInt(label.dataset.index, 10);
+      slider.value = index;
+      interacted = true;
+      selected = OPTIONS[index];
+      ovenGame.classList.remove('is-correct', 'is-wrong');
+      syncKnob(index);
     });
   });
 
   document.getElementById('check-btn').addEventListener('click', () => {
-    if (selected === null) {
-      showFeedback(false, 'Pick an option first!', '');
+    if (!interacted || selected === null) {
+      showFeedback(false, 'Drag the oven control first!', '');
       return;
     }
     const isRight = selected === CORRECT_VAL;
+    ovenGame.classList.toggle('is-correct', isRight);
+    ovenGame.classList.toggle('is-wrong', !isRight);
     showFeedback(isRight, isRight ? FEEDBACK_OK : FEEDBACK_BAD, HINT);
     saveAnswer({ selected, correct: isRight });
     if (isRight) unlockNext();

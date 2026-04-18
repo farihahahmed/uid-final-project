@@ -25,7 +25,7 @@
         {% endif %}
       </div>
 
-      <div class="grocery-grid">
+      <div class="grocery-grid{% if step.grocery_items|length == 4 %} grocery-grid-count-4{% endif %}">
         {% for item in step.grocery_items %}
           <article class="grocery-item-card">
             <div class="grocery-item-index">{{ item.number }}</div>

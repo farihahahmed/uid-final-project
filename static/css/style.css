@@ -406,6 +406,10 @@ h1, h2, h3, .display-font {
   min-height: 0;
 }
 
+.grocery-grid-count-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .grocery-item-card {
   position: relative;
   display: flex;
@@ -451,22 +455,13 @@ h1, h2, h3, .display-font {
 }
 
 .grocery-item-image {
-  max-width: none;
-  max-height: none;
-  width: auto;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-.grocery-item-image[src$="muffins-unsalted-butter.png"],
-.grocery-item-image[src$="muffins-eggs.png"] {
   max-width: 100%;
   max-height: 100%;
   width: auto;
-  height: auto;
+  height: 100%;
   object-fit: contain;
+  object-position: center;
+  display: block;
 }
 
 .grocery-item-title {
@@ -488,26 +483,29 @@ h1, h2, h3, .display-font {
   margin-top: 6px;
   min-height: 1.4em;
   font-family: 'Inter', Arial, sans-serif;
-  font-size: clamp(0.95rem, 1vw, 1.05rem);
+  font-size: clamp(0.88rem, 0.9vw, 0.98rem);
   font-weight: 600;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: #6b7280;
+  white-space: nowrap;
 }
 
 .grocery-item-price {
   margin-top: auto;
   padding-top: 12px;
   font-family: 'Inter', Arial, sans-serif;
-  font-size: clamp(1.9rem, 2.4vw, 2.5rem);
+  font-size: clamp(1.72rem, 2.05vw, 2.18rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 1;
   color: var(--dark);
+  white-space: nowrap;
 }
 
 @media (max-width: 1200px) {
-  .grocery-grid {
+  .grocery-grid,
+  .grocery-grid-count-4 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -1096,6 +1094,115 @@ h1, h2, h3, .display-font {
 }
 
 /* ── Drag & Drop ── */
+/* ── Quiz 3-card layout ── */
+.quiz-main {
+  display: flex;
+  flex-direction: column;
+  padding: 28px 40px;
+  height: calc(100vh - 140px);
+  min-height: 700px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.quiz-header {
+  position: relative;
+  display: block;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.quiz-header-text {
+  text-align: center;
+}
+
+.quiz-header-text .slide-title,
+.quiz-header-text .slide-subtitle {
+  text-align: center;
+}
+
+.quiz-header-nav {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 18px;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 6px;
+  margin-bottom: 4px;
+}
+
+.quiz-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 18px rgba(255, 79, 167, 0.10);
+  border: 1px solid rgba(255, 200, 227, 0.6);
+  padding: 18px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.quiz-card-header {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--dark);
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.quiz-card-hint {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #9ca3af;
+  text-align: center;
+  margin: 0 0 10px;
+  font-style: italic;
+}
+
+.quiz-card-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  overflow-y: auto;
+}
+
+.quiz-card-body .drag-zone,
+.quiz-card-body .drop-target {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+}
+
+.quiz-card-body .drop-target {
+  flex: 1 1 auto;
+  min-height: 120px;
+}
+
+.set-aside-zone {
+  flex: 1 1 auto;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .drag-zone {
   display: flex;
   flex-wrap: wrap;
@@ -1130,6 +1237,47 @@ h1, h2, h3, .display-font {
 .drag-item.dragging {
   opacity: 0.5;
   transform: scale(0.97);
+}
+
+.drag-item-card {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  padding: 6px 6px 8px;
+  width: auto;
+  text-align: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.drag-item-image {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.drag-item-text {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.quiz-ingredients .drag-zone {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  min-height: 0;
+  margin-bottom: 0;
 }
 
 .drop-target {
@@ -1188,30 +1336,199 @@ h1, h2, h3, .display-font {
   border: 2px solid var(--pink-border);
 }
 
-/* ── Knob picker ── */
-.knob-options {
+/* ── Oven knob game ── */
+.oven-game {
+  margin: 8px 0 18px;
+}
+
+.oven-console {
+  border-radius: 28px;
+  padding: 6px 0 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transition: transform 0.18s ease;
+}
+
+.oven-preview {
+  width: min(100%, 280px);
+  margin: 0 auto 10px;
+}
+
+.oven-preview-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 16px 22px rgba(36, 0, 27, 0.16));
+}
+
+.oven-controls {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-top: 18px;
+  justify-items: center;
+}
+
+.oven-knob-stage {
+  position: relative;
+  width: 176px;
+  height: 176px;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.92), rgba(255, 244, 248, 0.65) 54%, rgba(255, 215, 235, 0.3) 75%, transparent 76%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 14px 28px rgba(255, 79, 167, 0.12);
+}
+
+.oven-knob-glow {
+  position: absolute;
+  inset: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.12), transparent 68%);
+}
+
+.oven-knob-image {
+  position: relative;
+  z-index: 1;
+  width: 136px;
+  height: 136px;
+  display: block;
+  object-fit: contain;
+  transform: rotate(-115deg);
+  transition: transform 0.22s ease, filter 0.18s ease;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.22));
+  pointer-events: none;
+  user-select: none;
+}
+
+.oven-slider-panel {
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-  margin: 18px 0;
+  width: 100%;
+  max-width: 440px;
 }
 
-.knob-btn {
+.oven-slider-title {
   font-family: 'Inter', Arial, sans-serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  padding: 12px 28px;
-  border: 2px solid var(--pink-border);
-  border-radius: 14px;
-  background: rgba(255,255,255,0.7);
-  color: var(--dark);
-  cursor: pointer;
-  transition: all 0.15s;
+  font-size: 0.84rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--pink-dark);
+  text-align: center;
 }
 
-.knob-btn:hover            { background: var(--pink-border); color: white; }
-.knob-btn.selected-correct { background: #86efac; border-color: #16a34a; color: #15803d; }
-.knob-btn.selected-wrong   { background: rgba(255,179,217,0.3); border-color: var(--pink-dark); color: var(--pink-dark); }
+.oven-slider {
+  width: 100%;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: ew-resize;
+  --slider-progress: 0%;
+}
+
+.oven-slider:focus {
+  outline: none;
+}
+
+.oven-slider::-webkit-slider-runnable-track {
+  height: 16px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg,
+      #ff5faf 0%,
+      #ff5faf var(--slider-progress),
+      rgba(255, 255, 255, 0.92) var(--slider-progress),
+      rgba(255, 255, 255, 0.92) 100%);
+  border: 1px solid rgba(255, 179, 217, 0.9);
+  box-shadow: inset 0 2px 6px rgba(255, 79, 167, 0.1);
+}
+
+.oven-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 34px;
+  height: 34px;
+  margin-top: -10px;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffe182 0%, #ffbf47 100%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+}
+
+.oven-slider::-moz-range-track {
+  height: 16px;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg,
+      #ff5faf 0%,
+      #ff5faf var(--slider-progress),
+      rgba(255, 255, 255, 0.92) var(--slider-progress),
+      rgba(255, 255, 255, 0.92) 100%);
+  border: 1px solid rgba(255, 179, 217, 0.9);
+  box-shadow: inset 0 2px 6px rgba(255, 79, 167, 0.1);
+}
+
+.oven-slider::-moz-range-thumb {
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffe182 0%, #ffbf47 100%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.22);
+}
+
+.oven-slider-labels {
+  display: grid;
+  gap: 8px;
+}
+
+.oven-slider-label {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #6b7280;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.oven-slider-label.is-active {
+  color: var(--pink-dark);
+  transform: translateY(-1px);
+}
+
+.oven-game.is-correct .oven-readout-wrap {
+  box-shadow:
+    0 0 0 2px rgba(134, 239, 172, 0.35),
+    0 10px 26px rgba(21, 128, 61, 0.1);
+}
+
+.oven-game.is-wrong .oven-readout-wrap {
+  box-shadow:
+    0 0 0 2px rgba(244, 114, 182, 0.28),
+    0 10px 26px rgba(236, 72, 153, 0.1);
+}
+
+.oven-game.is-correct .oven-knob-image {
+  filter: drop-shadow(0 0 18px rgba(134, 239, 172, 0.5));
+}
+
+.oven-game.is-wrong .oven-knob-image {
+  filter: drop-shadow(0 0 18px rgba(244, 114, 182, 0.42));
+}
 
 /* ── Check button ── */
 .btn-check-answer {
@@ -1432,6 +1749,14 @@ h1, h2, h3, .display-font {
   .home-cta-btn {
     min-width: 320px;
   }
+
+  .oven-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .oven-preview {
+    width: min(100%, 240px);
+  }
 }
 
 @media (max-width: 768px) {
@@ -1517,7 +1842,8 @@ h1, h2, h3, .display-font {
     gap: 14px;
   }
 
-  .grocery-grid {
+  .grocery-grid,
+  .grocery-grid-count-4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
@@ -1543,11 +1869,11 @@ h1, h2, h3, .display-font {
   }
 
   .grocery-item-quantity {
-    font-size: 0.88rem;
+    font-size: 0.82rem;
   }
 
   .grocery-item-price {
-    font-size: 1.7rem;
+    font-size: 1.55rem;
   }
 
   .nav-btns {
@@ -1572,6 +1898,24 @@ h1, h2, h3, .display-font {
     width: 100%;
   }
 
+  .oven-console {
+    padding-top: 4px;
+  }
+
+  .oven-knob-stage {
+    width: 150px;
+    height: 150px;
+  }
+
+  .oven-knob-image {
+    width: 124px;
+    height: 124px;
+  }
+
+  .oven-slider-label {
+    font-size: 0.88rem;
+  }
+
   .mealprep-side-image {
     height: clamp(320px, 56vw, 460px);
   }
@@ -1584,7 +1928,8 @@ h1, h2, h3, .display-font {
 }
 
 @media (max-width: 420px) {
-  .grocery-grid {
+  .grocery-grid,
+  .grocery-grid-count-4 {
     grid-template-columns: 1fr;
   }
 
