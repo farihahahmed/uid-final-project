@@ -1,42 +1,64 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="max-width:700px; margin:60px auto; text-align:center; padding:0 20px;">
+<div class="home-page">
 
-  <div style="font-size:4rem; margin-bottom:12px;">🧁🥘🥙</div>
+  <section class="home-hero">
+    <p class="home-kicker">WELCOME TO</p>
 
-  <h1 class="display-font" style="font-size:2.8rem; margin-bottom:8px;">
-    A Lazy College Student's Guide
-  </h1>
-  <h2 class="display-font" style="font-size:1.8rem; color:#c026d3; margin-bottom:8px;">
-    to EASY DUMP-AND-BAKE recipes
-  </h2>
-  <p style="font-size:1.1rem; color:#6b7280; margin-bottom:32px;">
-    that you make once, eat throughout the week
-  </p>
+    <h1 class="home-title-line home-title-line-1">
+      a lazy college student's guide on
+    </h1>
 
-  <!-- 3 selling points -->
-  <div style="display:flex; justify-content:center; gap:32px; flex-wrap:wrap; margin-bottom:40px;">
-    <div style="text-align:center;">
-      <div style="font-size:2rem;">💸</div>
-      <div class="display-font" style="font-size:1.1rem;">Budget-friendly</div>
-      <div style="font-size:0.85rem; color:#6b7280;">&lt; $300/mo</div>
+    <h1 class="home-title-line home-title-line-2">
+      <span class="pink">EASY</span>
+      <span class="dark"> dump-and-bake </span>
+      <span class="pink">RECIPES</span>
+    </h1>
+
+    <p class="home-subtitle">
+      THAT YOU MAKE ONCE, EAT THROUGHOUT THE WEEK
+    </p>
+
+    <div class="home-mood-wrap">
+      <img
+        src="{{ url_for('static', filename='images/lazy.gif') }}"
+        alt="lazy sleepy face"
+        class="home-mood-gif"
+      >
+      <p class="home-mood-label">MOOD</p>
     </div>
-    <div style="text-align:center;">
-      <div style="font-size:2rem;">😴</div>
-      <div class="display-font" style="font-size:1.1rem;">Laziness-approved</div>
-      <div style="font-size:0.85rem; color:#6b7280;">1 grocery run/mo</div>
-    </div>
-    <div style="text-align:center;">
-      <div style="font-size:2rem;">👍</div>
-      <div class="display-font" style="font-size:1.1rem;">Easy as hell</div>
-      <div style="font-size:0.85rem; color:#6b7280;">Chop / dump / bake</div>
-    </div>
-  </div>
+  </section>
 
-  <a href="{{ url_for('start') }}" class="btn-next" style="font-size:1.3rem; padding:14px 48px;">
-    Get Started →
-  </a>
+  <section class="home-carousel-band">
+    <div class="home-carousel">
+      <div class="home-carousel-track">
+
+        <div class="home-carousel-group">
+          <div class="home-carousel-pill">✅💸 BUDGET-FRIENDLY · &lt;$300/MO</div>
+          <div class="home-carousel-divider"></div>
+          <div class="home-carousel-pill">✅😴 LAZINESS-APPROVED · 1 RUN/MO</div>
+          <div class="home-carousel-divider"></div>
+          <div class="home-carousel-pill">✅👍 EASY AS HELL · CHOP/DUMP/BAKE</div>
+        </div>
+
+        <div class="home-carousel-group" aria-hidden="true">
+          <div class="home-carousel-pill">✅💸 BUDGET-FRIENDLY · &lt;$300/MO</div>
+          <div class="home-carousel-divider"></div>
+          <div class="home-carousel-pill">✅😴 LAZINESS-APPROVED · 1 RUN/MO</div>
+          <div class="home-carousel-divider"></div>
+          <div class="home-carousel-pill">✅👍 EASY AS HELL · CHOP/DUMP/BAKE</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="home-cta-wrap">
+    <a href="{{ url_for('start') }}" class="home-cta-btn">
+      GET STARTED ➜
+    </a>
+  </section>
 
 </div>
 {% endblock %}
