@@ -5,34 +5,97 @@
 {% block progress %}
 <div class="progress-wrap">
   <div class="small progress-label-text mb-1">
-    {{ recipe_meta.display_name }} — Step {{ step_num }} of {{ total }}
+    {{ recipe_meta.display_name }} — Step {{ display_step }} of {{ display_total }}
   </div>
   <div class="progress">
-    <div class="progress-bar" style="width: {{ (step_num / total * 100)|int }}%; background: linear-gradient(90deg, {{ recipe_meta.color }}, #2dd4bf);"></div>
+    <div class="progress-bar" style="width: {{ (display_step / display_total * 100)|int }}%; background: linear-gradient(90deg, {{ recipe_meta.color }}, #2dd4bf);"></div>
   </div>
 </div>
 {% endblock %}
 
 {% block content %}
-<div class="main-card">
+<div class="main-card{% if step.grocery_page %} grocery-card{% else %} recipe-centered{% endif %}">
 
-  <div class="d-flex align-items-center gap-2 mb-1">
-    <span class="fs-2">{{ recipe_meta.emoji }}</span>
-    <h2 class="slide-title mb-0">{{ step.title }}</h2>
-  </div>
+  {% if step.grocery_page %}
+    <div class="slide-stage recipe-stage grocery-stage">
+      <div class="grocery-heading">
+        <h2 class="slide-title grocery-title">{{ step.title }}</h2>
+        {% if step.subtitle %}
+          <p class="slide-subtitle grocery-subtitle">{{ step.subtitle }}</p>
+        {% endif %}
+      </div>
 
-  {% if step.subtitle %}
-    <p class="slide-subtitle">{{ step.subtitle }}</p>
-  {% endif %}
-
-  {% if step.image %}
-    <img src="{{ url_for('static', filename='images/' + step.image) }}"
-         class="recipe-img" alt="{{ step.title }}">
+      <div class="grocery-grid">
+        {% for item in step.grocery_items %}
+          <article class="grocery-item-card">
+            <div class="grocery-item-index">{{ item.number }}</div>
+            <div class="grocery-item-media">
+              <img src="{{ url_for('static', filename='images/' + item.image) }}"
+                   class="grocery-item-image"
+                   alt="{{ item.title }}">
+            </div>
+            <h3 class="grocery-item-title">{{ item.title }}</h3>
+            {% if item.quantity %}
+              <div class="grocery-item-quantity">{{ item.quantity }}</div>
+            {% endif %}
+            <div class="grocery-item-price">{{ item.price }}</div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% elif step.remix_page %}
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <span class="fs-2">{{ recipe_meta.emoji }}</span>
+      <h2 class="slide-title mb-0">{{ step.title }}</h2>
+    </div>
+    {% if step.subtitle %}
+      <p class="slide-subtitle">{{ step.subtitle }}</p>
+    {% endif %}
+    <div class="slide-stage recipe-stage remix-stage">
+      <div class="remix-left">
+        <div class="remix-label">{{ step.remix.original_label }}</div>
+        <img src="{{ url_for('static', filename='images/' + step.remix.original_image) }}"
+             class="remix-image" alt="{{ step.remix.original_label }}">
+      </div>
+      <div class="remix-arrow">
+        <div class="remix-arrow-line"></div>
+        <div class="remix-arrow-head"></div>
+      </div>
+      <div class="remix-right">
+        <div class="remix-right-header">{{ step.remix.substitutions_header }}</div>
+        <div class="remix-right-subheader">{{ step.remix.substitutions_subheader }}</div>
+        <ul class="remix-subs">
+          {% for sub in step.remix.substitutions %}
+            <li class="remix-sub-item">
+              <span class="remix-sub-name">{{ sub.name }}</span>
+              <span class="remix-sub-arrow">→</span>
+              <span class="remix-sub-emoji">{{ sub.emoji }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   {% else %}
-    <div class="img-placeholder">[ image goes here ]</div>
-  {% endif %}
+    <div class="d-flex align-items-center gap-2 mb-1">
+      <span class="fs-2">{{ recipe_meta.emoji }}</span>
+      <h2 class="slide-title mb-0">{{ step.title }}</h2>
+    </div>
 
-  <p class="slide-body">{{ step.body }}</p>
+    {% if step.subtitle %}
+      <p class="slide-subtitle">{{ step.subtitle }}</p>
+    {% endif %}
+
+    <div class="slide-stage recipe-stage">
+      {% if step.body %}<p class="slide-body">{{ step.body }}</p>{% endif %}
+
+      {% if step.image %}
+        <img src="{{ url_for('static', filename='images/' + step.image) }}"
+             class="recipe-img" alt="{{ step.title }}">
+      {% else %}
+        <div class="img-placeholder">[ image goes here ]</div>
+      {% endif %}
+    </div>
+  {% endif %}
 
   <div class="nav-btns">
     {% if prev_url %}

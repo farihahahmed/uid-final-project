@@ -1,64 +1,104 @@
 {
   "mealprep": [
     {
-      "title": "Before we start…",
-      "subtitle": "let's meal plan!",
-      "body": "Our goal is to do 1 grocery run a month only! All three recipes are dump-and-bake, one-pan, and budget-friendly.",
-      "image": null
+      "title": "Let's meal plan!",
+      "subtitle": "Our goal: minimize grocery runs to 1 trip a month",
+      "body": "We designed a monthly meal plan so every ingredient is used before it expires — no waste, no extra trips.",
+      "images": [
+        "mealplan-left.png",
+        "mealplan-calendar.png",
+        "grocery-cart.png"
+      ]
     },
     {
-      "title": "Our goal",
-      "subtitle": "1 grocery run a month only!",
-      "body": "We designed this meal plan so every ingredient is used before it expires.",
-      "image": null
+      "title": "We have 1 option for",
+      "subtitle": "Breakfast or a Snack",
+      "body": "If you get bored, swap apples for other fruits (like pears, peaches, or mango!). These recipes are remixable, so you never get bored.",
+      "image": null,
+      "recipe_tree": {
+        "recipes": [
+          { "name": "One Pan Brown Sugar Apple Muffins", "image": "choose-muffins.png" }
+        ]
+      }
     },
     {
-      "title": "We have 3 recipes this month",
-      "subtitle": "Breakfast/Snack + Lunch/Dinner",
-      "body": "Brown Sugar Apple Muffins for breakfast. Chicken Casserole OR Chicken Fajitas for lunch and dinner.",
-      "image": null
+      "title": "We have 2 options for",
+      "subtitle": "Lunch or Dinner",
+      "body": "If you get bored, swap chicken for other proteins (like tofu, turkey, or shrimp!). These recipes are remixable, so you never get bored.",
+      "image": null,
+      "recipe_tree": {
+        "pick_one": true,
+        "recipes": [
+          { "name": "One Pan Chicken Casserole", "image": "choose-casserole.png" },
+          { "name": "One Pan Chicken Fajitas", "image": "choose-fajitas.png" }
+        ]
+      }
     },
     {
-      "title": "Our goal is to be as lazy as possible!",
-      "subtitle": "We want to minimize cook time",
-      "body": "Make your breakfast muffins on Sundays — just 40 minutes, once a week.",
-      "image": null
+      "title": "Muffins: bake once, eat all week",
+      "subtitle": "Bake for 40 min on Sunday → Get 14 muffins → Eat 2 muffins a day × 7 days",
+      "body": null,
+      "image": null,
+      "meal_table": {
+        "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "rows": ["Breakfast", "Lunch", "Dinner"],
+        "row_fills": {
+          "Breakfast": { "emoji": "🧁", "count": 2 }
+        },
+        "highlights": [
+          { "col_index": 0, "label": "Bake 40 mins" }
+        ]
+      }
     },
     {
-      "title": "Enjoy muffins all week",
-      "subtitle": "14 servings → 2 muffins a day × 7 days",
-      "body": "Bake once on Sunday and you're covered for the entire week.",
-      "image": null
+      "title": "Casserole 🥘 & Fajitas 🥙: bake twice, eat all week",
+      "subtitle": "Bake 45 min on Sun + Wed → Get 2 batches → Each lasts 3–4 days",
+      "subtitle_compact": false,
+      "body": null,
+      "image": null,
+      "meal_table": {
+        "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        "rows": ["Breakfast", "Lunch", "Dinner"],
+        "row_fills": {
+          "Breakfast": { "emoji": "🧁", "count": 2 }
+        },
+        "row_cells": {
+          "Lunch": [
+            { "emoji": "🥘" }, { "emoji": "🥘" }, { "emoji": "🥘" },
+            { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }
+          ],
+          "Dinner": [
+            { "emoji": "🥘" }, { "emoji": "🥘" }, { "emoji": "🥘" },
+            { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }
+          ]
+        },
+        "highlights": [
+          { "col_index": 0, "label": "Bake 45 mins" },
+          { "col_index": 3, "label": "Bake 45 mins" }
+        ],
+        "batches": [
+          { "label": "Batch 1", "start_col": 0, "end_col": 2 },
+          { "label": "Batch 2", "start_col": 3, "end_col": 6 }
+        ]
+      }
     },
     {
-      "title": "For lunch/dinner…",
-      "subtitle": "Choose between Casserole 🥘 or Fajitas 🥙",
-      "body": "Pick whichever one sounds good. Each batch lasts 3–4 days.",
-      "image": null
+      "title": "Weekly cook time: just 90 mins",
+      "subtitle": "We're lazy — so we bake in parallel",
+      "body": "Muffins and casserole can bake at the same time on Sundays — overlapping bake times means less time in the kitchen.",
+      "image": "energy-saving-bear.gif"
     },
     {
-      "title": "Cook twice a week",
-      "subtitle": "Sundays and Wednesdays — 45 mins each",
-      "body": "Muffins and your lunch/dinner can bake at the same time — total cook time is only 90 mins/week!",
-      "image": null
-    },
-    {
-      "title": "Total monthly cost: $265",
+      "title": "Total monthly cost: $265 — huge savings!!!",
       "subtitle": "Muffins $49 · Casserole $113 · Fajitas $103",
-      "body": "One grocery run. One month of meals. Huge savings.",
-      "image": null
+      "body": null,
+      "image": "save-dat-money.gif"
     },
     {
-      "title": "They're all one-pan recipes!",
-      "subtitle": "Requiring minimal dishes to wash",
-      "body": "Less cleanup, less stress.",
-      "image": null
-    },
-    {
-      "title": "And they're all dump-and-bake!",
-      "subtitle": "Requiring minimal cooking ability",
-      "body": "No fancy technique needed — just chop, dump, and bake.",
-      "image": null
+      "title": "They're all one-pan, dump-and-bake recipes!",
+      "subtitle": "Minimal dishes to wash, minimal cooking ability",
+      "body": "Just chop, dump, and bake — less cleanup, less stress.",
+      "image": "640c2d26-d768-4d82-9062-58cc13697c3d_text.gif"
     }
   ],
 
@@ -67,78 +107,191 @@
       "display_name": "Brown Sugar Apple Muffins",
       "emoji": "🧁",
       "color": "#f9a8d4",
+      "display_total": 13,
       "steps": [
         {
-          "title": "Step 1: Grocery Shop!",
+          "title": "🧁 Step 1: Grocery Shop!",
           "subtitle": "We need 10 items in total",
-          "body": "All-Purpose Flour $3.49 · Baking Soda $0.99 · Sea Salt $3.29 · Light Brown Sugar $4.49 · Buttermilk $1.99 · Unsalted Butter $4.29 · Vanilla Extract $8.79 · Honeycrisp Apples $8.99 · Ground Cinnamon $4.29 · Large Eggs $4.49",
-          "image": null
+          "body": null,
+          "grocery_page": true,
+          "display_step": 1,
+          "grocery_items": [
+            {
+              "number": 1,
+              "title": "All-Purpose Flour",
+              "quantity": "80 oz",
+              "price": "$3.49",
+              "image": "muffins-flour.png"
+            },
+            {
+              "number": 2,
+              "title": "Baking Soda",
+              "quantity": "16 oz",
+              "price": "$0.99",
+              "image": "muffins-baking-soda.png"
+            },
+            {
+              "number": 3,
+              "title": "Sea Salt",
+              "quantity": "26.5 oz",
+              "price": "$3.29",
+              "image": "muffins-sea-salt.png"
+            },
+            {
+              "number": 4,
+              "title": "Light Brown Sugar",
+              "quantity": "24 oz",
+              "price": "$4.49",
+              "image": "muffins-brown-sugar.png"
+            },
+            {
+              "number": 5,
+              "title": "Buttermilk",
+              "quantity": "16 fl oz",
+              "price": "$1.99",
+              "image": "muffins-buttermilk.png"
+            }
+          ]
+        },
+        {
+          "title": "🧁 Step 1: Grocery Shop!",
+          "subtitle": "Which comes out to $49.10 (4 batches!)",
+          "body": null,
+          "grocery_page": true,
+          "display_step": 1,
+          "grocery_items": [
+            {
+              "number": 6,
+              "title": "Unsalted Butter",
+              "quantity": "16 oz",
+              "price": "$4.29",
+              "image": "muffins-unsalted-butter.png"
+            },
+            {
+              "number": 7,
+              "title": "Vanilla Extract",
+              "quantity": "2 fl oz",
+              "price": "$8.79",
+              "image": "muffins-vanilla-extract.png"
+            },
+            {
+              "number": 8,
+              "title": "Honeycrisp Apples",
+              "quantity": "48 oz",
+              "price": "$8.99",
+              "image": "muffins-apples.png"
+            },
+            {
+              "number": 9,
+              "title": "Ground Cinnamon",
+              "quantity": "1.9 oz",
+              "price": "$4.29",
+              "image": "muffins-cinnamon.png"
+            },
+            {
+              "number": 10,
+              "title": "Large Eggs",
+              "quantity": "12 count",
+              "price": "$4.49",
+              "image": "muffins-eggs.png"
+            }
+          ]
         },
         {
           "title": "Step 2: Preheat the oven",
           "subtitle": "to 375°F (190°C)",
           "body": "Set your oven to 375°F before you do anything else so it's ready when you need it.",
-          "image": null
+          "image": "oven-preheat-375.png",
+          "display_step": 2
         },
         {
           "title": "Step 3: Grease a 14-cup muffin tin",
           "subtitle": "or line with paper cups",
           "body": "Spray each cup with non-stick spray, or drop in paper liners.",
-          "image": null
+          "image": "muffin-tin-greased.png",
+          "display_step": 3
         },
         {
           "title": "Step 4: Make the flour mixture",
           "subtitle": "Stir together in a large bowl",
           "body": "2¼ cups flour · 1 tsp baking soda · ½ tsp salt",
-          "image": null
+          "image": "muffins-step4-flour-mix.png",
+          "display_step": 4
         },
         {
           "title": "Step 5: Make the brown sugar mixture",
           "subtitle": "Stir in a separate bowl until sugar dissolves",
           "body": "1½ cups brown sugar · 1 cup buttermilk · 3 tbsp butter · 1 egg · 1 tsp vanilla",
-          "image": null
+          "image": "muffins-step5-sugar-mix.png",
+          "display_step": 5
         },
         {
           "title": "Step 6: Combine",
           "subtitle": "Pour wet mixture into flour mixture",
           "body": "Stir until just combined — don't overmix.",
-          "image": null
+          "image": "muffins-step6-combine.png",
+          "display_step": 6
         },
         {
           "title": "Step 7: Add the apples",
           "subtitle": "Dice apples and fold them in",
           "body": "Peel and dice your apples into small cubes, then stir them into the batter.",
-          "image": null
+          "image": "muffins-step7-apples.png",
+          "display_step": 7
         },
         {
           "title": "Step 8: Fill the muffin tin",
           "subtitle": "Spoon batter into each cup, filling to the top",
           "body": "Use a spoon or ice cream scoop for even filling.",
-          "image": null
+          "image": "muffins-step8-fill-tin.png",
+          "display_step": 8
         },
         {
           "title": "Step 9: Make the topping",
           "subtitle": "Stir together in a small bowl",
           "body": "½ cup brown sugar · ⅓ cup flour · 2 tbsp butter · cinnamon to taste",
-          "image": null
+          "image": "muffins-step9-topping-mix.png",
+          "display_step": 9
         },
         {
           "title": "Step 10: Add the topping",
           "subtitle": "Sprinkle mixture on top of muffins",
           "body": "Use your fingers to crumble the topping evenly over each muffin.",
-          "image": null
+          "image": "muffins-step10-sprinkle.png",
+          "display_step": 10
         },
         {
           "title": "Step 11: Bake!",
           "subtitle": "25 minutes",
           "body": "Bake until a toothpick inserted in the center comes out clean.",
-          "image": null
+          "image": "muffins-step11-baked.png",
+          "display_step": 11
         },
         {
           "title": "Step 12: Serve",
           "subtitle": "Enjoy as breakfast or snack!",
-          "body": "Bored of apples? Swap in pears, peaches, mango, canned pears, or canned peaches — recipe stays the same!",
-          "image": null
+          "body": null,
+          "image": "muffins-step12-serve.png",
+          "display_step": 12
+        },
+        {
+          "title": "Step 13: If you get bored of these muffins,",
+          "subtitle": "you can easily use different fruits!",
+          "remix_page": true,
+          "display_step": 13,
+          "remix": {
+            "original_label": "Apple Muffins",
+            "original_image": "muffins-step12-serve.png",
+            "substitutions_header": "Use these instead",
+            "substitutions_subheader": "(these also stay in the fridge for 1 month without expiring):",
+            "substitutions": [
+              { "name": "Pears", "emoji": "🍐" },
+              { "name": "Peaches", "emoji": "🍑" },
+              { "name": "Mango", "emoji": "🥭" },
+              { "name": "Canned pears", "emoji": "🍐🥫" },
+              { "name": "Canned peaches", "emoji": "🍑🥫" }
+            ]
+          }
         }
       ]
     },

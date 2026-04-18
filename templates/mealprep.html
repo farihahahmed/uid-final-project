@@ -14,19 +14,152 @@
 {% block content %}
 <div class="main-card">
 
-  <h2 class="slide-title">{{ slide.title }}</h2>
+  {% if slide.title %}
+    <h2 class="slide-title">{{ slide.title }}</h2>
+  {% endif %}
   {% if slide.subtitle %}
-    <p class="slide-subtitle">{{ slide.subtitle }}</p>
+    <p class="slide-subtitle {% if slide.subtitle_compact %}slide-subtitle-compact{% endif %}">{{ slide.subtitle }}</p>
   {% endif %}
 
-  {% if slide.image %}
-    <img src="{{ url_for('static', filename='images/' + slide.image) }}"
-         class="recipe-img" alt="{{ slide.title }}">
-  {% else %}
-    <div class="img-placeholder">[ image goes here ]</div>
-  {% endif %}
+  <div class="slide-stage mealprep-stage">
+    {% if slide.meal_table %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      <div class="meal-table-wrap">
+        {% if slide.meal_table.highlights %}
+          <div class="meal-table-highlights {% if slide.meal_table.batches %}with-batches{% endif %}"
+               style="grid-template-columns: 1fr repeat({{ slide.meal_table.days|length }}, 1fr);">
+            <div></div>
+            {% for i in range(slide.meal_table.days|length) %}
+              <div class="meal-table-highlight-cell">
+                {% for h in slide.meal_table.highlights %}
+                  {% if h.col_index == i %}
+                    <div class="meal-highlight-label">{{ h.label }}</div>
+                    <div class="meal-highlight-arrow-wrap">
+                      <div class="meal-highlight-arrow-line"></div>
+                      <div class="meal-highlight-arrow-head"></div>
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if slide.meal_table.batches %}
+          <div class="meal-table-batches"
+               style="grid-template-columns: 1fr repeat({{ slide.meal_table.days|length }}, 1fr);">
+            {% for batch in slide.meal_table.batches %}
+              <div class="batch-group"
+                   style="grid-column: {{ batch.start_col + 2 }} / {{ batch.end_col + 3 }};">
+                <div class="batch-label">{{ batch.label }}</div>
+                <div class="batch-bracket"></div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <table class="meal-table">
+          <thead>
+            <tr>
+              <th></th>
+              {% for day in slide.meal_table.days %}
+                <th>{{ day }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for row_name in slide.meal_table.rows %}
+              <tr>
+                <th class="meal-table-row-label">{{ row_name }}</th>
+                {% for day in slide.meal_table.days %}
+                  {% set day_idx = loop.index0 %}
+                  <td>
+                    {% set cell = None %}
+                    {% if slide.meal_table.row_cells and slide.meal_table.row_cells[row_name] and day_idx < slide.meal_table.row_cells[row_name]|length %}
+                      {% set cell = slide.meal_table.row_cells[row_name][day_idx] %}
+                    {% endif %}
+                    {% if cell %}
+                      {% for _ in range(cell.count or 1) %}
+                        <span class="meal-cell-emoji">{{ cell.emoji }}</span>
+                      {% endfor %}
+                    {% elif slide.meal_table.row_fills and slide.meal_table.row_fills[row_name] %}
+                      {% set fill = slide.meal_table.row_fills[row_name] %}
+                      {% for _ in range(fill.count) %}
+                        <span class="meal-cell-emoji">{{ fill.emoji }}</span>
+                      {% endfor %}
+                    {% endif %}
+                  </td>
+                {% endfor %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% elif slide.recipe_tree %}
+      {% set n = slide.recipe_tree.recipes|length %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      <div class="recipe-tree">
+        {% if slide.recipe_tree.pick_one %}
+          <div class="tree-label-row" style="grid-template-columns: 1fr;">
+            <div class="tree-label-col">
+              <div class="tree-label tree-label-black">Pick One</div>
+            </div>
+          </div>
+        {% endif %}
 
-  <p class="slide-body">{{ slide.body }}</p>
+        {% if n >= 2 %}
+          <svg class="tree-arrows-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+            <defs>
+              <marker id="red-arrow" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+                <polygon points="0 0, 5 2.5, 0 5" fill="#ff1744"/>
+              </marker>
+            </defs>
+            <line x1="500" y1="0" x2="250" y2="50" stroke="#ff1744" stroke-width="5" marker-end="url(#red-arrow)" stroke-linecap="round"/>
+            <line x1="500" y1="0" x2="750" y2="50" stroke="#ff1744" stroke-width="5" marker-end="url(#red-arrow)" stroke-linecap="round"/>
+          </svg>
+        {% endif %}
+
+        <div class="tree-cards" style="grid-template-columns: repeat({{ n }}, minmax(0, 1fr)); max-width: {{ n * 420 }}px; margin: 0 auto;">
+          {% for recipe in slide.recipe_tree.recipes %}
+            <div class="tree-card">
+              <div class="tree-card-name">{{ recipe.name }}</div>
+              <div class="tree-card-img-wrap">
+                <img src="{{ url_for('static', filename='images/' + recipe.image) }}"
+                     class="tree-card-img" alt="{{ recipe.name }}">
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% elif slide.images %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      {% if slide.center_arrows %}
+        <svg class="tree-arrows-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
+          <defs>
+            <marker id="lunch-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <polygon points="0 0, 8 4, 0 8" fill="#ff1744"/>
+            </marker>
+          </defs>
+          <line x1="500" y1="0" x2="250" y2="50" stroke="#ff1744" stroke-width="5" marker-end="url(#lunch-arrow)" stroke-linecap="round"/>
+          <line x1="500" y1="0" x2="750" y2="50" stroke="#ff1744" stroke-width="5" marker-end="url(#lunch-arrow)" stroke-linecap="round"/>
+        </svg>
+      {% endif %}
+      <div class="mealprep-image-grid {% if slide.equal_height_images %}mealprep-grid-equal{% endif %}"
+           style="grid-template-columns: repeat({{ slide.images|length }}, minmax(0, 1fr));">
+        {% for image_name in slide.images %}
+          <div class="mealprep-image-wrap {% if slide.equal_height_images %}mealprep-image-wrap-equal{% endif %}">
+            <img src="{{ url_for('static', filename='images/' + image_name) }}"
+                 class="recipe-img mealprep-side-image {% if slide.equal_height_images %}mealprep-equal-image{% endif %}" alt="{{ slide.title }}">
+          </div>
+        {% endfor %}
+      </div>
+    {% elif slide.image %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      <img src="{{ url_for('static', filename='images/' + slide.image) }}"
+           class="recipe-img" alt="{{ slide.title }}">
+    {% else %}
+      <p class="slide-body">{{ slide.body }}</p>
+      <div class="img-placeholder">[ image goes here ]</div>
+    {% endif %}
+  </div>
 
   <div class="nav-btns">
     {% if prev_url %}

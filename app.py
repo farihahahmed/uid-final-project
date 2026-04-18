@@ -5,9 +5,9 @@ import os
 app = Flask(__name__)
 app.secret_key = 'dumpdumpbake2025'
 
-# Load data
-with open('data.json') as f:
-    DATA = json.load(f)
+def load_data():
+    with open('data.json') as f:
+        return json.load(f)
 
 # Simple single-user state (as per assignment)
 user_state = {
@@ -44,7 +44,8 @@ def start():
 
 @app.route('/mealprep/<int:step>')
 def mealprep(step):
-    slides = DATA['mealprep']
+    data = load_data()
+    slides = data['mealprep']
     total = len(slides)
     if step < 1 or step > total:
         return redirect(url_for('mealprep', step=1))
@@ -73,19 +74,21 @@ def mealprep(step):
 
 @app.route('/choose')
 def choose_recipe():
-    recipes = DATA['recipes']
+    data = load_data()
+    recipes = data['recipes']
     return render_template('choose.html', recipes=recipes)
 
 # ── Recipe Steps ─────────────────────────────────────────────────────────────
 
 @app.route('/recipe/<recipe_name>/<int:step>')
 def recipe(recipe_name, step):
-    if recipe_name not in DATA['recipes']:
+    data = load_data()
+    if recipe_name not in data['recipes']:
         return redirect(url_for('choose_recipe'))
 
     record('recipe_chosen', recipe_name)
 
-    steps = DATA['recipes'][recipe_name]['steps']
+    steps = data['recipes'][recipe_name]['steps']
     total = len(steps)
     if step < 1 or step > total:
         return redirect(url_for('recipe', recipe_name=recipe_name, step=1))
@@ -108,10 +111,12 @@ def recipe(recipe_name, step):
     return render_template(
         'recipe.html',
         recipe_name=recipe_name,
-        recipe_meta=DATA['recipes'][recipe_name],
+        recipe_meta=data['recipes'][recipe_name],
         step=current_step,
         step_num=step,
         total=total,
+        display_step=current_step.get('display_step', step),
+        display_total=data['recipes'][recipe_name].get('display_total', total),
         prev_url=prev_url,
         next_url=next_url,
         next_label=next_label,
@@ -121,10 +126,11 @@ def recipe(recipe_name, step):
 
 @app.route('/quiz/<recipe_name>/<int:step>')
 def quiz(recipe_name, step):
-    if recipe_name not in DATA['quiz']:
+    data = load_data()
+    if recipe_name not in data['quiz']:
         return redirect(url_for('choose_recipe'))
 
-    questions = DATA['quiz'][recipe_name]
+    questions = data['quiz'][recipe_name]
     total = len(questions)
     if step < 1 or step > total:
         return redirect(url_for('quiz', recipe_name=recipe_name, step=1))
