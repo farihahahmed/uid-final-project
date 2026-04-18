@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+  <div id="custom-cursor" aria-hidden="true"></div>
 
   <!-- Top nav -->
   <nav class="top-nav">
@@ -36,6 +37,76 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    $(function () {
+      if (!window.matchMedia('(pointer:fine)').matches) {
+        return;
+      }
+
+      const $body = $('body');
+      const $cursor = $('#custom-cursor');
+      const interactiveSelector = 'a, button, [role="button"], .btn-next, .btn-prev, .btn-check-answer, .knob-btn, .drag-item, input[type="button"], input[type="submit"], label[for], summary';
+      const storageKeyX = 'customCursorX';
+      const storageKeyY = 'customCursorY';
+      const storageKeyMode = 'customCursorMode';
+      let cursorVisible = false;
+
+      $body.addClass('custom-cursor-enabled');
+
+      const savedX = window.sessionStorage.getItem(storageKeyX);
+      const savedY = window.sessionStorage.getItem(storageKeyY);
+
+      if (savedX !== null && savedY !== null) {
+        $cursor.css({
+          left: savedX + 'px',
+          top: savedY + 'px'
+        });
+        if (window.sessionStorage.getItem(storageKeyMode) === 'hand') {
+          $cursor.addClass('is-hand');
+        }
+        $cursor.addClass('is-visible');
+        cursorVisible = true;
+      }
+
+      $(document)
+        .on('mousemove', function (event) {
+          if (!cursorVisible) {
+            $cursor.addClass('is-visible');
+            cursorVisible = true;
+          }
+
+          $cursor.css({
+            left: event.clientX + 'px',
+            top: event.clientY + 'px'
+          });
+
+          window.sessionStorage.setItem(storageKeyX, event.clientX);
+          window.sessionStorage.setItem(storageKeyY, event.clientY);
+        })
+        .on('mouseenter', interactiveSelector, function () {
+          $cursor.addClass('is-hand');
+          window.sessionStorage.setItem(storageKeyMode, 'hand');
+        })
+        .on('mouseleave', interactiveSelector, function () {
+          $cursor.removeClass('is-hand');
+          window.sessionStorage.setItem(storageKeyMode, 'arrow');
+        })
+        .on('mousedown', function () {
+          $cursor.addClass('is-clicking');
+        })
+        .on('mouseup', function () {
+          $cursor.removeClass('is-clicking');
+        })
+        .on('mousedown', interactiveSelector, function () {
+          $cursor.addClass('is-hand');
+          window.sessionStorage.setItem(storageKeyMode, 'hand');
+        })
+        .on('mousemove', function (event) {
+          const targetIsInteractive = $(event.target).closest(interactiveSelector).length > 0;
+          window.sessionStorage.setItem(storageKeyMode, targetIsInteractive ? 'hand' : 'arrow');
+        });
+    });
+  </script>
 
   {% block scripts %}{% endblock %}
 </body>

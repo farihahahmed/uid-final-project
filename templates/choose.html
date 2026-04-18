@@ -1,34 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="main-card" style="text-align:center;">
+<div class="main-card choose-card-shell" style="text-align:center;">
 
   <h2 class="slide-title">Now let's get started!</h2>
   <p class="slide-subtitle">Choose your dump-and-bake recipe</p>
 
-  <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-top:32px;">
+  <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center recipe-choice-grid">
     {% for key, recipe in recipes.items() %}
-    <a href="{{ url_for('recipe', recipe_name=key, step=1) }}"
-       style="text-decoration:none; flex:1; min-width:180px; max-width:220px;">
-      <div style="
-        border: 3px solid {{ recipe.color }};
-        border-radius: 20px;
-        padding: 28px 20px;
-        background: white;
-        transition: transform 0.15s, box-shadow 0.15s;
-        cursor: pointer;
-      "
-      onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'"
-      onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="font-size:3rem; margin-bottom:12px;">{{ recipe.emoji }}</div>
-        <div class="display-font" style="font-size:1.15rem; color:#1e1b4b;">
-          One Pan<br>{{ recipe.display_name }}
+    <div class="col-md-4 col-lg-3">
+      <a href="{{ url_for('recipe', recipe_name=key, step=1) }}" class="recipe-choice-link">
+        <div
+          class="recipe-choice-card"
+          style="border-color: {{ recipe.color }};"
+          onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'"
+          onmouseout="this.style.transform='';this.style.boxShadow=''"
+        >
+          <div class="recipe-choice-emoji">{{ recipe.emoji }}</div>
+          <div class="display-font recipe-choice-title">
+            One Pan<br>{{ recipe.display_name }}
+          </div>
+          <div class="recipe-choice-cta">
+            <span class="btn-next recipe-choice-btn">Get Started →</span>
+          </div>
         </div>
-        <div style="margin-top:16px;">
-          <span class="btn-next" style="font-size:0.9rem; padding:8px 20px;">Get Started →</span>
-        </div>
-      </div>
-    </a>
+      </a>
+    </div>
     {% endfor %}
   </div>
 
