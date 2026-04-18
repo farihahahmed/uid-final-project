@@ -2,8 +2,8 @@
 
 {% block progress %}
 <div class="progress-wrap">
-  <div style="font-size:0.8rem; color:#9ca3af; margin-bottom:4px;">
-    Meal Prep — step {{ step }} of {{ total }}
+  <div class="small progress-label-text mb-1">
+    Meal Prep — Step {{ step }} of {{ total }}
   </div>
   <div class="progress">
     <div class="progress-bar" style="width: {{ (step / total * 100)|int }}%"></div>

@@ -4,8 +4,8 @@
 
 {% block progress %}
 <div class="progress-wrap">
-  <div style="font-size:0.8rem; color:#9ca3af; margin-bottom:4px;">
-    {{ recipe_meta.display_name }} — step {{ step_num }} of {{ total }}
+  <div class="small progress-label-text mb-1">
+    {{ recipe_meta.display_name }} — Step {{ step_num }} of {{ total }}
   </div>
   <div class="progress">
     <div class="progress-bar" style="width: {{ (step_num / total * 100)|int }}%; background: linear-gradient(90deg, {{ recipe_meta.color }}, #2dd4bf);"></div>
@@ -16,9 +16,9 @@
 {% block content %}
 <div class="main-card">
 
-  <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
-    <span style="font-size:1.8rem;">{{ recipe_meta.emoji }}</span>
-    <h2 class="slide-title" style="margin:0;">{{ step.title }}</h2>
+  <div class="d-flex align-items-center gap-2 mb-1">
+    <span class="fs-2">{{ recipe_meta.emoji }}</span>
+    <h2 class="slide-title mb-0">{{ step.title }}</h2>
   </div>
 
   {% if step.subtitle %}

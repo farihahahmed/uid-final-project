@@ -1,22 +1,31 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="main-card choose-card-shell" style="text-align:center;">
+<div class="main-card choose-card-shell text-center">
+  {% set recipe_images = {
+    'muffins': 'images/choose-muffins.png',
+    'casserole': 'images/choose-casserole.png',
+    'fajitas': 'images/choose-fajitas.png'
+  } %}
 
   <h2 class="slide-title">Now let's get started!</h2>
   <p class="slide-subtitle">Choose your dump-and-bake recipe</p>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center recipe-choice-grid">
+  <div class="row row-cols-2 row-cols-lg-3 g-3 g-lg-4 justify-content-center recipe-choice-grid">
     {% for key, recipe in recipes.items() %}
-    <div class="col-md-4 col-lg-3">
+    <div class="col d-flex">
       <a href="{{ url_for('recipe', recipe_name=key, step=1) }}" class="recipe-choice-link">
         <div
-          class="recipe-choice-card"
+          class="recipe-choice-card h-100"
           style="border-color: {{ recipe.color }};"
           onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.1)'"
           onmouseout="this.style.transform='';this.style.boxShadow=''"
         >
-          <div class="recipe-choice-emoji">{{ recipe.emoji }}</div>
+          <img
+            src="{{ url_for('static', filename=recipe_images[key]) }}"
+            alt="{{ recipe.display_name }}"
+            class="recipe-choice-image"
+          >
           <div class="display-font recipe-choice-title">
             One Pan<br>{{ recipe.display_name }}
           </div>

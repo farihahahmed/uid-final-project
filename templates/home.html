@@ -3,62 +3,69 @@
 {% block content %}
 <div class="home-page">
 
-  <section class="home-hero">
-    <p class="home-kicker">WELCOME TO</p>
+  <div class="container-fluid px-0">
+    <div class="row g-0">
+      <div class="col-12">
+        <section class="home-hero">
+          <p class="home-kicker">WELCOME TO</p>
 
-    <h1 class="home-title-line home-title-line-1">
-      a lazy college student's guide on
-    </h1>
+          <h1 class="home-title-line home-title-line-1">
+            a lazy college student's guide on
+          </h1>
 
-    <h1 class="home-title-line home-title-line-2">
-      <span class="pink">EASY</span>
-      <span class="dark"> dump-and-bake </span>
-      <span class="pink">RECIPES</span>
-    </h1>
+          <h1 class="home-title-line home-title-line-2">
+            <span class="pink">EASY</span>
+            <span class="dark"> dump-and-bake </span>
+            <span class="pink">RECIPES</span>
+          </h1>
 
-    <p class="home-subtitle">
-      THAT YOU MAKE ONCE, EAT THROUGHOUT THE WEEK
-    </p>
+          <p class="home-subtitle">
+            THAT YOU MAKE ONCE, EAT THROUGHOUT THE WEEK
+          </p>
 
-    <div class="home-mood-wrap">
-      <img
-        src="{{ url_for('static', filename='images/lazy.gif') }}"
-        alt="lazy sleepy face"
-        class="home-mood-gif"
-      >
-      <p class="home-mood-label">MOOD</p>
-    </div>
-  </section>
+          <div class="home-mood-wrap d-flex justify-content-center mx-auto">
+            <img
+              src="{{ url_for('static', filename='images/lazy.gif') }}"
+              alt="lazy sleepy face"
+              class="home-mood-gif"
+            >
+          </div>
+        </section>
+      </div>
+      <div class="col-12">
+        <section class="home-carousel-band">
+          <div class="home-carousel">
+            <div class="home-carousel-track">
 
-  <section class="home-carousel-band">
-    <div class="home-carousel">
-      <div class="home-carousel-track">
+              <div class="home-carousel-group">
+                <div class="home-carousel-pill">✅💸 BUDGET-FRIENDLY · &lt;$300/MO</div>
+                <div class="home-carousel-divider"></div>
+                <div class="home-carousel-pill">✅😴 LAZINESS-APPROVED · 1 GROCERY RUN/MO</div>
+                <div class="home-carousel-divider"></div>
+                <div class="home-carousel-pill">✅👍 EASY AS HELL · CHOP/DUMP/BAKE</div>
+              </div>
 
-        <div class="home-carousel-group">
-          <div class="home-carousel-pill">✅💸 BUDGET-FRIENDLY · &lt;$300/MO</div>
-          <div class="home-carousel-divider"></div>
-          <div class="home-carousel-pill">✅😴 LAZINESS-APPROVED · 1 RUN/MO</div>
-          <div class="home-carousel-divider"></div>
-          <div class="home-carousel-pill">✅👍 EASY AS HELL · CHOP/DUMP/BAKE</div>
-        </div>
+              <div class="home-carousel-group" aria-hidden="true">
+                <div class="home-carousel-pill">✅💸 BUDGET-FRIENDLY · &lt;$300/MO</div>
+                <div class="home-carousel-divider"></div>
+                <div class="home-carousel-pill">✅😴 LAZINESS-APPROVED · 1 GROCERY RUN/MO</div>
+                <div class="home-carousel-divider"></div>
+                <div class="home-carousel-pill">✅👍 EASY AS HELL · CHOP/DUMP/BAKE</div>
+              </div>
 
-        <div class="home-carousel-group" aria-hidden="true">
-          <div class="home-carousel-pill">✅💸 BUDGET-FRIENDLY · &lt;$300/MO</div>
-          <div class="home-carousel-divider"></div>
-          <div class="home-carousel-pill">✅😴 LAZINESS-APPROVED · 1 RUN/MO</div>
-          <div class="home-carousel-divider"></div>
-          <div class="home-carousel-pill">✅👍 EASY AS HELL · CHOP/DUMP/BAKE</div>
-        </div>
-
+            </div>
+          </div>
+        </section>
+      </div>
+      <div class="col-12">
+        <section class="home-cta-wrap">
+          <a href="{{ url_for('start') }}" class="home-cta-btn">
+            GET STARTED ➜
+          </a>
+        </section>
       </div>
     </div>
-  </section>
-
-  <section class="home-cta-wrap">
-    <a href="{{ url_for('start') }}" class="home-cta-btn">
-      GET STARTED ➜
-    </a>
-  </section>
+  </div>
 
 </div>
 {% endblock %}

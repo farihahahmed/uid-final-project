@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="main-card" style="text-align:center;">
+<div class="main-card text-center">
 
-  <div style="font-size:5rem; margin-bottom:16px;">🎉</div>
+  <div class="display-1 mb-3">🎉</div>
 
   <h2 class="slide-title">You did it!</h2>
   <p class="slide-subtitle">Now plate it and enjoy 🍽️</p>
 
-  <p class="slide-body" style="max-width:480px; margin:0 auto 32px;">
+  <p class="slide-body mx-auto mb-4 result-body-copy">
     You've learned the recipe and completed the cooking game.
     Time to actually make it — you've got this!
   </p>
 
-  <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+  <div class="d-flex gap-3 justify-content-center flex-wrap">
     <a href="{{ url_for('quiz', recipe_name=recipe_name, step=1) }}" class="btn-prev">
       Take Quiz Again
     </a>
     <a href="{{ url_for('choose_recipe') }}" class="btn-next">
       Try Another Recipe →
     </a>
-    <a href="{{ url_for('home') }}" class="btn-next" style="background:#c026d3;">
+    <a href="{{ url_for('home') }}" class="btn-next btn-next-home">
       🏠 Home
     </a>
   </div>

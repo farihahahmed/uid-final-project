@@ -11,7 +11,7 @@
   <!-- Google Fonts -->
  <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
 
   <!-- App styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -21,12 +21,28 @@
 
   <!-- Top nav -->
   <nav class="top-nav">
-    <a href="{{ url_for('home') }}" {% if request.endpoint == 'home' %}class="active"{% endif %}>🏠 Home</a>
-    <a href="{{ url_for('mealprep', step=1) }}" {% if request.endpoint == 'mealprep' %}class="active"{% endif %}>📅 Before We Start: How to Meal Prep!</a>
-    <a href="{{ url_for('choose_recipe') }}" {% if request.endpoint == 'choose_recipe' %}class="active"{% endif %}>🍽️ Choose Recipe</a>
-    <a href="{{ url_for('recipe', recipe_name='muffins', step=1) }}">🧁 Muffins</a>
-    <a href="{{ url_for('recipe', recipe_name='casserole', step=1) }}">🥘 Casserole</a>
-    <a href="{{ url_for('recipe', recipe_name='fajitas', step=1) }}">🥙 Fajitas</a>
+    <div class="container-fluid px-2 px-sm-3">
+      <div class="row g-2 nav-row">
+        <div class="col-6 col-md-4 col-xl">
+          <a href="{{ url_for('home') }}" class="top-nav-link {% if request.endpoint == 'home' %}active{% endif %}">🏠 Home</a>
+        </div>
+        <div class="col-6 col-md-8 col-xl">
+          <a href="{{ url_for('mealprep', step=1) }}" class="top-nav-link top-nav-link-mealprep {% if request.endpoint == 'mealprep' %}active{% endif %}">📅 Before We Start: How to Meal Prep!</a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+          <a href="{{ url_for('choose_recipe') }}" class="top-nav-link {% if request.endpoint == 'choose_recipe' %}active{% endif %}">🍽️ Choose Recipe</a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+          <a href="{{ url_for('recipe', recipe_name='muffins', step=1) }}" class="top-nav-link">🧁 Muffins</a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+          <a href="{{ url_for('recipe', recipe_name='casserole', step=1) }}" class="top-nav-link">🥘 Casserole</a>
+        </div>
+        <div class="col-6 col-md-4 col-xl">
+          <a href="{{ url_for('recipe', recipe_name='fajitas', step=1) }}" class="top-nav-link">🥙 Fajitas</a>
+        </div>
+      </div>
+    </div>
   </nav>
 
   {% block progress %}{% endblock %}
