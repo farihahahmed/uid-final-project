@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="main-card">
+<div class="main-card mealprep-centered">
 
   {% if slide.title %}
     <h2 class="slide-title">{{ slide.title }}</h2>
@@ -117,7 +117,7 @@
           </svg>
         {% endif %}
 
-        <div class="tree-cards" style="grid-template-columns: repeat({{ n }}, minmax(0, 1fr)); max-width: {{ n * 420 }}px; margin: 0 auto;">
+        <div class="tree-cards {% if n == 1 %}tree-cards-single{% endif %}" style="grid-template-columns: repeat({{ n }}, minmax(0, 1fr)); max-width: {{ 860 if n == 1 else n * 420 }}px; margin: 0 auto;">
           {% for recipe in slide.recipe_tree.recipes %}
             <div class="tree-card">
               <div class="tree-card-name">{{ recipe.name }}</div>

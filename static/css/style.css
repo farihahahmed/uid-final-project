@@ -135,6 +135,70 @@ h1, h2, h3, .display-font {
   box-shadow: inset 0 -1px 0 rgba(214, 88, 154, 0.18);
 }
 
+/* ── Nav dropdown (Muffins / Casserole / Fajitas) ── */
+.top-nav-dropdown {
+  position: relative;
+  height: 100%;
+}
+
+.top-nav-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  min-width: 160px;
+  background: white;
+  border: 1px solid rgba(249, 198, 224, 0.95);
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(255, 69, 160, 0.18);
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+  z-index: 100;
+}
+
+.top-nav-dropdown:hover .top-nav-menu,
+.top-nav-dropdown:focus-within .top-nav-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Invisible bridge so cursor can move from link to menu without closing */
+.top-nav-dropdown::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.top-nav-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--pink-dark);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.12s, color 0.12s;
+}
+
+.top-nav-menu-item:hover {
+  background: linear-gradient(180deg, #ff86c4 0%, #f76db3 100%);
+  color: white;
+}
+
 /* ── Progress bar ── */
 .progress-wrap {
   padding: 10px 24px 0;
@@ -222,6 +286,18 @@ h1, h2, h3, .display-font {
 .mealprep-stage {
   gap: 8px;
   justify-content: flex-start;
+}
+
+.mealprep-centered .slide-title,
+.mealprep-centered .slide-subtitle,
+.mealprep-centered .slide-body {
+  text-align: center;
+}
+
+.mealprep-centered .slide-body {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 980px;
 }
 
 .mealprep-stage > .recipe-img {
@@ -798,6 +874,10 @@ h1, h2, h3, .display-font {
   min-height: 0;
 }
 
+.tree-cards-single .tree-card-name {
+  white-space: nowrap;
+}
+
 .tree-card {
   display: flex;
   flex-direction: column;
@@ -1130,6 +1210,24 @@ h1, h2, h3, .display-font {
   flex-shrink: 0;
 }
 
+.quiz-nav-btns {
+  margin-top: 10px;
+  padding-top: 0;
+  flex-shrink: 0;
+  gap: 10px;
+}
+
+.quiz-nav-btns .btn-next,
+.quiz-nav-btns .btn-prev {
+  font-size: 1.05rem;
+  padding: 10px 18px;
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
 .quiz-grid {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -1138,7 +1236,25 @@ h1, h2, h3, .display-font {
   flex: 1 1 auto;
   min-height: 0;
   margin-top: 6px;
-  margin-bottom: 4px;
+  margin-bottom: 0;
+}
+
+.quiz-right-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.quiz-right-stack > .quiz-set-aside {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.quiz-right-stack > .quiz-nav-btns {
+  margin-top: 0;
+  flex-shrink: 0;
 }
 
 .quiz-card {
@@ -1182,8 +1298,7 @@ h1, h2, h3, .display-font {
   overflow-y: auto;
 }
 
-.quiz-card-body .drag-zone,
-.quiz-card-body .drop-target {
+.quiz-card-body .drag-zone {
   border: none;
   background: transparent;
   padding: 0;
@@ -1200,7 +1315,33 @@ h1, h2, h3, .display-font {
   min-height: 120px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+  align-items: center;
+  padding-top: 4px;
+}
+
+.set-aside-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.set-aside-image {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+  display: block;
+}
+
+.set-aside-label {
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 .drag-zone {
@@ -1315,14 +1456,17 @@ h1, h2, h3, .display-font {
 
 /* ── Feedback box ── */
 .feedback-box {
-  border-radius: 18px;
-  padding: 18px 24px;
-  margin-top: 18px;
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-top: 10px;
   font-family: 'Inter', Arial, sans-serif;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.25;
   display: none;
 }
+
+.feedback-box br + * { margin-top: 2px; }
 
 .feedback-box.correct {
   background: #dcfce7;
@@ -1331,9 +1475,9 @@ h1, h2, h3, .display-font {
 }
 
 .feedback-box.wrong {
-  background: rgba(255,179,217,0.2);
-  color: var(--pink-dark);
-  border: 2px solid var(--pink-border);
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 2px solid #fca5a5;
 }
 
 /* ── Oven knob game ── */
@@ -1348,11 +1492,16 @@ h1, h2, h3, .display-font {
   border: none;
   box-shadow: none;
   transition: transform 0.18s ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  align-items: center;
 }
 
 .oven-preview {
-  width: min(100%, 280px);
-  margin: 0 auto 10px;
+  width: min(100%, 260px);
+  margin: 0 auto;
+  overflow: visible;
 }
 
 .oven-preview-image {
@@ -1360,14 +1509,16 @@ h1, h2, h3, .display-font {
   height: auto;
   display: block;
   filter: drop-shadow(0 16px 22px rgba(36, 0, 27, 0.16));
+  transform: scale(1.2);
+  transform-origin: center center;
 }
 
 .oven-controls {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   align-items: center;
-  margin-top: 18px;
+  margin-top: 0;
   justify-items: center;
 }
 
@@ -1974,4 +2125,206 @@ h1, h2, h3, .display-font {
     font-size: 0.82rem;
     padding: 8px 12px;
   }
+}
+
+/* ── Grease-the-pan minigame ─────────────────────────────────────────── */
+.grease-game {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: stretch;
+  width: 100%;
+  padding: 8px 4px 0;
+}
+
+.grease-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #fff7f1;
+  border: 2px dashed #f3c6d9;
+  border-radius: 18px;
+  overflow: hidden;
+  user-select: none;
+  touch-action: none;
+}
+
+.grease-tray {
+  position: absolute;
+  inset: 10% 6%;
+  width: 88%;
+  height: 80%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.grease-tray-greased {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 80ms linear;
+}
+
+.grease-spray {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  height: 42%;
+  width: auto;
+  cursor: grab;
+  transition: transform 80ms ease;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.18));
+  z-index: 3;
+}
+
+.grease-spray.is-spraying {
+  cursor: grabbing;
+  transform: scale(1.05) rotate(-4deg);
+}
+
+.grease-progress-track {
+  position: relative;
+  height: 12px;
+  background: #fde6ef;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.grease-progress-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: linear-gradient(90deg, #f59ec2, #2dd4bf);
+  border-radius: 999px;
+  transition: width 80ms linear;
+}
+
+.grease-hint {
+  font-size: 0.92rem;
+  color: var(--pink-dark, #b91c6d);
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ── Blue bowl drop zone ─────────────────────────────────────────────── */
+.bowl-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--pink-dark, #b91c6d);
+  margin: 4px 0 8px;
+}
+
+.bowl-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+}
+
+.bowl-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+
+.drop-target.bowl-drop {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 25%;
+  bottom: 18%;
+  background: transparent;
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 6px;
+  z-index: 2;
+  padding: 6px;
+}
+
+.drop-target.bowl-drop.dragover {
+  background: rgba(45, 212, 191, 0.18);
+  border-radius: 50%;
+}
+
+.drop-target.bowl-drop .placeholder-text {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.35);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.drop-target.bowl-drop .drag-item-card {
+  width: 58px;
+}
+.drop-target.bowl-drop .drag-item-image {
+  width: 44px;
+  height: 44px;
+}
+.drop-target.bowl-drop .drag-item-text {
+  font-size: 0.7rem;
+}
+
+/* ── Drop zone above the bowl (keeps ingredients at full size) ──────── */
+.bowl-image-below {
+  display: block;
+  margin: 10px auto 0;
+  max-width: 180px;
+  width: 60%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Bowl side-by-side row ───────────────────────────────────────────── */
+.bowl-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.bowl-row .drop-target {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 150px;
+  align-self: center;
+}
+
+.bowl-image-side {
+  flex: 0 0 auto;
+  width: 150px;
+  max-width: 38%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.drag-zone.dragover {
+  outline: 3px dashed var(--pink-dark);
+  outline-offset: 4px;
+  border-radius: 12px;
+  background: rgba(255,179,217,0.15);
+}
+
+/* ── Capitalize ingredient / set-aside labels ───────────────────────── */
+.drag-item-text,
+.set-aside-label {
+  text-transform: capitalize;
+}
+
+/* Stack green + red feedback with a small gap */
+.feedback-good + .feedback-box {
+  margin-top: 6px;
 }

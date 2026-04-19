@@ -1,14 +1,15 @@
 {
   "mealprep": [
-    {
-      "title": "Let's meal plan!",
-      "subtitle": "Our goal: minimize grocery runs to 1 trip a month",
-      "body": "We designed a monthly meal plan so every ingredient is used before it expires — no waste, no extra trips.",
-      "images": [
-        "mealplan-left.png",
-        "mealplan-calendar.png",
-        "grocery-cart.png"
-      ]
+  {
+    "title": "Let's meal plan!",
+    "subtitle": "Our goal: minimize grocery runs to 1 trip a month",
+    "body": "We designed a monthly meal plan so every ingredient is used before it expires — no waste, no extra trips.",
+    "center_text": true,
+    "images": [
+      "mealplan-left.png",
+      "mealplan-calendar.png",
+      "grocery-cart.png"
+    ]
     },
     {
       "title": "We have 1 option for",
@@ -208,7 +209,7 @@
           "title": "Step 3: Grease a 14-cup muffin tin",
           "subtitle": "or line with paper cups",
           "body": "Spray each cup with non-stick spray, or drop in paper liners.",
-          "image": "muffin-tin-greased.png",
+          "image": "muffin-tray-greased-clipart.png",
           "display_step": 3
         },
         {
@@ -675,6 +676,34 @@
         "feedback_wrong": "Not quite! Think between 350 and 400."
       },
       {
+        "type": "grease",
+        "title": "Grease the muffin tin!",
+        "instruction": "Press and drag the spray across the pan to grease it",
+        "interaction": "grease",
+        "tray_image": "muffin-tray-not-greased-clipart.png",
+        "tray_greased_image": "muffin-tray-greased-clipart.png",
+        "spray_image": "baking-spray.png",
+        "spray_active_image": "baking-spray-greasy.png",
+        "all_items": [
+          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
+          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
+          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
+          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
+          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
+          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
+          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
+          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
+          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
+          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png", "quantity": "to taste"}
+        ],
+        "hint": "Hold and drag rightward to spray across the whole pan.",
+        "feedback_correct": "Nice — pan is all greased up!",
+        "feedback_wrong": "Keep dragging until the whole pan is greased.",
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+        ]
+      },
+      {
         "type": "drag_drop",
         "title": "Make the flour mixture!",
         "instruction": "Drag the correct ingredients into the bowl",
@@ -693,7 +722,16 @@
         ],
         "hint": "It's like Coca-Cola… a powder you can't bake without!",
         "feedback_correct": "You got flour, baking soda, and salt — nice work!",
-        "feedback_wrong": "Almost! Check what goes in the dry mixture."
+        "feedback_wrong": "Almost! Check what goes in the dry mixture.",
+        "missing_hints": {
+          "flour": "Hint: you're missing the main pantry-staple powder — the base of the mix.",
+          "baking_soda": "Hint: you're missing the leavening agent that helps the muffins rise.",
+          "salt": "Hint: you're missing a tiny pinch that balances the sweetness."
+        },
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "muffin-tray-greased-clipart.png", "label": "greased pan" }
+        ]
       },
       {
         "type": "drag_drop",
@@ -714,7 +752,11 @@
         ],
         "hint": "It's a liquid — without it the brown sugar won't dissolve!",
         "feedback_correct": "Perfect — brown sugar, buttermilk, butter, egg, and vanilla!",
-        "feedback_wrong": "Not quite — think about what goes in the WET mixture."
+        "feedback_wrong": "Not quite — think about what goes in the WET mixture.",
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "muffin-tray-greased-clipart.png", "label": "greased pan" }
+        ]
       },
       {
         "type": "drag_drop",
@@ -736,7 +778,11 @@
         ],
         "hint": "It's a fragrant spice — think fall vibes!",
         "feedback_correct": "Brown sugar, flour, butter, and cinnamon — you've got the topping!",
-        "feedback_wrong": "Almost! Don't forget the fragrant spice."
+        "feedback_wrong": "Almost! Don't forget the fragrant spice.",
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "muffin-tray-greased-clipart.png", "label": "greased pan" }
+        ]
       },
       {
         "type": "drag_drop",
@@ -759,7 +805,11 @@
         ],
         "hint": "It's a tiny bit more than 20 minutes!",
         "feedback_correct": "25 minutes — let it bake!",
-        "feedback_wrong": "Not quite! A tiny bit more than 20."
+        "feedback_wrong": "Not quite! A tiny bit more than 20.",
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "muffin-tray-greased-clipart.png", "label": "greased pan" }
+        ]
       }
     ],
 

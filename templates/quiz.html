@@ -19,14 +19,6 @@
       <h2 class="slide-title">{{ question.title }}</h2>
       <p class="slide-subtitle">{{ question.instruction }}</p>
     </div>
-    <div class="quiz-header-nav">
-      {% if prev_url %}
-        <a href="{{ prev_url }}" class="btn-prev">← Back</a>
-      {% endif %}
-      <a href="{{ next_url }}" class="btn-next disabled-link" id="next-btn">
-        {{ next_label }}
-      </a>
-    </div>
   </div>
 
   <div class="quiz-grid">
@@ -65,9 +57,50 @@
       <h3 class="quiz-card-header">Cook station</h3>
       <div class="quiz-card-body">
         {% if question.interaction == 'drag' %}
-          <span class="bowl-emoji">🥣</span>
-          <div class="drop-target" id="drop-zone">
-            <span class="placeholder-text" id="drop-placeholder">drag ingredients here</span>
+          <div class="bowl-title">Drag the correct ingredients here →</div>
+          <div class="bowl-row">
+            <div class="drop-target" id="drop-zone">
+              <span class="placeholder-text" id="drop-placeholder">drag ingredients here</span>
+            </div>
+            <img
+              src="{{ url_for('static', filename='images/blue-bowl.png') }}"
+              class="bowl-image-side"
+              alt="bowl"
+              draggable="false"
+            >
+          </div>
+        {% endif %}
+
+        {% if question.interaction == 'grease' %}
+          <div class="grease-game" id="grease-game">
+            <div class="grease-stage" id="grease-stage">
+              <img
+                src="{{ url_for('static', filename='images/' + question.tray_image) }}"
+                class="grease-tray grease-tray-base"
+                alt="muffin tray"
+                draggable="false"
+              >
+              <img
+                src="{{ url_for('static', filename='images/' + question.tray_greased_image) }}"
+                class="grease-tray grease-tray-greased"
+                id="grease-tray-greased"
+                alt=""
+                draggable="false"
+              >
+              <img
+                src="{{ url_for('static', filename='images/' + question.spray_image) }}"
+                class="grease-spray"
+                id="grease-spray"
+                data-idle="{{ url_for('static', filename='images/' + question.spray_image) }}"
+                data-active="{{ url_for('static', filename='images/' + question.spray_active_image) }}"
+                alt="baking spray"
+                draggable="false"
+              >
+            </div>
+            <div class="grease-progress-track">
+              <div class="grease-progress-fill" id="grease-progress-fill"></div>
+            </div>
+            <div class="grease-hint" id="grease-hint">Press and drag the spray across the pan →</div>
           </div>
         {% endif %}
 
@@ -79,6 +112,9 @@
                 <img
                   src="{{ url_for('static', filename='images/oven-dark-clipart.png') }}"
                   class="oven-preview-image"
+                  id="oven-preview-image"
+                  data-dark="{{ url_for('static', filename='images/oven-dark-clipart.png') }}"
+                  data-lit="{{ url_for('static', filename='images/oven-lit-up-clipart.png') }}"
                   alt=""
                 >
               </div>
@@ -127,8 +163,11 @@
           </div>
         {% endif %}
 
-        <button class="btn-check-answer" id="check-btn">Check ✓</button>
+        {% if question.interaction == 'knob' %}
+          <button class="btn-check-answer" id="check-btn">Check ✓</button>
+        {% endif %}
 
+        <div class="feedback-box feedback-good" id="feedback-good"></div>
         <div class="feedback-box" id="feedback-box">
           <span id="feedback-text"></span>
           <br><small id="hint-text" class="opacity-75"></small>
@@ -136,13 +175,40 @@
       </div>
     </section>
 
-    <!-- ── SET ASIDE CARD (RIGHT) ── -->
-    <section class="quiz-card quiz-set-aside">
-      <h3 class="quiz-card-header">Set aside</h3>
-      <div class="quiz-card-body">
-        <div class="set-aside-zone" id="set-aside-zone"></div>
+    <!-- ── SET ASIDE + NAV (RIGHT COLUMN) ── -->
+    <div class="quiz-right-stack">
+      <section class="quiz-card quiz-set-aside">
+        <h3 class="quiz-card-header">Set aside</h3>
+        <div class="quiz-card-body">
+          <div class="set-aside-zone" id="set-aside-zone">
+            {% if question.set_aside %}
+              {% for item in question.set_aside %}
+                <div class="set-aside-item">
+                  <img
+                    src="{{ url_for('static', filename='images/' + item.image) }}"
+                    class="set-aside-image"
+                    alt="{{ item.label }}"
+                    draggable="false"
+                  >
+                  <span class="set-aside-label">{{ item.label }}</span>
+                </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </section>
+
+      <div class="nav-btns quiz-nav-btns">
+        {% if prev_url %}
+          <a href="{{ prev_url }}" class="btn-prev">← Back</a>
+        {% else %}
+          <span></span>
+        {% endif %}
+        <a href="{{ next_url }}" class="btn-next disabled-link" id="next-btn">
+          {{ next_label }}
+        </a>
       </div>
-    </section>
+    </div>
 
   </div>
 
@@ -159,6 +225,9 @@ const OPTIONS      = {{ question.options | default([]) | tojson }};
 const FEEDBACK_OK  = {{ question.feedback_correct | tojson }};
 const FEEDBACK_BAD = {{ question.feedback_wrong   | tojson }};
 const HINT         = {{ question.hint | tojson }};
+const ALL_ITEMS    = {{ question.all_items | default([]) | tojson }};
+const MISSING_HINTS = {{ question.missing_hints | default({}) | tojson }};
+const ITEM_LABELS  = (function(){ const m = {}; ALL_ITEMS.forEach(i => m[i.id] = i.label); return m; })();
 const RECIPE       = {{ recipe_name | tojson }};
 const STEP         = {{ step }};
 
@@ -169,6 +238,20 @@ function unlockNext() {
   $('#next-btn').css({ 'pointer-events': 'all', opacity: 1 });
 }
 
+// ── Helper: sound effects ────────────────────────────────────────────────────
+const SOUND_CORRECT = new Audio("{{ url_for('static', filename='sounds/correct-answer.wav') }}");
+const SOUND_WRONG   = new Audio("{{ url_for('static', filename='sounds/wrong-answer.wav') }}");
+SOUND_CORRECT.volume = 0.6;
+SOUND_WRONG.volume   = 0.6;
+
+function playSound(correct) {
+  const audio = correct ? SOUND_CORRECT : SOUND_WRONG;
+  try {
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  } catch (_) {}
+}
+
 // ── Helper: show feedback ────────────────────────────────────────────────────
 function showFeedback(correct, msg, hint) {
   const box = $('#feedback-box');
@@ -176,6 +259,7 @@ function showFeedback(correct, msg, hint) {
   $('#feedback-text').text(msg);
   $('#hint-text').text(correct ? '' : hint);
   box.show();
+  playSound(correct);
 }
 
 // ── Save answer via AJAX ─────────────────────────────────────────────────────
@@ -206,6 +290,7 @@ if (INTERACTION === 'drag') {
 
   // ── Drop zone events ──────────────────────────────────────────────────────
   const dropZone = document.getElementById('drop-zone');
+  const dragZone = document.getElementById('drag-zone');
 
   dropZone.addEventListener('dragover', e => {
     e.preventDefault();
@@ -227,31 +312,104 @@ if (INTERACTION === 'drag') {
     // Move item into drop zone
     document.getElementById('drop-placeholder').style.display = 'none';
     dropZone.appendChild(item);
-    droppedIds.push(id);
+    const wasAlreadyIn = droppedIds.includes(id);
+    if (!wasAlreadyIn) {
+      droppedIds.push(id);
+      // Play sound for a NEW ingredient being dropped in
+      playSound(CORRECT_IDS.includes(id));
+    }
   });
 
-  // ── Click item in drop zone to return it ─────────────────────────────────
+  // ── Drag items BACK to ingredients list ───────────────────────────────────
+  dragZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dragZone.classList.add('dragover');
+  });
+
+  dragZone.addEventListener('dragleave', () => {
+    dragZone.classList.remove('dragover');
+  });
+
+  dragZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dragZone.classList.remove('dragover');
+
+    const id   = e.dataTransfer.getData('text/plain');
+    const item = document.getElementById('item-' + id);
+    if (!item) return;
+
+    dragZone.appendChild(item);
+    droppedIds = droppedIds.filter(i => i !== id);
+    if (dropZone.querySelectorAll('.drag-item').length === 0) {
+      document.getElementById('drop-placeholder').style.display = '';
+    }
+  });
+
+  // ── Click item in drop zone to return it (fallback) ──────────────────────
   dropZone.addEventListener('click', e => {
     const item = e.target.closest('.drag-item');
     if (!item) return;
-    document.getElementById('drag-zone').appendChild(item);
+    dragZone.appendChild(item);
     droppedIds = droppedIds.filter(i => i !== item.dataset.id);
     if (dropZone.querySelectorAll('.drag-item').length === 0) {
       document.getElementById('drop-placeholder').style.display = '';
     }
   });
 
-  // ── Check answer ──────────────────────────────────────────────────────────
-  document.getElementById('check-btn').addEventListener('click', () => {
-    const correct = CORRECT_IDS.slice().sort().join(',');
-    const given   = droppedIds.slice().sort().join(',');
-    const isRight = correct === given;
+  // ── Live evaluation (runs on every drop / remove) ────────────────────────
+  function evaluate() {
+    const wrongIds   = droppedIds.filter(id => !CORRECT_IDS.includes(id));
+    const missingIds = CORRECT_IDS.filter(id => !droppedIds.includes(id));
+    const isRight    = wrongIds.length === 0 && missingIds.length === 0;
 
-    showFeedback(isRight, isRight ? FEEDBACK_OK : FEEDBACK_BAD, HINT);
+    const titleCase = s => String(s).replace(/\b\w/g, c => c.toUpperCase());
+    const esc = s => $('<div>').text(s).html();
+    const correctDropped = droppedIds.filter(id => CORRECT_IDS.includes(id));
+
+    const goodBox = $('#feedback-good');
+    const box = $('#feedback-box');
+    goodBox.hide().empty().removeClass('correct wrong').addClass('correct feedback-good');
+    box.hide();
+
+    if (droppedIds.length === 0) {
+      return { isRight: false };
+    }
+
+    if (isRight) {
+      goodBox.html('<strong>' + esc(FEEDBACK_OK) + '</strong>').show();
+    } else {
+      if (correctDropped.length) {
+        const goodLines = correctDropped.map(id =>
+          `✓ ${esc(titleCase(ITEM_LABELS[id] || id))} belongs here!`
+        );
+        goodBox.html('<strong>Nice picks:</strong><br>' + goodLines.join('<br>')).show();
+      }
+
+      const lines = [];
+      wrongIds.forEach(id => {
+        const label = titleCase(ITEM_LABELS[id] || id);
+        lines.push(`${label} doesn't belong here — it's for a future step.`);
+      });
+      // Only show missing-hints once at least one correct item is in, so we
+      // don't spam hints while the bowl is still empty.
+      if (correctDropped.length || wrongIds.length) {
+        missingIds.forEach(id => {
+          if (MISSING_HINTS[id]) lines.push(MISSING_HINTS[id]);
+        });
+      }
+      if (lines.length) {
+        const safeLines = lines.map(esc);
+        box.removeClass('correct').addClass('wrong');
+        $('#feedback-text').html('<strong>Not quite!</strong><br>' + safeLines.join('<br>'));
+        $('#hint-text').text('');
+        box.show();
+      }
+    }
+
     saveAnswer({ dropped: droppedIds, correct: isRight });
-
     if (isRight) unlockNext();
-  });
+    return { isRight };
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -308,10 +466,122 @@ if (INTERACTION === 'knob') {
     const isRight = selected === CORRECT_VAL;
     ovenGame.classList.toggle('is-correct', isRight);
     ovenGame.classList.toggle('is-wrong', !isRight);
-    showFeedback(isRight, isRight ? FEEDBACK_OK : FEEDBACK_BAD, HINT);
+    const ovenImg = document.getElementById('oven-preview-image');
+    if (ovenImg) {
+      ovenImg.src = isRight ? ovenImg.dataset.lit : ovenImg.dataset.dark;
+    }
+    let wrongMsg = '';
+    if (!isRight) {
+      const unit = CORRECT_VAL > 100 ? '°F' : ' min';
+      wrongMsg = selected < CORRECT_VAL
+        ? `Not quite! A bit higher than ${selected}${unit}`
+        : `Not quite! A bit lower than ${selected}${unit}`;
+    }
+    showFeedback(isRight, isRight ? FEEDBACK_OK : wrongMsg, '');
     saveAnswer({ selected, correct: isRight });
     if (isRight) unlockNext();
   });
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// GREASE THE PAN
+// ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'grease') {
+  const SOUND_SPRAY = new Audio("{{ url_for('static', filename='sounds/spray.wav') }}");
+  SOUND_SPRAY.loop = true;
+  SOUND_SPRAY.volume = 0.6;
+
+  const stage   = document.getElementById('grease-stage');
+  const spray   = document.getElementById('grease-spray');
+  const greased = document.getElementById('grease-tray-greased');
+  const fill    = document.getElementById('grease-progress-fill');
+  const hint    = document.getElementById('grease-hint');
+
+  const idleSrc   = spray.dataset.idle;
+  const activeSrc = spray.dataset.active;
+
+  let dragging = false;
+  let progress = 0;   // 0 → 1
+  let done = false;
+  let stageRect = null;
+
+  const START_PCT = -0.02; // spray starts near the left edge
+  const END_PCT   = 0.85;  // fully greased when spray reaches 85% from left
+
+  function positionSprayAt(pct) {
+    // pct 0..1 across usable range
+    const x = (START_PCT + pct * (END_PCT - START_PCT)) * stageRect.width;
+    spray.style.left = `${x}px`;
+  }
+
+  function setProgress(p) {
+    progress = Math.max(progress, Math.min(1, p));
+    fill.style.width = `${progress * 100}%`;
+    // Reveal greased tray left-to-right
+    greased.style.clipPath = `inset(0 ${(1 - progress) * 100}% 0 0)`;
+    if (!done && progress >= 0.98) {
+      done = true;
+      try { SOUND_SPRAY.pause(); } catch (_) {}
+      spray.src = idleSrc;
+      spray.classList.remove('is-spraying');
+      hint.textContent = 'Nice — pan is fully greased!';
+      showFeedback(true, FEEDBACK_OK, '');
+      saveAnswer({ greased: true, correct: true });
+      unlockNext();
+    }
+  }
+
+  // Initialize spray at start position
+  function init() {
+    stageRect = stage.getBoundingClientRect();
+    positionSprayAt(0);
+  }
+  window.addEventListener('load', init);
+  window.addEventListener('resize', () => {
+    stageRect = stage.getBoundingClientRect();
+    positionSprayAt(progress);
+  });
+  init();
+
+  function onDown(e) {
+    if (done) return;
+    dragging = true;
+    stageRect = stage.getBoundingClientRect();
+    spray.src = activeSrc;
+    spray.classList.add('is-spraying');
+    try { SOUND_SPRAY.play().catch(() => {}); } catch (_) {}
+    e.preventDefault();
+  }
+
+  function onMove(e) {
+    if (!dragging || done) return;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const relX = clientX - stageRect.left;
+    const pct = (relX / stageRect.width - START_PCT) / (END_PCT - START_PCT);
+    const clamped = Math.max(0, Math.min(1, pct));
+    positionSprayAt(clamped);
+    setProgress(clamped);
+  }
+
+  function onUp() {
+    if (!dragging) return;
+    dragging = false;
+    try { SOUND_SPRAY.pause(); } catch (_) {}
+    if (!done) {
+      spray.src = idleSrc;
+      spray.classList.remove('is-spraying');
+    }
+  }
+
+  spray.addEventListener('mousedown', onDown);
+  stage.addEventListener('mousedown', onDown);
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+
+  spray.addEventListener('touchstart', onDown, { passive: false });
+  stage.addEventListener('touchstart', onDown, { passive: false });
+  document.addEventListener('touchmove', onMove, { passive: false });
+  document.addEventListener('touchend', onUp);
 }
 </script>
 {% endblock %}

@@ -33,13 +33,31 @@
           <a href="{{ url_for('choose_recipe') }}" class="top-nav-link {% if request.endpoint == 'choose_recipe' %}active{% endif %}">🍽️ Choose Recipe</a>
         </div>
         <div class="col-6 col-md-4 col-xl">
-          <a href="{{ url_for('recipe', recipe_name='muffins', step=1) }}" class="top-nav-link">🧁 Muffins</a>
+          <div class="top-nav-dropdown">
+            <a href="{{ url_for('recipe', recipe_name='muffins', step=1) }}" class="top-nav-link">🧁 Muffins</a>
+            <div class="top-nav-menu">
+              <a href="{{ url_for('recipe', recipe_name='muffins', step=1) }}" class="top-nav-menu-item">📖 Recipe</a>
+              <a href="{{ url_for('quiz', recipe_name='muffins', step=1) }}" class="top-nav-menu-item">🎮 Quiz</a>
+            </div>
+          </div>
         </div>
         <div class="col-6 col-md-4 col-xl">
-          <a href="{{ url_for('recipe', recipe_name='casserole', step=1) }}" class="top-nav-link">🥘 Casserole</a>
+          <div class="top-nav-dropdown">
+            <a href="{{ url_for('recipe', recipe_name='casserole', step=1) }}" class="top-nav-link">🥘 Casserole</a>
+            <div class="top-nav-menu">
+              <a href="{{ url_for('recipe', recipe_name='casserole', step=1) }}" class="top-nav-menu-item">📖 Recipe</a>
+              <a href="{{ url_for('quiz', recipe_name='casserole', step=1) }}" class="top-nav-menu-item">🎮 Quiz</a>
+            </div>
+          </div>
         </div>
         <div class="col-6 col-md-4 col-xl">
-          <a href="{{ url_for('recipe', recipe_name='fajitas', step=1) }}" class="top-nav-link">🥙 Fajitas</a>
+          <div class="top-nav-dropdown">
+            <a href="{{ url_for('recipe', recipe_name='fajitas', step=1) }}" class="top-nav-link">🥙 Fajitas</a>
+            <div class="top-nav-menu">
+              <a href="{{ url_for('recipe', recipe_name='fajitas', step=1) }}" class="top-nav-menu-item">📖 Recipe</a>
+              <a href="{{ url_for('quiz', recipe_name='fajitas', step=1) }}" class="top-nav-menu-item">🎮 Quiz</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -121,6 +139,49 @@
           const targetIsInteractive = $(event.target).closest(interactiveSelector).length > 0;
           window.sessionStorage.setItem(storageKeyMode, targetIsInteractive ? 'hand' : 'arrow');
         });
+    });
+  </script>
+  <script>
+    document.addEventListener('keydown', function (event) {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+        return;
+      }
+
+      const activeElement = document.activeElement;
+      if (
+        activeElement &&
+        activeElement.matches('input, textarea, select, [contenteditable="true"]')
+      ) {
+        return;
+      }
+
+      const selector = event.key === 'ArrowRight' ? '.btn-next[href]' : '.btn-prev[href]';
+      const candidates = Array.from(document.querySelectorAll(selector));
+
+      const target = candidates.find((element) => {
+        const style = window.getComputedStyle(element);
+        const isVisible =
+          style.display !== 'none' &&
+          style.visibility !== 'hidden' &&
+          element.getClientRects().length > 0;
+        const isEnabled =
+          style.pointerEvents !== 'none' &&
+          !element.hasAttribute('disabled') &&
+          element.getAttribute('aria-disabled') !== 'true';
+
+        return isVisible && isEnabled;
+      });
+
+      if (!target) {
+        return;
+      }
+
+      event.preventDefault();
+      target.click();
     });
   </script>
 
