@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, redirect, url_for, jsonify, request
 import json
 import os
+import random
 
 app = Flask(__name__)
 app.secret_key = 'dumpdumpbake2025'
@@ -140,7 +141,24 @@ def quiz(recipe_name, step):
     if step not in user_state['quiz_steps_visited'][recipe_name]:
         user_state['quiz_steps_visited'][recipe_name].append(step)
 
-    question = questions[step - 1]
+    question = dict(questions[step - 1])  # shallow copy so we can mutate all_items
+
+    # Hide ingredients that were consumed (correct_ids) in prior drag steps.
+    used_ids = set()
+    for prev_q in questions[: step - 1]:
+        if prev_q.get('interaction') in ('drag', 'slice'):
+            used_ids.update(prev_q.get('correct_ids', []))
+    if used_ids and question.get('all_items'):
+        question['all_items'] = [
+            it for it in question['all_items'] if it.get('id') not in used_ids
+        ]
+
+    # Shuffle ingredients so they aren't always in recipe order.
+    if question.get('all_items'):
+        shuffled = list(question['all_items'])
+        random.shuffle(shuffled)
+        question['all_items'] = shuffled
+
     prev_url = url_for('quiz', recipe_name=recipe_name, step=step - 1) if step > 1 else None
 
     if step == total:

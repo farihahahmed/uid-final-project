@@ -3,10 +3,17 @@
 {% block content %}
 <div class="main-card text-center">
 
-  <div class="display-1 mb-3">🎉</div>
+  {% if recipe_name == 'muffins' %}
+    <img src="{{ url_for('static', filename='images/plate-with-muffin.png') }}"
+         alt="plated muffin"
+         class="result-hero-image mb-3"
+         style="max-width: 320px; width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.15));">
+  {% else %}
+    <div class="display-1 mb-3">🎉</div>
+  {% endif %}
 
   <h2 class="slide-title">You did it!</h2>
-  <p class="slide-subtitle">Now plate it and enjoy 🍽️</p>
+  <p class="slide-subtitle">Now enjoy 🍽️</p>
 
   <p class="slide-body mx-auto mb-4 result-body-copy">
     You've learned the recipe and completed the cooking game.

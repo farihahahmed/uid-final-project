@@ -26,13 +26,12 @@
     <!-- ── INGREDIENTS CARD (LEFT) ── -->
     <section class="quiz-card quiz-ingredients">
       <h3 class="quiz-card-header">Ingredients</h3>
-      <div class="quiz-card-hint">(scroll below for more)</div>
       <div class="quiz-card-body">
         {% if question.all_items %}
           <div class="drag-zone" id="drag-zone">
             {% for item in question.all_items %}
               <div class="drag-item{% if item.image %} drag-item-card{% endif %}"
-                   {% if question.interaction == 'drag' %}draggable="true"{% endif %}
+                   {% if question.interaction == 'drag' or question.interaction == 'slice' %}draggable="true"{% endif %}
                    data-id="{{ item.id }}"
                    id="item-{{ item.id }}">
                 {% if item.image %}
@@ -57,14 +56,19 @@
       <h3 class="quiz-card-header">Cook station</h3>
       <div class="quiz-card-body">
         {% if question.interaction == 'drag' %}
-          <div class="bowl-title">Drag the correct ingredients here →</div>
           <div class="bowl-row">
             <div class="drop-target" id="drop-zone">
-              <span class="placeholder-text" id="drop-placeholder">drag ingredients here</span>
+              <span class="placeholder-text" id="drop-placeholder">{{ question.drop_placeholder | default('Drag ingredients here') }}</span>
             </div>
+            {% set empty_bowl = question.empty_bowl_image or 'blue-bowl.png' %}
             <img
-              src="{{ url_for('static', filename='images/blue-bowl.png') }}"
+              src="{{ url_for('static', filename='images/' + empty_bowl) }}"
               class="bowl-image-side"
+              id="bowl-image"
+              data-empty="{{ url_for('static', filename='images/' + empty_bowl) }}"
+              {% if question.completed_bowl_image %}
+                data-done="{{ url_for('static', filename='images/' + question.completed_bowl_image) }}"
+              {% endif %}
               alt="bowl"
               draggable="false"
             >
@@ -72,7 +76,7 @@
         {% endif %}
 
         {% if question.interaction == 'grease' %}
-          <div class="grease-game" id="grease-game">
+          <div class="grease-game{% if question.sound_file == 'whisk.wav' %} whisk-variant{% endif %}{% if question.spray_image == 'bowl-pouring.png' %} pour-variant{% endif %}{% if question.spray_image == 'step-8-apples-falling.png' %} apples-variant{% endif %}{% if question.spray_image == 'topping-falling.png' %} topping-variant{% endif %}{% if question.spray_image == 'glove.png' and question.cursor_follower %} bake-variant{% endif %}{% if question.two_panel %} two-panel-variant{% endif %}{% if question.requires_tray_setup %} setup-pending{% endif %}" id="grease-game">
             <div class="grease-stage" id="grease-stage">
               <img
                 src="{{ url_for('static', filename='images/' + question.tray_image) }}"
@@ -93,14 +97,180 @@
                 id="grease-spray"
                 data-idle="{{ url_for('static', filename='images/' + question.spray_image) }}"
                 data-active="{{ url_for('static', filename='images/' + question.spray_active_image) }}"
+                {% if question.spray_done_image %}
+                data-done="{{ url_for('static', filename='images/' + question.spray_done_image) }}"
+                {% endif %}
                 alt="baking spray"
                 draggable="false"
               >
+              {% if question.spray_image == 'whisk-clipart.png' %}
+                <div class="whisk-tooltip" id="whisk-tooltip">
+                  Move whisk<br>left &amp; right ← →<br>to mix
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'spatula.png' %}
+                <div class="whisk-tooltip" id="spatula-tooltip">
+                  Move spatula<br>left &amp; right ← →<br>to mix batter
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'spoon.png' %}
+                <div class="whisk-tooltip" id="spoon-tooltip">
+                  Move spoon<br>left &amp; right ← →<br>to stir
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'bowl-pouring.png' %}
+                <div class="whisk-tooltip" id="pour-tooltip">
+                  Move red bowl<br>left &amp; right ← →<br>to pour
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'step-8-apples-falling.png' %}
+                <div class="whisk-tooltip" id="apples-tooltip">
+                  Move apples<br>left &amp; right ← →<br>to fold in
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'baking-spray.png' %}
+                <div class="whisk-tooltip" id="spray-tooltip">
+                  Drag the spray<br>to the right →<br>to grease the pan
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'topping-falling.png' %}
+                <div class="whisk-tooltip" id="topping-tooltip"{% if question.requires_tray_setup %} style="display:none;"{% endif %}>
+                  Drag the topping<br>left &amp; right ← →<br>to sprinkle
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'glove.png' %}
+                <div class="whisk-tooltip" id="handle-tooltip"{% if question.requires_tray_setup %} style="display:none;"{% endif %}>
+                  Pull oven door down ↓
+                </div>
+              {% endif %}
+              {% if question.requires_tray_setup %}
+                <div class="grease-setup-slot" id="grease-setup-slot">
+                  <span class="fill-slot-label">{{ question.tray_slot_label }}</span>
+                </div>
+                <div class="whisk-tooltip" id="setup-tooltip">
+                  Drag {{ question.tray_slot_label | replace('Drag ', '') | replace('drag ', '') | replace(' here', '') }}<br>from the aside panel
+                </div>
+              {% endif %}
+              {% if question.requires_second_setup %}
+                <div class="grease-setup-slot-2" id="grease-setup-slot-2" style="display:none;">
+                  <span class="fill-slot-label">{{ question.second_slot_label }}</span>
+                </div>
+                <div class="whisk-tooltip" id="second-setup-tooltip" style="display:none;">
+                  {{ question.second_slot_label }}<br>from the aside panel
+                </div>
+              {% endif %}
+              {% if question.cursor_follower %}
+                <img src="{{ url_for('static', filename='images/' + question.spray_image) }}"
+                     class="cursor-follower" id="cursor-follower" alt="" draggable="false">
+              {% endif %}
+              {% if question.post_open_draggable_image %}
+                <img src="{{ url_for('static', filename='images/' + question.post_open_draggable_image) }}"
+                     class="grease-overlay-tray" id="grease-overlay-tray"
+                     style="display:none;" alt="muffin tray" draggable="false">
+              {% endif %}
+              {% if question.left_plate_label %}
+                <div class="grease-left-plate-slot" id="grease-left-plate-slot" style="display:none;">
+                  <span class="fill-slot-label">{{ question.left_plate_label }}</span>
+                </div>
+                {% if question.left_plate_final_image %}
+                  <img src="{{ url_for('static', filename='images/' + question.left_plate_final_image) }}"
+                       class="grease-left-final" id="grease-left-final"
+                       style="display:none;" alt="plate" draggable="false">
+                {% endif %}
+              {% endif %}
             </div>
+            {% if question.two_panel %}
+              <div class="grease-right-panel" id="grease-right-panel">
+                <div class="grease-right-slot" id="grease-right-slot">
+                  <span class="fill-slot-label">{{ question.right_panel_label }}</span>
+                </div>
+                {% if question.right_panel_final_image %}
+                  <img src="{{ url_for('static', filename='images/' + question.right_panel_final_image) }}"
+                       class="grease-right-final" id="grease-right-final"
+                       style="display:none;" alt="cooled muffins" draggable="false">
+                {% endif %}
+              </div>
+            {% endif %}
+            {% if not question.no_progress %}
             <div class="grease-progress-track">
               <div class="grease-progress-fill" id="grease-progress-fill"></div>
             </div>
-            <div class="grease-hint" id="grease-hint">Press and drag the spray across the pan →</div>
+            {% endif %}
+            {% if question.timer_options %}
+              <div class="bake-timer-panel" id="bake-timer-panel" style="display:none;">
+                <div class="bake-timer-title">{{ question.timer_title or 'Set timer' }}</div>
+                <input type="range" id="bake-timer-slider" class="bake-timer-slider"
+                       min="0" max="{{ question.timer_options|length - 1 }}" step="1" value="0">
+                <div class="bake-timer-labels"
+                     style="grid-template-columns: repeat({{ question.timer_options|length }}, minmax(0,1fr));">
+                  {% for opt in question.timer_options %}
+                    <button type="button" class="bake-timer-label" data-index="{{ loop.index0 }}" data-value="{{ opt }}">{{ opt }}</button>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+
+        {% if question.interaction == 'slice' %}
+          <div class="slice-game" id="slice-game">
+            <div class="slice-stage" id="slice-stage">
+              <img src="{{ url_for('static', filename='images/' + question.cutting_board_image) }}"
+                   class="slice-board" alt="cutting board" draggable="false">
+              <div class="slice-apples" id="slice-apples">
+                <img class="slice-apple" id="slice-apple-1"
+                     data-src-0="{{ url_for('static', filename='images/' + question.apple_image) }}"
+                     data-src-1="{{ url_for('static', filename='images/' + question.apple_slice_images[0]) }}"
+                     data-src-2="{{ url_for('static', filename='images/' + question.apple_slice_images[1]) }}"
+                     data-src-3="{{ url_for('static', filename='images/' + question.apple_slice_images[2]) }}"
+                     src="{{ url_for('static', filename='images/' + question.apple_image) }}"
+                     alt="apple" draggable="false">
+                <img class="slice-apple" id="slice-apple-2"
+                     data-src-0="{{ url_for('static', filename='images/' + question.apple_image) }}"
+                     data-src-1="{{ url_for('static', filename='images/' + question.apple_slice_images[0]) }}"
+                     data-src-2="{{ url_for('static', filename='images/' + question.apple_slice_images[1]) }}"
+                     data-src-3="{{ url_for('static', filename='images/' + question.apple_slice_images[2]) }}"
+                     src="{{ url_for('static', filename='images/' + question.apple_image) }}"
+                     alt="apple" draggable="false">
+              </div>
+              <img src="{{ url_for('static', filename='images/' + question.knife_image) }}"
+                   class="slice-knife" id="slice-knife" alt="knife" draggable="false">
+              <div class="whisk-tooltip" id="slice-tooltip">
+                Drag the apples<br>to the cutting board
+              </div>
+            </div>
+            <div class="slice-progress-label" id="slice-progress-label">Keep slicing — 0/8</div>
+            <div class="slice-progress-track">
+              <div class="slice-progress-fill" id="slice-progress-fill"></div>
+            </div>
+          </div>
+        {% endif %}
+
+        {% if question.interaction == 'fill' %}
+          <div class="fill-game" id="fill-game">
+            <div class="fill-slots">
+              <div class="fill-slot" id="fill-slot-tray" data-accept="tray">
+                <span class="fill-slot-label">{{ question.tray_slot_label }}</span>
+                <img class="fill-slot-image" id="fill-tray-img"
+                     data-base="{{ url_for('static', filename='images/' + question.tray_image) }}"
+                     {% for img in question.tray_progress_images %}
+                     data-progress-{{ loop.index }}="{{ url_for('static', filename='images/' + img) }}"
+                     {% endfor %}
+                     alt="" draggable="false">
+              </div>
+              <div class="fill-slot" id="fill-slot-batter" data-accept="batter">
+                <span class="fill-slot-label">{{ question.batter_slot_label }}</span>
+                <img class="fill-slot-image" id="fill-batter-img"
+                     data-base="{{ url_for('static', filename='images/' + question.batter_image) }}"
+                     alt="" draggable="false">
+              </div>
+            </div>
+            <img src="{{ url_for('static', filename='images/' + question.scooper_image) }}"
+                 class="fill-scooper" id="fill-scooper"
+                 data-idle="{{ url_for('static', filename='images/' + question.scooper_image) }}"
+                 data-full="{{ url_for('static', filename='images/' + question.scooper_full_image) }}"
+                 alt="" draggable="false">
+            <div class="whisk-tooltip" id="fill-tooltip" style="display:none;"></div>
           </div>
         {% endif %}
 
@@ -163,15 +333,16 @@
           </div>
         {% endif %}
 
-        {% if question.interaction == 'knob' %}
-          <button class="btn-check-answer" id="check-btn">Check ✓</button>
-        {% endif %}
 
         <div class="feedback-box feedback-good" id="feedback-good"></div>
         <div class="feedback-box" id="feedback-box">
           <span id="feedback-text"></span>
           <br><small id="hint-text" class="opacity-75"></small>
         </div>
+        <button type="button" class="show-hint-btn" id="show-hint-btn" style="display:none;">
+          Show hint 💡
+        </button>
+        <div class="feedback-box feedback-hint" id="feedback-hint" style="display:none;"></div>
       </div>
     </section>
 
@@ -183,7 +354,8 @@
           <div class="set-aside-zone" id="set-aside-zone">
             {% if question.set_aside %}
               {% for item in question.set_aside %}
-                <div class="set-aside-item">
+                <div class="set-aside-item{% if item.drag_key %} set-aside-draggable{% endif %}"
+                     {% if item.drag_key %}data-drag-key="{{ item.drag_key }}"{% endif %}>
                   <img
                     src="{{ url_for('static', filename='images/' + item.image) }}"
                     class="set-aside-image"
@@ -228,6 +400,7 @@ const HINT         = {{ question.hint | tojson }};
 const ALL_ITEMS    = {{ question.all_items | default([]) | tojson }};
 const MISSING_HINTS = {{ question.missing_hints | default({}) | tojson }};
 const ITEM_LABELS  = (function(){ const m = {}; ALL_ITEMS.forEach(i => m[i.id] = i.label); return m; })();
+const ITEM_FULL    = (function(){ const m = {}; ALL_ITEMS.forEach(i => m[i.id] = (i.quantity ? i.quantity + ' ' : '') + i.label); return m; })();
 const RECIPE       = {{ recipe_name | tojson }};
 const STEP         = {{ step }};
 
@@ -245,11 +418,15 @@ SOUND_CORRECT.volume = 0.6;
 SOUND_WRONG.volume   = 0.6;
 
 function playSound(correct) {
-  const audio = correct ? SOUND_CORRECT : SOUND_WRONG;
+  const src = correct ? SOUND_CORRECT : SOUND_WRONG;
   try {
-    audio.currentTime = 0;
-    audio.play().catch(() => {});
-  } catch (_) {}
+    // Clone so overlapping calls each get their own playback
+    const a = src.cloneNode(true);
+    a.volume = src.volume;
+    a.play().catch(() => {});
+  } catch (_) {
+    try { src.currentTime = 0; src.play().catch(() => {}); } catch (__) {}
+  }
 }
 
 // ── Helper: show feedback ────────────────────────────────────────────────────
@@ -280,13 +457,14 @@ if (INTERACTION === 'drag') {
   let droppedIds = [];
 
   // ── Drag events on items ──────────────────────────────────────────────────
-  document.querySelectorAll('.drag-item').forEach(item => {
+  function wireDragItem(item) {
     item.addEventListener('dragstart', e => {
       e.dataTransfer.setData('text/plain', item.dataset.id);
       item.classList.add('dragging');
     });
     item.addEventListener('dragend', () => item.classList.remove('dragging'));
-  });
+  }
+  document.querySelectorAll('.drag-item').forEach(wireDragItem);
 
   // ── Drop zone events ──────────────────────────────────────────────────────
   const dropZone = document.getElementById('drop-zone');
@@ -305,19 +483,29 @@ if (INTERACTION === 'drag') {
     e.preventDefault();
     dropZone.classList.remove('dragover');
 
-    const id   = e.dataTransfer.getData('text/plain');
-    const item = document.getElementById('item-' + id);
-    if (!item) return;
+    const id = e.dataTransfer.getData('text/plain');
+    if (!id || droppedIds.includes(id)) return;
 
-    // Move item into drop zone
+    // Keep original in place (hidden) so the ingredients grid doesn't reflow.
+    const original = document.getElementById('item-' + id);
+    if (!original) return;
+    original.classList.add('is-dropped');
+
+    // Clone into the bowl drop zone so the user sees it there & can drag back.
+    const clone = original.cloneNode(true);
+    clone.id = 'clone-' + id;
+    clone.dataset.id = id;
+    clone.classList.remove('is-dropped', 'dragging');
+    clone.style.opacity = '';
+    clone.style.visibility = '';
+    clone.setAttribute('draggable', 'true');
+    wireDragItem(clone);
+
     document.getElementById('drop-placeholder').style.display = 'none';
-    dropZone.appendChild(item);
-    const wasAlreadyIn = droppedIds.includes(id);
-    if (!wasAlreadyIn) {
-      droppedIds.push(id);
-      // Play sound for a NEW ingredient being dropped in
-      playSound(CORRECT_IDS.includes(id));
-    }
+    dropZone.appendChild(clone);
+    droppedIds.push(id);
+    playSound(CORRECT_IDS.includes(id));
+    evaluate();
   });
 
   // ── Drag items BACK to ingredients list ───────────────────────────────────
@@ -330,37 +518,44 @@ if (INTERACTION === 'drag') {
     dragZone.classList.remove('dragover');
   });
 
-  dragZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dragZone.classList.remove('dragover');
-
-    const id   = e.dataTransfer.getData('text/plain');
-    const item = document.getElementById('item-' + id);
-    if (!item) return;
-
-    dragZone.appendChild(item);
+  function returnToList(id) {
+    const clone = document.getElementById('clone-' + id);
+    if (clone) clone.remove();
+    const original = document.getElementById('item-' + id);
+    if (original) original.classList.remove('is-dropped');
     droppedIds = droppedIds.filter(i => i !== id);
     if (dropZone.querySelectorAll('.drag-item').length === 0) {
       document.getElementById('drop-placeholder').style.display = '';
     }
+    evaluate();
+  }
+
+  dragZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dragZone.classList.remove('dragover');
+    const id = e.dataTransfer.getData('text/plain');
+    if (!id || !droppedIds.includes(id)) return;
+    returnToList(id);
   });
 
-  // ── Click item in drop zone to return it (fallback) ──────────────────────
+  // ── Click clone in drop zone to return it (fallback) ─────────────────────
   dropZone.addEventListener('click', e => {
     const item = e.target.closest('.drag-item');
     if (!item) return;
-    dragZone.appendChild(item);
-    droppedIds = droppedIds.filter(i => i !== item.dataset.id);
-    if (dropZone.querySelectorAll('.drag-item').length === 0) {
-      document.getElementById('drop-placeholder').style.display = '';
-    }
+    returnToList(item.dataset.id);
   });
 
-  // ── Live evaluation (runs on every drop / remove) ────────────────────────
+  // ── Live evaluation ─────────────────────────────────────────────────────
   function evaluate() {
     const wrongIds   = droppedIds.filter(id => !CORRECT_IDS.includes(id));
     const missingIds = CORRECT_IDS.filter(id => !droppedIds.includes(id));
     const isRight    = wrongIds.length === 0 && missingIds.length === 0;
+
+    // Auto-shrink items in the drop zone if there are many (5+ ingredients)
+    const dropZone = document.getElementById('drop-zone');
+    if (dropZone) {
+      dropZone.classList.toggle('many-items', droppedIds.length >= 5);
+    }
 
     const titleCase = s => String(s).replace(/\b\w/g, c => c.toUpperCase());
     const esc = s => $('<div>').text(s).html();
@@ -368,11 +563,18 @@ if (INTERACTION === 'drag') {
 
     const goodBox = $('#feedback-good');
     const box = $('#feedback-box');
+    const hintBtn = $('#show-hint-btn');
+    const hintBox = $('#feedback-hint');
     goodBox.hide().empty().removeClass('correct wrong').addClass('correct feedback-good');
     box.hide();
+    hintBtn.hide();
+    hintBox.hide().empty();
 
-    if (droppedIds.length === 0) {
-      return { isRight: false };
+    const bowlImg = document.getElementById('bowl-image');
+    if (bowlImg) {
+      bowlImg.src = (isRight && bowlImg.dataset.done)
+        ? bowlImg.dataset.done
+        : bowlImg.dataset.empty;
     }
 
     if (isRight) {
@@ -380,35 +582,62 @@ if (INTERACTION === 'drag') {
     } else {
       if (correctDropped.length) {
         const goodLines = correctDropped.map(id =>
-          `✓ ${esc(titleCase(ITEM_LABELS[id] || id))} belongs here!`
+          `✓ ${esc(titleCase(ITEM_FULL[id] || ITEM_LABELS[id] || id))} belongs here!`
         );
         goodBox.html('<strong>Nice picks:</strong><br>' + goodLines.join('<br>')).show();
       }
 
-      const lines = [];
+      const wrongLines = [];
       wrongIds.forEach(id => {
         const label = titleCase(ITEM_LABELS[id] || id);
-        lines.push(`${label} doesn't belong here — it's for a future step.`);
-      });
-      // Only show missing-hints once at least one correct item is in, so we
-      // don't spam hints while the bowl is still empty.
-      if (correctDropped.length || wrongIds.length) {
-        missingIds.forEach(id => {
-          if (MISSING_HINTS[id]) lines.push(MISSING_HINTS[id]);
+        const fullLabel = titleCase(ITEM_FULL[id] || label);
+        const baseWrong = id.replace(/^topping_/, '');
+        const sameBaseCorrect = CORRECT_IDS.find(cid => {
+          const baseCorrect = cid.replace(/^topping_/, '');
+          return baseCorrect === baseWrong && cid !== id;
         });
-      }
-      if (lines.length) {
-        const safeLines = lines.map(esc);
+        if (sameBaseCorrect) {
+          const baseLabel = titleCase(ITEM_LABELS[sameBaseCorrect] || sameBaseCorrect);
+          wrongLines.push(`This step needs a different quantity of ${baseLabel}, not ${fullLabel}.`);
+        } else {
+          wrongLines.push(`${fullLabel} doesn't belong here — it's for a future step.`);
+        }
+      });
+
+      // Collect missing-ingredient hints (shown in yellow, only on demand)
+      const hintLines = [];
+      missingIds.forEach(id => {
+        if (MISSING_HINTS[id]) hintLines.push(MISSING_HINTS[id]);
+      });
+
+      // Red box: wrong items only
+      if (wrongLines.length) {
+        const safeWrong = wrongLines.map(esc);
         box.removeClass('correct').addClass('wrong');
-        $('#feedback-text').html('<strong>Not quite!</strong><br>' + safeLines.join('<br>'));
+        $('#feedback-text').html('<strong>Not quite!</strong><br>' + safeWrong.join('<br>'));
         $('#hint-text').text('');
         box.show();
+      } else if (missingIds.length) {
+        // Nothing wrong, just missing — still prompt
+        box.removeClass('correct').addClass('wrong');
+        $('#feedback-text').html('<strong>Almost! Something is missing.</strong>');
+        $('#hint-text').text('');
+        box.show();
+      }
+
+      // Yellow hint, revealed on button click
+      if (hintLines.length) {
+        const safeHints = hintLines.map(esc);
+        hintBox.html('<strong>Hint:</strong><br>' + safeHints.join('<br>'));
+        hintBtn.show().off('click').on('click', function () {
+          hintBox.show();
+          hintBtn.hide();
+        });
       }
     }
 
     saveAnswer({ dropped: droppedIds, correct: isRight });
     if (isRight) unlockNext();
-    return { isRight };
   }
 }
 
@@ -439,12 +668,51 @@ if (INTERACTION === 'knob') {
 
   syncKnob(parseInt(slider.value, 10));
 
+  let lastEvaluated = null;
+
+  function evaluateKnob() {
+    if (!interacted || selected === null) return;
+    const isRight = selected === CORRECT_VAL;
+    ovenGame.classList.toggle('is-correct', isRight);
+    ovenGame.classList.toggle('is-wrong', !isRight);
+    const ovenImg = document.getElementById('oven-preview-image');
+    if (ovenImg) {
+      ovenImg.src = isRight ? ovenImg.dataset.lit : ovenImg.dataset.dark;
+    }
+    let msg = FEEDBACK_OK;
+    if (!isRight) {
+      const unit = CORRECT_VAL > 100 ? '°F' : ' min';
+      msg = selected < CORRECT_VAL
+        ? `Not quite! A bit higher than ${selected}${unit}`
+        : `Not quite! A bit lower than ${selected}${unit}`;
+    }
+    const valueChanged = selected !== lastEvaluated;
+    if (valueChanged) {
+      // Show feedback + play sound when slider lands on a new discrete value
+      showFeedback(isRight, msg, '');
+    } else {
+      // Same value — keep the box visible without replaying the sound
+      const box = $('#feedback-box');
+      box.removeClass('correct wrong').addClass(isRight ? 'correct' : 'wrong');
+      $('#feedback-text').text(msg);
+      $('#hint-text').text('');
+      box.show();
+    }
+    saveAnswer({ selected, correct: isRight });
+    if (isRight) unlockNext();
+    lastEvaluated = selected;
+  }
+
   slider.addEventListener('input', () => {
     const index = parseInt(slider.value, 10);
     interacted = true;
     selected = OPTIONS[index];
-    ovenGame.classList.remove('is-correct', 'is-wrong');
     syncKnob(index);
+    evaluateKnob();
+  });
+
+  slider.addEventListener('change', () => {
+    evaluateKnob();
   });
 
   optionLabels.forEach(label => {
@@ -453,33 +721,9 @@ if (INTERACTION === 'knob') {
       slider.value = index;
       interacted = true;
       selected = OPTIONS[index];
-      ovenGame.classList.remove('is-correct', 'is-wrong');
       syncKnob(index);
+      evaluateKnob();
     });
-  });
-
-  document.getElementById('check-btn').addEventListener('click', () => {
-    if (!interacted || selected === null) {
-      showFeedback(false, 'Drag the oven control first!', '');
-      return;
-    }
-    const isRight = selected === CORRECT_VAL;
-    ovenGame.classList.toggle('is-correct', isRight);
-    ovenGame.classList.toggle('is-wrong', !isRight);
-    const ovenImg = document.getElementById('oven-preview-image');
-    if (ovenImg) {
-      ovenImg.src = isRight ? ovenImg.dataset.lit : ovenImg.dataset.dark;
-    }
-    let wrongMsg = '';
-    if (!isRight) {
-      const unit = CORRECT_VAL > 100 ? '°F' : ' min';
-      wrongMsg = selected < CORRECT_VAL
-        ? `Not quite! A bit higher than ${selected}${unit}`
-        : `Not quite! A bit lower than ${selected}${unit}`;
-    }
-    showFeedback(isRight, isRight ? FEEDBACK_OK : wrongMsg, '');
-    saveAnswer({ selected, correct: isRight });
-    if (isRight) unlockNext();
   });
 }
 
@@ -487,13 +731,39 @@ if (INTERACTION === 'knob') {
 // GREASE THE PAN
 // ════════════════════════════════════════════════════════════════════════════
 if (INTERACTION === 'grease') {
-  const SOUND_SPRAY = new Audio("{{ url_for('static', filename='sounds/spray.wav') }}");
-  SOUND_SPRAY.loop = true;
-  SOUND_SPRAY.volume = 0.6;
+  const SILENT = {{ 'true' if question.silent else 'false' }};
+  const DRAG_AXIS = {{ (question.drag_axis or 'x') | tojson }};
+  const NO_PROGRESS = {{ 'true' if question.no_progress else 'false' }};
+  const CURSOR_FOLLOWER = {{ 'true' if question.cursor_follower else 'false' }};
+  const REVEAL_DIRECTION = {{ (question.reveal_direction or 'right') | tojson }};
+  const TIMER_CORRECT     = {{ (question.timer_correct_value or 0) | tojson }};
+  const TIMER_OPTIONS     = {{ (question.timer_options or []) | tojson }};
+  let   timerCorrect      = !TIMER_CORRECT;
+  const POST_OPEN_MUFFIN  = {{ (question.post_open_muffin_image or '') | tojson }};
+  const POST_OPEN_CLOSED  = {{ (question.post_open_closed_image or '') | tojson }};
+  const POST_TIP_TRAY     = {{ (question.post_open_tooltip_tray or '') | tojson }};
+  const POST_TIP_CLOSE    = {{ (question.post_open_tooltip_close or '') | tojson }};
+  const POST_OPEN_ENABLED = !!POST_OPEN_MUFFIN;
+  const TWO_PANEL         = {{ 'true' if question.two_panel else 'false' }};
+  const POST_OPEN_DRAGGABLE = {{ (question.post_open_draggable_image or '') | tojson }};
+  const POST_TIP_TRANSFER = {{ (question.post_open_tooltip_transfer or '') | tojson }};
+  const PLATE_MUFFIN_TIP     = {{ (question.plate_muffin_tooltip or '') | tojson }};
+  const PLATE_MUFFIN_DRAG    = {{ (question.plate_muffin_drag_image or '') | tojson }};
+  const PLATE_WITH_MUFFIN    = {{ (question.plate_with_muffin_image or '') | tojson }};
+  const FINISH_SOUND_FILE    = {{ (question.finish_sound or '') | tojson }};
+  const FEEDBACK_FINISH      = {{ (question.feedback_finish or '') | tojson }};
+  const SOUND_FINISH = FINISH_SOUND_FILE
+    ? new Audio("{{ url_for('static', filename='sounds/') }}" + FINISH_SOUND_FILE)
+    : null;
+  if (SOUND_FINISH) SOUND_FINISH.volume = 0.8;
+  let   bakePhase         = 'opening'; // 'opening' → 'await_tray'/'await_transfer' → 'await_close' → 'await_timer' → 'done'
+  const SOUND_SPRAY = SILENT ? null : new Audio("{{ url_for('static', filename='sounds/' + (question.sound_file or 'spray.wav')) }}");
+  if (SOUND_SPRAY) { SOUND_SPRAY.loop = true; SOUND_SPRAY.volume = 0.6; }
 
   const stage   = document.getElementById('grease-stage');
   const spray   = document.getElementById('grease-spray');
   const greased = document.getElementById('grease-tray-greased');
+  const trayBaseImg = document.querySelector('.grease-tray-base');
   const fill    = document.getElementById('grease-progress-fill');
   const hint    = document.getElementById('grease-hint');
 
@@ -504,9 +774,16 @@ if (INTERACTION === 'grease') {
   let progress = 0;   // 0 → 1
   let done = false;
   let stageRect = null;
+  let lastClientX = null;
 
-  const START_PCT = -0.02; // spray starts near the left edge
-  const END_PCT   = 0.85;  // fully greased when spray reaches 85% from left
+  const START_PCT = {{ question.drag_start_pct | default(-0.02) }};
+  const END_PCT   = {{ question.drag_end_pct   | default(0.85)  }};
+  const DISTANCE_MODE = {{ 'true' if question.drag_speed is defined else 'false' }};
+  const DRAG_SPEED = {{ question.drag_speed | default(1.0) }};
+  const REQUIRES_SETUP = {{ 'true' if question.requires_tray_setup else 'false' }};
+  const REQUIRES_SECOND_SETUP = {{ 'true' if question.requires_second_setup else 'false' }};
+  const QUIET_INTERMEDIATE = {{ 'true' if question.quiet_intermediate else 'false' }};
+  let setupDone = !REQUIRES_SETUP && !REQUIRES_SECOND_SETUP;
 
   function positionSprayAt(pct) {
     // pct 0..1 across usable range
@@ -516,19 +793,357 @@ if (INTERACTION === 'grease') {
 
   function setProgress(p) {
     progress = Math.max(progress, Math.min(1, p));
-    fill.style.width = `${progress * 100}%`;
-    // Reveal greased tray left-to-right
-    greased.style.clipPath = `inset(0 ${(1 - progress) * 100}% 0 0)`;
+    if (!NO_PROGRESS && fill) fill.style.width = `${progress * 100}%`;
+    const invPct = (1 - progress) * 100;
+    if (bakePhase === 'await_close') {
+      // Reveal closed image from bottom (user drags up → door lowers)
+      greased.style.clipPath = `inset(${invPct}% 0 0 0)`;
+    } else if (REVEAL_DIRECTION === 'down') {
+      greased.style.clipPath = `inset(0 0 ${invPct}% 0)`;
+    } else {
+      greased.style.clipPath = `inset(0 ${invPct}% 0 0)`;
+    }
     if (!done && progress >= 0.98) {
+      if (TWO_PANEL && bakePhase === 'opening') {
+        enterAwaitTransferPhase();
+        return;
+      }
+      if (POST_OPEN_ENABLED && bakePhase === 'opening') {
+        enterAwaitTrayPhase();
+        return;
+      }
+      if (bakePhase === 'await_close') {
+        // Door is now closed — reveal the timer and wait for user to set it
+        bakePhase = 'await_timer';
+        if (SOUND_SPRAY) { try { SOUND_SPRAY.pause(); } catch (_) {} }
+        if (!QUIET_INTERMEDIATE) playSound(true);
+        // Hide the glove follower + restore normal cursor — user now interacts with the timer
+        const follower = document.getElementById('cursor-follower') || window.__followerEl;
+        if (follower) { follower.classList.remove('visible'); follower.style.display = 'none'; }
+        const gameEl = document.getElementById('grease-game');
+        if (gameEl) {
+          gameEl.classList.remove('bake-variant');
+          gameEl.classList.add('bake-variant-done');
+        }
+        // Only the two-panel step (step 15) uses the two-panel cursor overrides.
+        if (TWO_PANEL) document.body.classList.add('two-panel-active');
+        const tt = document.getElementById('handle-tooltip');
+        if (tt) tt.style.display = 'none';
+        const timerPanel = document.getElementById('bake-timer-panel');
+        if (timerPanel) timerPanel.style.display = '';
+        if (hint) hint.textContent = 'Set the bake timer to ' + TIMER_CORRECT + ' minutes';
+        return;
+      }
       done = true;
-      try { SOUND_SPRAY.pause(); } catch (_) {}
-      spray.src = idleSrc;
-      spray.classList.remove('is-spraying');
-      hint.textContent = 'Nice — pan is fully greased!';
+      if (SOUND_SPRAY) { try { SOUND_SPRAY.pause(); } catch (_) {} }
+      if (spray) { spray.src = spray.dataset.done || idleSrc; spray.classList.remove('is-spraying'); }
+      if (hint) hint.textContent = '';
       showFeedback(true, FEEDBACK_OK, '');
       saveAnswer({ greased: true, correct: true });
       unlockNext();
     }
+  }
+
+  function enterAwaitTrayPhase() {
+    bakePhase = 'await_tray';
+    dragging = false;
+    progress = 0;
+    if (!QUIET_INTERMEDIATE) playSound(true);
+    // Swap base to opened oven; fully hide the greased overlay to prevent double-render
+    if (trayBaseImg) trayBaseImg.src = "{{ url_for('static', filename='images/') }}oven-opened.png";
+    if (greased) {
+      greased.style.display = 'none';
+      greased.style.clipPath = 'inset(0 100% 0 0)';
+    }
+    const tt = document.getElementById('handle-tooltip');
+    if (tt) tt.innerHTML = POST_TIP_TRAY;
+    // Enable muffin_tray set-aside as droppable onto stage
+    enableMuffinTrayDrag();
+  }
+
+  function enterAwaitClosePhase() {
+    bakePhase = 'await_close';
+    dragging = false;
+    progress = 0;
+    if (!QUIET_INTERMEDIATE) playSound(true);
+    if (trayBaseImg) trayBaseImg.src = "{{ url_for('static', filename='images/') }}" + POST_OPEN_MUFFIN;
+    if (greased) {
+      greased.style.display = '';
+      greased.src = "{{ url_for('static', filename='images/') }}" + POST_OPEN_CLOSED;
+      greased.style.clipPath = 'inset(100% 0 0 0)';
+    }
+    const tt = document.getElementById('handle-tooltip');
+    if (tt) tt.innerHTML = POST_TIP_CLOSE;
+  }
+
+  function enterAwaitTransferPhase() {
+    bakePhase = 'await_transfer';
+    dragging = false;
+    progress = 0;
+    if (!QUIET_INTERMEDIATE) playSound(true);
+    // Hide the glove cursor/follower — user now uses normal pointer to drag the tray
+    if (spray) spray.style.display = 'none';
+    const follower = document.getElementById('cursor-follower') || window.__followerEl;
+    if (follower) { follower.classList.remove('visible'); follower.style.display = 'none'; }
+    // Remove the bake-variant class so the "hide all cursors" CSS stops applying.
+    const gameEl = document.getElementById('grease-game');
+    if (gameEl) {
+      gameEl.classList.remove('bake-variant');
+      gameEl.classList.add('bake-variant-done');
+    }
+    document.body.classList.add('two-panel-active');
+    // Hide the "pull door down" tooltip
+    const tt = document.getElementById('handle-tooltip');
+    if (tt) tt.style.display = 'none';
+    if (hint) hint.textContent = POST_TIP_TRANSFER || 'Drag the muffin tray to the cooling rack';
+    // Show the draggable muffin tray overlay on the oven
+    const overlay = document.getElementById('grease-overlay-tray');
+    if (overlay) {
+      overlay.style.display = '';
+      enableOverlayTrayDrag(overlay);
+    }
+  }
+
+  function enableOverlayTrayDrag(overlay) {
+    const rightSlot  = document.getElementById('grease-right-slot');
+    const rightFinal = document.getElementById('grease-right-final');
+    if (!overlay || !rightSlot) return;
+    overlay.style.cursor = 'grab';
+    let ghost = null;
+    const onDown = (e) => {
+      e.preventDefault();
+      const rect = overlay.getBoundingClientRect();
+      ghost = overlay.cloneNode(true);
+      ghost.style.position = 'fixed';
+      ghost.style.left = rect.left + 'px';
+      ghost.style.top  = rect.top + 'px';
+      ghost.style.width = rect.width + 'px';
+      ghost.style.height = rect.height + 'px';
+      ghost.style.pointerEvents = 'none';
+      ghost.style.opacity = '0.9';
+      ghost.style.zIndex = '9999';
+      document.body.appendChild(ghost);
+      overlay.style.opacity = '0.3';
+      const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - offX) + 'px';
+        ghost.style.top  = (ev.clientY - offY) + 'px';
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        const r = rightSlot.getBoundingClientRect();
+        const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                    ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        if (ghost) { ghost.remove(); ghost = null; }
+        if (hit) {
+          overlay.style.display = 'none';
+          rightSlot.classList.add('is-filled');
+          if (rightFinal) rightFinal.style.display = '';
+          if (!QUIET_INTERMEDIATE) playSound(true);
+          // If a plate slot is configured, enter the plate phase; otherwise finish.
+          const plateSlot = document.getElementById('grease-left-plate-slot');
+          if (plateSlot) {
+            enterAwaitPlatePhase();
+          } else {
+            done = true;
+            bakePhase = 'done';
+            if (hint) hint.textContent = '';
+            showFeedback(true, FEEDBACK_OK, '');
+            saveAnswer({ cooled: true, correct: true });
+            unlockNext();
+          }
+        } else {
+          overlay.style.opacity = '1';
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    };
+    overlay.addEventListener('mousedown', onDown);
+  }
+
+  function enterAwaitPlatePhase() {
+    bakePhase = 'await_plate';
+    // Hide the oven imagery on the left panel
+    if (trayBaseImg) trayBaseImg.style.display = 'none';
+    if (greased) greased.style.display = 'none';
+    // Show the plate drop slot on the left
+    const plateSlot = document.getElementById('grease-left-plate-slot');
+    if (plateSlot) plateSlot.style.display = '';
+    if (hint) hint.textContent = 'Drag a plate from the side panel onto the left.';
+    enablePlateDrag();
+  }
+
+  function enablePlateDrag() {
+    const plateSlot  = document.getElementById('grease-left-plate-slot');
+    const plateFinal = document.getElementById('grease-left-final');
+    const plateItems = document.querySelectorAll('.set-aside-item[data-drag-key="plate"]');
+    plateItems.forEach(item => {
+      let ghost = null;
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top  = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.9';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          const r = plateSlot.getBoundingClientRect();
+          const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                      ev.clientY >= r.top  && ev.clientY <= r.bottom;
+          if (ghost) { ghost.remove(); ghost = null; }
+          if (hit) {
+            item.classList.add('is-used');
+            plateSlot.classList.add('is-filled');
+            if (plateFinal) plateFinal.style.display = '';
+            if (!QUIET_INTERMEDIATE) playSound(true);
+            // If a muffin-to-plate phase is configured, enter it; otherwise finish.
+            if (PLATE_MUFFIN_DRAG) {
+              enterAwaitPlatingPhase();
+            } else {
+              done = true;
+              bakePhase = 'done';
+              if (hint) hint.textContent = '';
+              showFeedback(true, FEEDBACK_OK, '');
+              saveAnswer({ plated: true, correct: true });
+              unlockNext();
+            }
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
+  }
+
+  function enterAwaitPlatingPhase() {
+    bakePhase = 'await_plating';
+    // Red tooltip on the right panel
+    const rightPanel = document.getElementById('grease-right-panel');
+    if (rightPanel && PLATE_MUFFIN_TIP) {
+      let tip = document.getElementById('plate-muffin-tooltip');
+      if (!tip) {
+        tip = document.createElement('div');
+        tip.id = 'plate-muffin-tooltip';
+        tip.className = 'whisk-tooltip plate-muffin-tooltip';
+        rightPanel.appendChild(tip);
+      }
+      tip.innerHTML = PLATE_MUFFIN_TIP;
+      tip.style.display = '';
+    }
+    if (hint) hint.textContent = PLATE_MUFFIN_TIP || '';
+    enableMuffinFromTrayDrag();
+  }
+
+  function enableMuffinFromTrayDrag() {
+    const rightFinal = document.getElementById('grease-right-final'); // muffins-done.png on right
+    const plateFinal = document.getElementById('grease-left-final');  // plate.png on left
+    if (!rightFinal || !plateFinal) return;
+    rightFinal.style.pointerEvents = 'auto';
+    rightFinal.style.cursor = 'grab';
+    rightFinal.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      const startRect = rightFinal.getBoundingClientRect();
+      // Spawn a single-muffin ghost that follows the cursor
+      const ghost = document.createElement('img');
+      ghost.src = "{{ url_for('static', filename='images/') }}" + PLATE_MUFFIN_DRAG;
+      ghost.style.position = 'fixed';
+      ghost.style.width = Math.min(startRect.width * 0.35, 140) + 'px';
+      ghost.style.height = 'auto';
+      ghost.style.pointerEvents = 'none';
+      ghost.style.zIndex = '9999';
+      ghost.style.left = (e.clientX - 60) + 'px';
+      ghost.style.top  = (e.clientY - 60) + 'px';
+      ghost.style.filter = 'drop-shadow(0 6px 14px rgba(0,0,0,0.3))';
+      document.body.appendChild(ghost);
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - 60) + 'px';
+        ghost.style.top  = (ev.clientY - 60) + 'px';
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        const r = plateFinal.getBoundingClientRect();
+        const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                    ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        ghost.remove();
+        if (hit) {
+          // Swap plate → plate-with-muffin
+          plateFinal.src = "{{ url_for('static', filename='images/') }}" + PLATE_WITH_MUFFIN;
+          const tip = document.getElementById('plate-muffin-tooltip');
+          if (tip) tip.style.display = 'none';
+          done = true;
+          bakePhase = 'done';
+          // Play winner sound (don't layer the regular correct chime on top)
+          if (SOUND_FINISH) { try { SOUND_FINISH.currentTime = 0; SOUND_FINISH.play().catch(() => {}); } catch (_) {} }
+          if (hint) hint.textContent = '';
+          const box = $('#feedback-box');
+          box.removeClass('correct wrong').addClass('correct');
+          $('#feedback-text').text(FEEDBACK_FINISH || FEEDBACK_OK);
+          $('#hint-text').text('');
+          box.show();
+          saveAnswer({ plated_muffin: true, correct: true });
+          unlockNext();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  function enableMuffinTrayDrag() {
+    const trayItems = document.querySelectorAll('.set-aside-item[data-drag-key="muffin_tray"]');
+    trayItems.forEach(item => {
+      let ghost = null;
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.85';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const startX = e.clientX, startY = e.clientY;
+        const offX = startX - rect.left, offY = startY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          const sR = stage.getBoundingClientRect();
+          const hit = ev.clientX >= sR.left && ev.clientX <= sR.right &&
+                      ev.clientY >= sR.top  && ev.clientY <= sR.bottom;
+          if (ghost) { ghost.remove(); ghost = null; }
+          if (hit) {
+            item.classList.add('is-used');
+            enterAwaitClosePhase();
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
   }
 
   // Initialize spray at start position
@@ -543,38 +1158,140 @@ if (INTERACTION === 'grease') {
   });
   init();
 
+  let lastClientY = null;
+
   function onDown(e) {
-    if (done) return;
+    if (done || !setupDone) return;
+    if (bakePhase === 'await_tray') return;
+    if (bakePhase === 'await_transfer') return;
+    if (bakePhase === 'await_timer') return;
     dragging = true;
     stageRect = stage.getBoundingClientRect();
-    spray.src = activeSrc;
-    spray.classList.add('is-spraying');
-    try { SOUND_SPRAY.play().catch(() => {}); } catch (_) {}
+    lastClientX = e.touches ? e.touches[0].clientX : e.clientX;
+    lastClientY = e.touches ? e.touches[0].clientY : e.clientY;
+    if (spray) { spray.src = activeSrc; spray.classList.add('is-spraying'); }
+    if (SOUND_SPRAY) { try { SOUND_SPRAY.play().catch(() => {}); } catch (_) {} }
     e.preventDefault();
   }
 
   function onMove(e) {
     if (!dragging || done) return;
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    if (DRAG_AXIS === 'y') {
+      // Vertical drag — direction depends on phase (downward to open, upward to close)
+      if (lastClientY !== null) {
+        const deltaPx = clientY - lastClientY;
+        const direction = (bakePhase === 'await_close') ? -1 : 1;
+        const useful = deltaPx * direction;
+        if (useful > 0) {
+          setProgress(progress + (useful / stageRect.height) * DRAG_SPEED);
+        }
+      }
+      lastClientY = clientY;
+      lastClientX = clientX;
+      return;
+    }
+
     const relX = clientX - stageRect.left;
     const pct = (relX / stageRect.width - START_PCT) / (END_PCT - START_PCT);
     const clamped = Math.max(0, Math.min(1, pct));
-    positionSprayAt(clamped);
-    setProgress(clamped);
+    if (spray) positionSprayAt(clamped);
+
+    if (DISTANCE_MODE) {
+      if (lastClientX !== null) {
+        const deltaPx = Math.abs(clientX - lastClientX);
+        setProgress(progress + (deltaPx / stageRect.width) * DRAG_SPEED);
+      }
+      lastClientX = clientX;
+    } else {
+      setProgress(clamped);
+    }
   }
 
   function onUp() {
     if (!dragging) return;
     dragging = false;
-    try { SOUND_SPRAY.pause(); } catch (_) {}
-    if (!done) {
+    lastClientX = null;
+    lastClientY = null;
+    if (SOUND_SPRAY) { try { SOUND_SPRAY.pause(); } catch (_) {} }
+    if (!done && spray) {
       spray.src = idleSrc;
       spray.classList.remove('is-spraying');
     }
   }
 
-  spray.addEventListener('mousedown', onDown);
+  if (spray) spray.addEventListener('mousedown', onDown);
   stage.addEventListener('mousedown', onDown);
+
+  // Bake timer slider (step 14) — gates final completion
+  if (TIMER_CORRECT) {
+    const tSlider = document.getElementById('bake-timer-slider');
+    const tLabels = Array.from(document.querySelectorAll('.bake-timer-label'));
+    let lastTimerIdx = -1;
+    const updateLabels = (idx) => {
+      tLabels.forEach((b, i) => b.classList.toggle('is-active', i === idx));
+      const val = TIMER_OPTIONS[idx];
+      const wasCorrect = timerCorrect;
+      timerCorrect = (val === TIMER_CORRECT);
+      const changed = idx !== lastTimerIdx;
+      lastTimerIdx = idx;
+      if (timerCorrect && !wasCorrect) {
+        playSound(true);
+        // Final completion: oven is closed and timer is set correctly
+        if (bakePhase === 'await_timer' && !done) {
+          done = true;
+          bakePhase = 'done';
+          if (hint) hint.textContent = '';
+          showFeedback(true, FEEDBACK_OK, '');
+          saveAnswer({ baked: true, correct: true, timer: TIMER_CORRECT });
+          unlockNext();
+        }
+      } else if (!timerCorrect && changed) {
+        // Wrong timer value — play wrong sound + give directional hint
+        playSound(false);
+        const hintMsg = val < TIMER_CORRECT
+          ? `Not quite! A bit more time than ${val} min`
+          : `Not quite! A bit less time than ${val} min`;
+        showFeedback(false, hintMsg, '');
+        // If they had already completed, re-lock so they must re-correct
+        if (done && bakePhase === 'done') {
+          done = false;
+          bakePhase = 'await_timer';
+          $('#next-btn').css({ 'pointer-events': 'none', opacity: 0.5 }).addClass('disabled-link');
+        }
+      }
+    };
+    if (tSlider) {
+      tSlider.addEventListener('input', () => updateLabels(parseInt(tSlider.value, 10)));
+    }
+    tLabels.forEach((btn, i) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (tSlider) tSlider.value = i;
+        updateLabels(i);
+      });
+      btn.addEventListener('mousedown', (e) => e.stopPropagation());
+    });
+  }
+
+  // Cursor follower (oven mitt style) — visible once setup complete
+  if (CURSOR_FOLLOWER) {
+    const follower = document.getElementById('cursor-follower');
+    if (follower) {
+      window.__followerEl = follower;
+      // Promote to body so it can follow cursor anywhere on the page
+      document.body.appendChild(follower);
+      follower.style.position = 'fixed';
+      document.addEventListener('mousemove', (e) => {
+        if (!follower.classList.contains('visible')) return;
+        follower.style.left = e.clientX + 'px';
+        follower.style.top  = e.clientY + 'px';
+      });
+      if (setupDone) follower.classList.add('visible');
+    }
+  }
   document.addEventListener('mousemove', onMove);
   document.addEventListener('mouseup', onUp);
 
@@ -582,6 +1299,475 @@ if (INTERACTION === 'grease') {
   stage.addEventListener('touchstart', onDown, { passive: false });
   document.addEventListener('touchmove', onMove, { passive: false });
   document.addEventListener('touchend', onUp);
+
+  // ── Optional setup phase(s): drag aside items into place ────────────────
+  if (REQUIRES_SETUP || REQUIRES_SECOND_SETUP) {
+    const setupSlot         = document.getElementById('grease-setup-slot');
+    const setupSlot2        = document.getElementById('grease-setup-slot-2');
+    const setupTooltip      = document.getElementById('setup-tooltip');
+    const secondTooltip     = document.getElementById('second-setup-tooltip');
+    const pourTooltip       = document.getElementById('pour-tooltip') || document.getElementById('topping-tooltip') || document.getElementById('handle-tooltip');
+    const gameEl            = document.getElementById('grease-game');
+    const trayBase          = document.querySelector('.grease-tray-base');
+    const setAsideDraggables = document.querySelectorAll('.set-aside-draggable');
+
+    // Sequence of expected drops (drag_key → drop target element)
+    const sequence = [];
+    if (REQUIRES_SETUP) sequence.push({ key: 'flour_bowl', target: setupSlot, after: afterFirst });
+    if (REQUIRES_SECOND_SETUP) sequence.push({ key: 'brown_sugar_bowl', target: null /* set after first */, after: afterSecond });
+    let seqIndex = 0;
+
+    // Hide spray until ALL setup done; hide tray-base during phase 1
+    if (spray) spray.style.display = 'none';
+
+    function afterFirst() {
+      // Flour dropped: show tray, hide setup slot + tooltip
+      if (!QUIET_INTERMEDIATE) playSound(true);
+      if (setupSlot) setupSlot.style.display = 'none';
+      if (setupTooltip) setupTooltip.style.display = 'none';
+      gameEl.classList.remove('setup-pending');
+      gameEl.classList.add('setup-pending-2');
+      if (REQUIRES_SECOND_SETUP) {
+        // Target of phase 2 is the outlined slot-2 above the tray
+        if (setupSlot2) setupSlot2.style.display = '';
+        sequence[1].target = setupSlot2 || trayBase;
+        if (secondTooltip) secondTooltip.style.display = '';
+      }
+    }
+    function afterSecond() {
+      // Brown sugar dropped on top: reveal spray, begin pour
+      if (!QUIET_INTERMEDIATE) playSound(true);
+      gameEl.classList.remove('setup-pending-2');
+      if (setupSlot2) setupSlot2.style.display = 'none';
+      if (secondTooltip) secondTooltip.style.display = 'none';
+      if (spray) spray.style.display = '';
+      if (pourTooltip) pourTooltip.style.display = '';
+      setupDone = true;
+      stageRect = stage.getBoundingClientRect();
+      positionSprayAt(0);
+      if (window.__followerEl) window.__followerEl.classList.add('visible');
+    }
+
+    function finishStepIfLast() {
+      const finished = (seqIndex >= sequence.length);
+      if (finished && !REQUIRES_SECOND_SETUP) {
+        // Only phase 1 case
+        setupDone = true;
+        stageRect = stage.getBoundingClientRect();
+        positionSprayAt(0);
+        if (spray) spray.style.display = '';
+        if (pourTooltip) pourTooltip.style.display = '';
+        if (window.__followerEl) window.__followerEl.classList.add('visible');
+      }
+    }
+
+    let sGhost = null, sCarry = null;
+    function sHit(x, y, el) {
+      if (!el) return false;
+      const r = el.getBoundingClientRect();
+      return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    }
+    function sStart(e, el) {
+      if (setupDone) return;
+      const key = el.getAttribute('data-drag-key');
+      // Only allow the currently-expected key
+      if (!sequence[seqIndex] || sequence[seqIndex].key !== key) return;
+      sCarry = key;
+      sGhost = el.cloneNode(true);
+      sGhost.style.position = 'fixed';
+      sGhost.style.pointerEvents = 'none';
+      sGhost.style.opacity = '0.85';
+      sGhost.style.zIndex = '9999';
+      sGhost.style.width = el.offsetWidth + 'px';
+      sGhost.style.left = (e.clientX - 40) + 'px';
+      sGhost.style.top  = (e.clientY - 40) + 'px';
+      document.body.appendChild(sGhost);
+      el.classList.add('dragging');
+      e.preventDefault();
+    }
+    function sMove(e) {
+      if (!sCarry || !sGhost) return;
+      sGhost.style.left = (e.clientX - 40) + 'px';
+      sGhost.style.top  = (e.clientY - 40) + 'px';
+    }
+    function sEnd(e) {
+      if (!sCarry) return;
+      const key = sCarry; sCarry = null;
+      const x = e.clientX, y = e.clientY;
+      if (sGhost) { sGhost.remove(); sGhost = null; }
+      setAsideDraggables.forEach(d => d.classList.remove('dragging'));
+
+      const current = sequence[seqIndex];
+      if (!current || current.key !== key) return;
+      if (sHit(x, y, current.target)) {
+        const srcEl = document.querySelector(`.set-aside-draggable[data-drag-key="${key}"]`);
+        if (srcEl) srcEl.classList.add('is-used');
+        if (typeof current.after === 'function') current.after();
+        seqIndex++;
+        finishStepIfLast();
+      }
+    }
+
+    setAsideDraggables.forEach(el => {
+      el.style.cursor = 'grab';
+      el.addEventListener('mousedown', e => sStart(e, el));
+      el.addEventListener('touchstart', ev => {
+        const t = ev.touches[0];
+        sStart({ clientX: t.clientX, clientY: t.clientY, preventDefault: () => ev.preventDefault() }, el);
+      }, { passive: false });
+    });
+    document.addEventListener('mousemove', sMove);
+    document.addEventListener('mouseup',   sEnd);
+    document.addEventListener('touchmove', ev => {
+      if (!sCarry) return;
+      const t = ev.touches[0];
+      sMove({ clientX: t.clientX, clientY: t.clientY });
+    }, { passive: true });
+    document.addEventListener('touchend', ev => {
+      const t = (ev.changedTouches && ev.changedTouches[0]) || { clientX: 0, clientY: 0 };
+      sEnd({ clientX: t.clientX, clientY: t.clientY });
+    });
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SLICE (step 7 — drag apple to board, then slice downward with knife)
+// ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'slice') {
+  const SOUND_SLICE = new Audio("{{ url_for('static', filename='sounds/slice.wav') }}");
+  SOUND_SLICE.volume = 0.7;
+  function playSliceSound() {
+    try { SOUND_SLICE.currentTime = 0; SOUND_SLICE.play().catch(() => {}); } catch (_) {}
+  }
+  const stage     = document.getElementById('slice-stage');
+  const applesEl  = document.getElementById('slice-apples');
+  const apples    = [document.getElementById('slice-apple-1'), document.getElementById('slice-apple-2')];
+  const knife     = document.getElementById('slice-knife');
+  const tooltip   = document.getElementById('slice-tooltip');
+  const TOTAL_SLICES = 3;
+
+  let applesOnBoard = false;
+  let slicesDone = [0, 0];
+  const TOTAL_PER_APPLE = TOTAL_SLICES;
+  let slicing = false;
+  let sliceStartY = null;
+  let sliceApple = -1;
+
+  // ── Pointer-based drag for the apple card onto the cutting board ─────────
+  const appleCard = document.querySelector('.drag-item[data-id="apple"]');
+  let ghost = null;
+  let carrying = false;
+
+  function startCarry(e) {
+    if (applesOnBoard) return;
+    carrying = true;
+    ghost = appleCard.cloneNode(true);
+    ghost.style.position = 'fixed';
+    ghost.style.pointerEvents = 'none';
+    ghost.style.opacity = '0.85';
+    ghost.style.zIndex = '9999';
+    ghost.style.left = (e.clientX - 40) + 'px';
+    ghost.style.top  = (e.clientY - 40) + 'px';
+    document.body.appendChild(ghost);
+    appleCard.classList.add('dragging');
+    e.preventDefault();
+  }
+  function moveCarry(e) {
+    if (!carrying || !ghost) return;
+    ghost.style.left = (e.clientX - 40) + 'px';
+    ghost.style.top  = (e.clientY - 40) + 'px';
+  }
+  function endCarry(e) {
+    if (!carrying) return;
+    carrying = false;
+    const stageRect = stage.getBoundingClientRect();
+    const over = e.clientX >= stageRect.left && e.clientX <= stageRect.right
+              && e.clientY >= stageRect.top  && e.clientY <= stageRect.bottom;
+    if (ghost) { ghost.remove(); ghost = null; }
+    appleCard.classList.remove('dragging');
+    if (over && !applesOnBoard) {
+      applesOnBoard = true;
+      applesEl.classList.add('visible');
+      knife.classList.add('visible');
+      stage.classList.add('knife-mode');
+      if (tooltip) tooltip.innerHTML = 'Slice the apples<br>top to bottom ↓ with the knife';
+      appleCard.classList.add('is-dropped');
+    }
+  }
+
+  if (appleCard) {
+    appleCard.setAttribute('draggable', 'false');  // disable HTML5 drag
+    appleCard.style.cursor = 'grab';
+    appleCard.addEventListener('mousedown', startCarry);
+    appleCard.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      startCarry({ clientX: t.clientX, clientY: t.clientY, preventDefault: () => e.preventDefault() });
+    }, { passive: false });
+  }
+  document.addEventListener('mousemove', moveCarry);
+  document.addEventListener('mouseup',   endCarry);
+  document.addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    moveCarry({ clientX: t.clientX, clientY: t.clientY });
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const t = (e.changedTouches && e.changedTouches[0]) || { clientX: 0, clientY: 0 };
+    endCarry({ clientX: t.clientX, clientY: t.clientY });
+  });
+
+  // ── Knife follows the cursor (only after apples are on the board) ────────
+  function moveKnife(clientX, clientY) {
+    const r = stage.getBoundingClientRect();
+    knife.style.left = (clientX - r.left) + 'px';
+    knife.style.top  = (clientY - r.top) + 'px';
+  }
+  stage.addEventListener('mousemove', e => {
+    if (!applesOnBoard) return;
+    moveKnife(e.clientX, e.clientY);
+  });
+  stage.addEventListener('touchmove', e => {
+    if (!applesOnBoard) return;
+    const t = e.touches[0];
+    moveKnife(t.clientX, t.clientY);
+  }, { passive: true });
+
+  const sliceFill = document.getElementById('slice-progress-fill');
+  const sliceLabel = document.getElementById('slice-progress-label');
+  const TOTAL_SLICE_COUNT = TOTAL_PER_APPLE * 2;
+  function updateSliceProgress() {
+    if (!sliceFill) return;
+    const completed = slicesDone[0] + slicesDone[1];
+    sliceFill.style.width = `${(completed / TOTAL_SLICE_COUNT) * 100}%`;
+    if (sliceLabel) {
+      if (completed >= TOTAL_SLICE_COUNT) {
+        sliceLabel.textContent = `All sliced! ${completed}/${TOTAL_SLICE_COUNT}`;
+      } else {
+        sliceLabel.textContent = `Keep slicing — ${completed}/${TOTAL_SLICE_COUNT}`;
+      }
+    }
+  }
+
+  // ── Slicing: a downward swipe over an apple advances THAT apple's state ──
+  function advanceSlice(i) {
+    if (i < 0 || i > 1) return;
+    if (slicesDone[i] >= TOTAL_PER_APPLE) return;
+    slicesDone[i]++;
+    apples[i].src = apples[i].getAttribute('data-src-' + slicesDone[i]);
+    playSliceSound();
+    updateSliceProgress();
+    if (slicesDone[0] >= TOTAL_PER_APPLE && slicesDone[1] >= TOTAL_PER_APPLE) {
+      showFeedback(true, FEEDBACK_OK, '');
+      saveAnswer({ sliced: true, correct: true });
+      unlockNext();
+    }
+  }
+
+  function appleIndexAt(x, y) {
+    for (let i = 0; i < apples.length; i++) {
+      const r = apples[i].getBoundingClientRect();
+      // Only count if pointer is horizontally over the apple (vertical range
+      // is forgiving so the downward swipe can start above and end below).
+      if (x >= r.left && x <= r.right) return i;
+    }
+    return -1;
+  }
+
+  function onSliceDown(e) {
+    if (!applesOnBoard) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    sliceApple = appleIndexAt(x, y);
+    if (sliceApple === -1) return;
+    slicing = true;
+    sliceStartY = y;
+    e.preventDefault();
+  }
+  function onSliceMove(e) {
+    if (!slicing) return;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    if (y - sliceStartY > 60) {
+      advanceSlice(sliceApple);
+      slicing = false;
+      sliceStartY = null;
+      sliceApple = -1;
+    }
+  }
+  function onSliceUp() {
+    slicing = false;
+    sliceStartY = null;
+  }
+
+  stage.addEventListener('mousedown', onSliceDown);
+  document.addEventListener('mousemove', onSliceMove);
+  document.addEventListener('mouseup', onSliceUp);
+  stage.addEventListener('touchstart', onSliceDown, { passive: false });
+  document.addEventListener('touchmove', onSliceMove, { passive: false });
+  document.addEventListener('touchend', onSliceUp);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// FILL (step 10 — two-panel setup, then scoop batter into tray)
+// ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'fill') {
+  const game         = document.getElementById('fill-game');
+  const traySlot     = document.getElementById('fill-slot-tray');
+  const batterSlot   = document.getElementById('fill-slot-batter');
+  const trayImg      = document.getElementById('fill-tray-img');
+  const batterImg    = document.getElementById('fill-batter-img');
+  const scooper      = document.getElementById('fill-scooper');
+  const tooltip      = document.getElementById('fill-tooltip');
+  const TOTAL_SCOOPS = 5;
+
+  let trayFilled = false, batterFilled = false;
+  let scoops = 0;
+  let stage = 'setup';     // 'setup' → 'scoop' → 'done'
+
+  // ── Phase 1: make set-aside items pointer-draggable into the slots ───────
+  const setAsideDraggables = document.querySelectorAll('.set-aside-draggable');
+  let ghost = null, carrying = null;  // carrying = drag_key
+
+  function startCarry(e, el) {
+    if (stage !== 'setup') return;
+    const key = el.getAttribute('data-drag-key');
+    if (key === 'tray' && trayFilled) return;
+    if (key === 'batter' && batterFilled) return;
+    carrying = key;
+    ghost = el.cloneNode(true);
+    ghost.style.position = 'fixed';
+    ghost.style.pointerEvents = 'none';
+    ghost.style.opacity = '0.85';
+    ghost.style.zIndex = '9999';
+    ghost.style.left = (e.clientX - 40) + 'px';
+    ghost.style.top  = (e.clientY - 40) + 'px';
+    ghost.style.width = el.offsetWidth + 'px';
+    document.body.appendChild(ghost);
+    el.classList.add('dragging');
+    e.preventDefault();
+  }
+  function moveCarry(e) {
+    if (!carrying || !ghost) return;
+    ghost.style.left = (e.clientX - 40) + 'px';
+    ghost.style.top  = (e.clientY - 40) + 'px';
+  }
+  function hitSlot(x, y, slot) {
+    const r = slot.getBoundingClientRect();
+    return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+  }
+  function fillSlot(key) {
+    if (key === 'tray' && !trayFilled) {
+      trayFilled = true;
+      traySlot.classList.add('is-filled');
+      trayImg.src = trayImg.dataset.base;
+      const srcEl = document.querySelector('.set-aside-draggable[data-drag-key="tray"]');
+      if (srcEl) srcEl.classList.add('is-used');
+    } else if (key === 'batter' && !batterFilled) {
+      batterFilled = true;
+      batterSlot.classList.add('is-filled');
+      batterImg.src = batterImg.dataset.base;
+      const srcEl = document.querySelector('.set-aside-draggable[data-drag-key="batter"]');
+      if (srcEl) srcEl.classList.add('is-used');
+    }
+    if (trayFilled && batterFilled) enterScoopPhase();
+  }
+  function endCarry(e) {
+    if (!carrying) return;
+    const key = carrying;
+    carrying = null;
+    const x = e.clientX, y = e.clientY;
+    if (ghost) { ghost.remove(); ghost = null; }
+    setAsideDraggables.forEach(d => d.classList.remove('dragging'));
+    if (key === 'tray' && hitSlot(x, y, traySlot)) {
+      fillSlot('tray');
+    } else if (key === 'batter' && hitSlot(x, y, batterSlot)) {
+      fillSlot('batter');
+    }
+  }
+
+  setAsideDraggables.forEach(el => {
+    el.style.cursor = 'grab';
+    el.addEventListener('mousedown', e => startCarry(e, el));
+    el.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      startCarry({ clientX: t.clientX, clientY: t.clientY, preventDefault: () => e.preventDefault() }, el);
+    }, { passive: false });
+  });
+  document.addEventListener('mousemove', moveCarry);
+  document.addEventListener('mouseup', endCarry);
+  document.addEventListener('touchmove', e => {
+    if (!carrying) return;
+    const t = e.touches[0];
+    moveCarry({ clientX: t.clientX, clientY: t.clientY });
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const t = (e.changedTouches && e.changedTouches[0]) || { clientX: 0, clientY: 0 };
+    endCarry({ clientX: t.clientX, clientY: t.clientY });
+  });
+
+  // ── Phase 2: scooper cursor — drag batter → tray to scoop ────────────────
+  function enterScoopPhase() {
+    stage = 'scoop';
+    game.classList.add('scooper-mode');
+    scooper.classList.add('visible');
+    if (tooltip) { tooltip.innerHTML = 'Drag batter into<br>the muffin tray<br>(5 scoops)'; tooltip.style.display = ''; }
+  }
+
+  function moveScooper(clientX, clientY) {
+    const r = game.getBoundingClientRect();
+    scooper.style.left = (clientX - r.left) + 'px';
+    scooper.style.top  = (clientY - r.top) + 'px';
+  }
+  game.addEventListener('mousemove', e => {
+    if (stage !== 'scoop' && stage !== 'done') return;
+    moveScooper(e.clientX, e.clientY);
+  });
+  game.addEventListener('touchmove', e => {
+    if (stage !== 'scoop') return;
+    const t = e.touches[0];
+    moveScooper(t.clientX, t.clientY);
+  }, { passive: true });
+
+  let scooping = false;
+  function onScoopDown(e) {
+    if (stage !== 'scoop') return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    const y = e.touches ? e.touches[0].clientY : e.clientY;
+    if (!hitSlot(x, y, batterSlot)) return;
+    scooping = true;
+    scooper.src = scooper.dataset.full;
+    e.preventDefault();
+  }
+  function onScoopUp(e) {
+    if (!scooping) return;
+    scooping = false;
+    const x = e.clientX !== undefined ? e.clientX
+          : (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientX : 0);
+    const y = e.clientY !== undefined ? e.clientY
+          : (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY : 0);
+    const droppedOnTray = hitSlot(x, y, traySlot);
+    scooper.src = scooper.dataset.idle;
+    if (droppedOnTray && scoops < TOTAL_SCOOPS) {
+      scoops++;
+      const next = trayImg.getAttribute('data-progress-' + scoops);
+      if (next) trayImg.src = next;
+      playSound(true);
+      if (scoops >= TOTAL_SCOOPS) {
+        stage = 'done';
+        game.classList.remove('scooper-mode');
+        game.classList.add('is-done');
+        scooper.classList.remove('visible');
+        if (tooltip) tooltip.style.display = 'none';
+        showFeedback(true, FEEDBACK_OK, '');
+        saveAnswer({ filled: true, correct: true, scoops: scoops });
+        unlockNext();
+      } else {
+        if (tooltip) tooltip.innerHTML = `Keep scooping!<br>${scoops} / ${TOTAL_SCOOPS}`;
+      }
+    }
+  }
+  game.addEventListener('mousedown', onScoopDown);
+  document.addEventListener('mouseup', onScoopUp);
+  game.addEventListener('touchstart', onScoopDown, { passive: false });
+  document.addEventListener('touchend', onScoopUp);
 }
 </script>
 {% endblock %}
