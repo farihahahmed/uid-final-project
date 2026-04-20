@@ -8,4 +8,3 @@ minor details to do list (do later, not improtant):
 - recenter memes?
 - clipart: fajitas recipe and casserole recipe is missing a few cliparts
 - 'if you're bored...' section is missing for fajitas and casserole both
-- change each page so that if you click 'arrow' key, it should also do 'next' and 'back'
