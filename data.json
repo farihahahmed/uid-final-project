@@ -1366,10 +1366,18 @@
       },
       {
         "type": "drag_drop",
-        "title": "Placeholder Quiz Step 2",
-        "instruction": "Coming soon — drag the correct items",
+        "title": "Load the marinade bag!",
+        "instruction": "Drag the chicken, peppers, and onion into the bag",
         "interaction": "drag",
-        "correct_ids": ["chicken_breast"],
+        "correct_ids": ["chicken_breast", "pepper_blend", "yellow_onion"],
+        "empty_bowl_image": "fajitas-marinade-bag.png",
+        "completed_bowl_image": "fajitas-marinade-bag-full.png",
+        "drop_placeholder": "Drag ingredients into the marinade bag",
+        "missing_hints": {
+          "chicken_breast": "The main protein goes in — look for the chicken.",
+          "pepper_blend": "The colorful veggies need to soak in the marinade too.",
+          "yellow_onion": "Don't forget the onion — it adds sweetness."
+        },
         "all_items": [
           {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
           {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
@@ -1385,9 +1393,88 @@
           {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
           {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
         ],
-        "hint": "Placeholder hint",
-        "feedback_correct": "Correct!",
-        "feedback_wrong": "Try again."
+        "hint": "The fresh stuff goes in — the chicken, the peppers, and the onion.",
+        "feedback_correct": "Everything's in the bag — now let it marinate!",
+        "feedback_wrong": "Think fresh proteins and veggies — not the dry spices."
+      },
+      {
+        "type": "grease",
+        "title": "Spread on the sheet pan!",
+        "instruction": "Hold and drag right to spread the marinated fajitas across the pan",
+        "interaction": "grease",
+        "tray_image": "fajitas-pan-empty.png",
+        "tray_greased_image": "fajitas-step4.png",
+        "spray_image": "fajitas-spatula.png",
+        "spray_active_image": "fajitas-spatula.png",
+        "drag_axis": "x",
+        "drag_start_pct": 0.0,
+        "drag_end_pct": 0.95,
+        "sound_file": "pour.wav",
+        "all_items": [
+          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
+          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
+          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
+          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
+          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
+          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
+          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
+          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
+          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
+          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
+          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
+          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
+          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+        ],
+        "hint": "Hold and drag rightward to spread everything across the pan →",
+        "feedback_correct": "Nicely spread — into the oven it goes!",
+        "feedback_wrong": ""
+      },
+      {
+        "type": "timer",
+        "title": "Let it roast!",
+        "instruction": "Watch the clock — hit STOP between 15 and 20 minutes!",
+        "interaction": "timer",
+        "scene_image": "fajitas-step5.png",
+        "timer_min": 15,
+        "timer_max": 20,
+        "timer_speed": 0.001,
+        "all_items": [
+          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
+          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+        ],
+        "hint": "Press START, watch the clock, and hit STOP between 15 and 20 minutes.",
+        "feedback_correct": "Perfect roast! The chicken hits 165°F inside.",
+        "feedback_wrong": "Stop between 15 and 20 minutes.",
+        "feedback_wrong_early": "Too soon — the chicken isn't cooked through yet!",
+        "feedback_wrong_late": "Too long! The veggies will get mushy."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Finish it off!",
+        "instruction": "Drag the cilantro and lime onto the plate",
+        "interaction": "drag",
+        "correct_ids": ["cilantro", "lime"],
+        "empty_bowl_image": "plate.png",
+        "completed_bowl_image": "fajitas-step7.png",
+        "drop_placeholder": "Drag garnish onto the plate",
+        "all_items": [
+          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
+          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
+          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
+          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
+          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
+          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
+          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
+          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
+          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
+          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
+          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
+          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
+          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+        ],
+        "hint": "Cilantro and lime go on last — drag both onto the plate.",
+        "feedback_correct": "Fajitas complete — fresh, bright, and delicious!",
+        "feedback_wrong": "Just the fresh garnish — cilantro and lime."
       }
     ]
   }

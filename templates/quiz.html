@@ -143,6 +143,11 @@
                   Pull oven door down ↓
                 </div>
               {% endif %}
+              {% if question.spray_image == 'fajitas-spatula.png' %}
+                <div class="whisk-tooltip" id="spatula-fajitas-tooltip">
+                  Hold and drag right →<br>to spread evenly
+                </div>
+              {% endif %}
               {% if question.requires_tray_setup %}
                 <div class="grease-setup-slot" id="grease-setup-slot">
                   <span class="fill-slot-label">{{ question.tray_slot_label }}</span>
@@ -333,6 +338,26 @@
           </div>
         {% endif %}
 
+        {% if question.interaction == 'timer' %}
+          <div class="timer-game" id="timer-game">
+            <div class="timer-scene-wrap">
+              <img
+                src="{{ url_for('static', filename='images/' + question.scene_image) }}"
+                class="timer-scene"
+                alt="fajitas roasting"
+                draggable="false"
+              >
+            </div>
+            <div class="timer-panel" id="timer-panel">
+              <div class="timer-display" id="timer-display">00:00</div>
+              <button type="button" class="timer-start-btn" id="timer-start-btn">&#9654; START</button>
+              <button type="button" class="timer-stop-btn" id="timer-stop-btn" style="display:none;">&#9646; STOP</button>
+            </div>
+            <div class="whisk-tooltip" id="timer-tooltip">
+              Press START, then STOP<br>between 15 and 20 min
+            </div>
+          </div>
+        {% endif %}
 
         <div class="feedback-box feedback-good" id="feedback-good"></div>
         <div class="feedback-box" id="feedback-box">
@@ -455,6 +480,7 @@ function saveAnswer(payload) {
 if (INTERACTION === 'drag') {
 
   let droppedIds = [];
+  const wrongSaved = new Set(); // tracks wrong items already counted so we don't double-penalise
 
   // ── Drag events on items ──────────────────────────────────────────────────
   function wireDragItem(item) {
@@ -636,8 +662,17 @@ if (INTERACTION === 'drag') {
       }
     }
 
-    saveAnswer({ dropped: droppedIds, correct: isRight });
-    if (isRight) unlockNext();
+    // Only penalise once per wrong item actually dropped — not for missing items
+    wrongIds.forEach(id => {
+      if (!wrongSaved.has(id)) {
+        wrongSaved.add(id);
+        saveAnswer({ dropped: droppedIds, correct: false });
+      }
+    });
+    if (isRight) {
+      saveAnswer({ dropped: droppedIds, correct: true });
+      unlockNext();
+    }
   }
 }
 
@@ -1768,6 +1803,87 @@ if (INTERACTION === 'fill') {
   document.addEventListener('mouseup', onScoopUp);
   game.addEventListener('touchstart', onScoopDown, { passive: false });
   document.addEventListener('touchend', onScoopUp);
+}
+
+// ── TIMER ────────────────────────────────────────────────────────────────────
+if (INTERACTION === 'timer') {
+  const TIMER_MIN   = {{ question.timer_min   | default(15) }};
+  const TIMER_MAX   = {{ question.timer_max   | default(20) }};
+  const TIMER_SPEED = {{ question.timer_speed | default(1.5) }};
+  const WRONG_EARLY = {{ question.feedback_wrong_early | default('Too early! Keep roasting.') | tojson }};
+  const WRONG_LATE  = {{ question.feedback_wrong_late  | default('Too long! Take it out sooner.') | tojson }};
+
+  // Each game-minute takes TIMER_SPEED real seconds.
+  // We tick every ~25ms so the seconds hand sweeps smoothly.
+  const TICK_MS = Math.round((TIMER_SPEED * 1000) / 60);
+
+  const display  = document.getElementById('timer-display');
+  const startBtn = document.getElementById('timer-start-btn');
+  const stopBtn  = document.getElementById('timer-stop-btn');
+  const tooltip  = document.getElementById('timer-tooltip');
+
+  let intervalId  = null;
+  let gameMinutes = 0;
+  let gameSeconds = 0;
+  let running     = false;
+  let answered    = false;
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function updateDisplay() {
+    if (display) display.textContent = pad(gameMinutes) + ':' + pad(gameSeconds);
+  }
+
+  function tick() {
+    gameSeconds++;
+    if (gameSeconds >= 60) { gameSeconds = 0; gameMinutes++; }
+    updateDisplay();
+    if (gameMinutes > TIMER_MAX) stopClock();
+  }
+
+  function startClock() {
+    if (running || answered) return;
+    running = true;
+    if (startBtn) startBtn.style.display = 'none';
+    if (stopBtn)  stopBtn.style.display  = '';
+    if (tooltip)  tooltip.style.display  = 'none';
+    intervalId = setInterval(tick, TICK_MS);
+  }
+
+  function stopClock() {
+    if (!running) return;
+    running = false;
+    clearInterval(intervalId);
+    if (stopBtn)  stopBtn.style.display  = 'none';
+
+    const isRight = gameMinutes >= TIMER_MIN && gameMinutes <= TIMER_MAX;
+    const msg     = isRight ? FEEDBACK_OK
+                  : (gameMinutes < TIMER_MIN ? WRONG_EARLY : WRONG_LATE);
+
+    playSound(isRight);
+    showFeedback(isRight, msg, isRight ? '' : HINT);
+    saveAnswer({ stopped_at: pad(gameMinutes) + ':' + pad(gameSeconds), correct: isRight });
+
+    if (isRight) {
+      unlockNext();
+    } else {
+      $('#next-btn').css({ 'pointer-events': 'none', opacity: 0.5 }).addClass('disabled-link');
+      setTimeout(function() {
+        gameMinutes = 0;
+        gameSeconds = 0;
+        answered    = false;
+        updateDisplay();
+        if (startBtn) startBtn.style.display = '';
+        if (tooltip)  tooltip.style.display  = '';
+        $('#feedback-good').hide().empty();
+        $('#feedback-box').hide().empty().removeClass('correct wrong');
+      }, 2500);
+    }
+  }
+
+  if (startBtn) startBtn.addEventListener('click', startClock);
+  if (stopBtn)  stopBtn.addEventListener('click',  stopClock);
+  updateDisplay();
 }
 </script>
 {% endblock %}
