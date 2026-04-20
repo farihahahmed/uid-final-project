@@ -15,6 +15,16 @@
   <h2 class="slide-title">You did it!</h2>
   <p class="slide-subtitle">Now enjoy 🍽️</p>
 
+  <div class="result-score-card mx-auto mb-3">
+    <div class="result-score-rank">{{ rank }}</div>
+    <div class="result-score-line">
+      Wrong answers: <strong>{{ wrong_count }}</strong>
+    </div>
+    <div class="result-score-hint">
+      The fewer wrong answers, the better the score!
+    </div>
+  </div>
+
   <p class="slide-body mx-auto mb-4 result-body-copy">
     You've learned the recipe and completed the cooking game.
     Time to actually make it — you've got this!

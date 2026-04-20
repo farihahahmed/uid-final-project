@@ -661,6 +661,40 @@ h1, h2, h3, .display-font {
   max-width: 480px;
 }
 
+.result-score-card {
+  display: inline-block;
+  padding: 14px 26px;
+  border-radius: 18px;
+  background: #fff7ed;
+  border: 2px solid #fdba74;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  text-align: center;
+}
+.result-score-rank {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: #c2410c;
+  margin-bottom: 4px;
+}
+.result-score-line {
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #7c2d12;
+}
+.result-score-line strong {
+  font-size: 1.25rem;
+  color: #9a3412;
+}
+.result-score-hint {
+  margin-top: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #9a3412;
+  opacity: 0.8;
+}
+
 /* ── Recipe Choice Cards ── */
 .choose-card-shell {
   justify-content: flex-start;

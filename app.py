@@ -18,6 +18,7 @@ user_state = {
     'recipe_steps_visited': {},
     'quiz_answers': {},
     'quiz_steps_visited': {},
+    'wrong_attempts': {},  # { recipe_name: total_wrong_count }
 }
 
 def record(key, value):
@@ -183,19 +184,36 @@ def quiz(recipe_name, step):
 
 @app.route('/quiz/<recipe_name>/<int:step>/answer', methods=['POST'])
 def save_answer(recipe_name, step):
-    data = request.get_json()
+    data = request.get_json() or {}
     key = f'{recipe_name}_step_{step}'
     user_state['quiz_answers'][key] = data
+    # Tally every wrong attempt the user makes — the lower, the better.
+    if data.get('correct') is False:
+        user_state['wrong_attempts'][recipe_name] = (
+            user_state['wrong_attempts'].get(recipe_name, 0) + 1
+        )
     return jsonify({'status': 'ok'})
 
 # ── Result ────────────────────────────────────────────────────────────────────
 
 @app.route('/result/<recipe_name>')
 def result(recipe_name):
+    wrong_count = user_state['wrong_attempts'].get(recipe_name, 0)
+    # Rank the run by fewest mistakes
+    if wrong_count == 0:
+        rank = 'Flawless Chef 🏆'
+    elif wrong_count <= 2:
+        rank = 'Pro Cook ⭐'
+    elif wrong_count <= 5:
+        rank = 'Home Cook 🍳'
+    else:
+        rank = 'Keep Practicing 💪'
     return render_template(
         'result.html',
         recipe_name=recipe_name,
         answers=user_state['quiz_answers'],
+        wrong_count=wrong_count,
+        rank=rank,
     )
 
 # ── Debug state (dev only) ────────────────────────────────────────────────────
