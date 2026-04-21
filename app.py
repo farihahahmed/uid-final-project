@@ -7,7 +7,8 @@ app = Flask(__name__)
 app.secret_key = 'dumpdumpbake2025'
 
 def load_data():
-    with open('data.json') as f:
+    data_path = os.path.join(app.root_path, 'data.json')
+    with open(data_path, encoding='utf-8') as f:
         return json.load(f)
 
 # Simple single-user state (as per assignment)

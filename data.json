@@ -1309,6 +1309,141 @@
         "set_aside": [
           { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
         ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Add the chicken!",
+        "instruction": "Drag the chicken and parsley into the cream mixture",
+        "interaction": "drag",
+        "correct_ids": ["chicken", "parsley"],
+        "empty_bowl_image": "bowl-with-cheeses-stirred.png",
+        "completed_bowl_image": "casserole-step4.png",
+        "drop_placeholder": "Drag chicken and parsley here",
+        "all_items": [
+          {"id": "cream_soup",     "label": "cream of chicken soup", "emoji": "ðŸ¥«", "image": "chicken-soup-clipart.png",           "quantity": "1 can"},
+          {"id": "cottage_cheese", "label": "cottage cheese",        "emoji": "ðŸ§€", "image": "cottage-cheese-clipart.png",         "quantity": "Â½ cup"},
+          {"id": "sour_cream",     "label": "sour cream",            "emoji": "ðŸ¥›", "image": "sour-cream-clipart.png",             "quantity": "Â½ cup"},
+          {"id": "cream_cheese",   "label": "cream cheese",          "emoji": "ðŸ§€", "image": "whipped-cream-cheese-clipart.png",   "quantity": "4 oz"},
+          {"id": "onion_powder",   "label": "onion powder",          "emoji": "ðŸ§…", "image": "onion-powder-clipart.png",           "quantity": "Â½ tsp"},
+          {"id": "seasoning",      "label": "Creole seasoning",      "emoji": "ðŸŒ¶ï¸", "image": "seafood-rub-clipart.png",            "quantity": "1Â½ tsp"},
+          {"id": "garlic_powder",  "label": "garlic powder",         "emoji": "ðŸ§„", "image": "garlic-powder-clipart.png",          "quantity": "1 tsp"},
+          {"id": "chicken",        "label": "pulled chicken",        "emoji": "ðŸ—", "image": "pulled-chicken-clipart.png",         "quantity": "16 oz"},
+          {"id": "parsley",        "label": "parsley",               "emoji": "ðŸŒ¿", "image": "parsley-clipart.png",                "quantity": "1 bunch"},
+          {"id": "crackers",       "label": "crackers",              "emoji": "ðŸ˜", "image": "crackers-clipart.png",               "quantity": "12 oz"},
+          {"id": "mozzarella",     "label": "mozzarella",            "emoji": "ðŸ§€", "image": "mozarella-clipart.png",              "quantity": "16 oz"},
+          {"id": "scallions",      "label": "scallions",             "emoji": "ðŸ§…", "image": "scallions-clipart.png",              "quantity": "1 bunch"},
+          {"id": "cinnamon",       "label": "cinnamon",              "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png",              "quantity": "1.9 oz"},
+          {"id": "butter",         "label": "butter",                "emoji": "ðŸ§ˆ", "image": "butter-clipart-2.png",               "quantity": "16 oz"}
+        ],
+        "hint": "This step needs the main protein and the fresh green herb.",
+        "feedback_correct": "Great — the chicken is coated and ready!",
+        "feedback_wrong": "Think protein plus parsley for this step.",
+        "missing_hints": {
+          "chicken": "Hint: you're missing the pulled chicken.",
+          "parsley": "Hint: you're missing the leafy herb that gets folded in."
+        },
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "bowl-with-cheeses-stirred.png", "label": "cream mixture" }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Make the cracker topping!",
+        "instruction": "Drag the topping ingredients into the bowl",
+        "interaction": "drag",
+        "correct_ids": ["crackers", "butter", "topping_garlic_powder"],
+        "empty_bowl_image": "green-bowl.png",
+        "completed_bowl_image": "green-bowl-2.png",
+        "drop_placeholder": "Drag cracker topping ingredients here",
+        "all_items": [
+          {"id": "crackers",              "label": "crackers",              "emoji": "ðŸ˜", "image": "crackers-clipart.png",       "quantity": "12 oz"},
+          {"id": "butter",                "label": "melted butter",         "emoji": "ðŸ§ˆ", "image": "butter-clipart-2.png",       "quantity": "4 tbsp"},
+          {"id": "topping_garlic_powder", "label": "garlic powder",         "emoji": "ðŸ§„", "image": "garlic-powder-clipart.png",  "quantity": "Â½ tsp"},
+          {"id": "mozzarella",            "label": "mozzarella",            "emoji": "ðŸ§€", "image": "mozarella-clipart.png",      "quantity": "16 oz"},
+          {"id": "scallions",             "label": "scallions",             "emoji": "ðŸ§…", "image": "scallions-clipart.png",      "quantity": "1 bunch"},
+          {"id": "cinnamon",              "label": "cinnamon",              "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png",      "quantity": "1.9 oz"}
+        ],
+        "hint": "The topping is crunchy crackers plus butter and a little garlic powder.",
+        "feedback_correct": "Yes — that's the crunchy cracker topping!",
+        "feedback_wrong": "Not quite — build the crunchy topping, not the filling.",
+        "missing_hints": {
+          "crackers": "Hint: you're missing the crunchy base.",
+          "butter": "Hint: you're missing the melted fat that holds the crumbs together.",
+          "topping_garlic_powder": "Hint: you're missing the extra garlic powder for the topping."
+        },
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "casserole-step4.png", "label": "chicken mixture" }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Assemble the casserole!",
+        "instruction": "Drag the chicken mixture, mozzarella, and cracker topping into the baking dish",
+        "interaction": "drag",
+        "correct_ids": ["chicken_mixture", "mozzarella", "cracker_topping"],
+        "empty_bowl_image": "bowl-empty.png",
+        "completed_bowl_image": "casserole-step6.png",
+        "drop_placeholder": "Drag layers into the baking dish",
+        "all_items": [
+          {"id": "chicken_mixture", "label": "chicken mixture", "emoji": "ðŸ¥˜", "image": "casserole-step4.png",     "quantity": "base"},
+          {"id": "mozzarella",      "label": "mozzarella",      "emoji": "ðŸ§€", "image": "mozarella-clipart.png",  "quantity": "16 oz"},
+          {"id": "cracker_topping", "label": "cracker topping", "emoji": "ðŸ˜", "image": "green-bowl-2.png",       "quantity": "1 bowl"},
+          {"id": "scallions",       "label": "scallions",       "emoji": "ðŸ§…", "image": "scallions-clipart.png",  "quantity": "1 bunch"},
+          {"id": "cinnamon",        "label": "cinnamon",        "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png",  "quantity": "1.9 oz"}
+        ],
+        "hint": "Layer the filling first, then cheese, then the cracker topping.",
+        "feedback_correct": "Layered and ready for the oven!",
+        "feedback_wrong": "Think casserole layers: filling, cheese, then topping.",
+        "missing_hints": {
+          "chicken_mixture": "Hint: start with the prepared chicken mixture.",
+          "mozzarella": "Hint: add the shredded cheese layer.",
+          "cracker_topping": "Hint: finish with the crunchy cracker topping."
+        },
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
+          { "image": "casserole-step4.png", "label": "chicken mixture" },
+          { "image": "green-bowl-2.png", "label": "cracker topping" }
+        ]
+      },
+      {
+        "type": "timer",
+        "title": "Bake the casserole!",
+        "instruction": "Watch the clock — hit STOP when it reaches about 35 minutes!",
+        "interaction": "timer",
+        "scene_image": "casserole-step7.png",
+        "timer_min": 33,
+        "timer_max": 37,
+        "timer_speed": 0.001,
+        "all_items": [
+          {"id": "scallions", "label": "scallions", "emoji": "ðŸ§…", "image": "scallions-clipart.png", "quantity": "1 bunch"}
+        ],
+        "hint": "The recipe says about 35 minutes. Stop between 33 and 37 minutes.",
+        "feedback_correct": "Perfect bake — golden, bubbly, and ready to serve!",
+        "feedback_wrong": "Aim for about 35 minutes.",
+        "feedback_wrong_early": "Too soon — the casserole needs more time to get bubbly.",
+        "feedback_wrong_late": "Too long — the crackers may burn."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Serve and garnish!",
+        "instruction": "Drag the scallions onto the casserole",
+        "interaction": "drag",
+        "correct_ids": ["scallions"],
+        "empty_bowl_image": "casserole-step7.png",
+        "completed_bowl_image": "casserole-step8.png",
+        "drop_placeholder": "Drag scallions onto the casserole",
+        "all_items": [
+          {"id": "scallions", "label": "scallions", "emoji": "ðŸ§…", "image": "scallions-clipart.png", "quantity": "1 bunch"},
+          {"id": "cinnamon",  "label": "cinnamon",  "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png", "quantity": "1.9 oz"}
+        ],
+        "hint": "The final garnish is the green onion/scallion topping.",
+        "feedback_correct": "Casserole complete — ready for lunch or dinner!",
+        "feedback_wrong": "Only the scallions go on at the end.",
+        "missing_hints": {
+          "scallions": "Hint: garnish with the green onions."
+        }
       }
     ],
 
