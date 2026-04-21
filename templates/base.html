@@ -18,6 +18,16 @@
 </head>
 <body>
   <div id="custom-cursor" aria-hidden="true"></div>
+  <audio
+    id="background-music"
+    src="{{ url_for('static', filename='sounds/home-page-music.mp3') }}"
+    loop
+    preload="auto"
+  ></audio>
+  <button type="button" class="music-toggle" id="music-toggle" aria-pressed="false">
+    <span class="music-toggle-icon" aria-hidden="true">ðŸ”Š</span>
+    <span class="music-toggle-text">Music On</span>
+  </button>
 
   <!-- Top nav -->
   <nav class="top-nav">
@@ -71,6 +81,65 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+    (function () {
+      const music = document.getElementById('background-music');
+      const toggle = document.getElementById('music-toggle');
+      if (!music || !toggle) {
+        return;
+      }
+
+      const mutedKey = 'backgroundMusicMuted';
+      const startedKey = 'backgroundMusicStarted';
+      const icon = toggle.querySelector('.music-toggle-icon');
+      const text = toggle.querySelector('.music-toggle-text');
+
+      function isMuted() {
+        return window.localStorage.getItem(mutedKey) === 'true';
+      }
+
+      function updateButton() {
+        const muted = music.muted;
+        toggle.setAttribute('aria-pressed', muted ? 'true' : 'false');
+        if (icon) icon.textContent = muted ? 'ðŸ”‡' : 'ðŸ”Š';
+        if (text) text.textContent = muted ? 'Music Off' : 'Music On';
+      }
+
+      function playMusic() {
+        if (music.muted) {
+          return;
+        }
+        music.play()
+          .then(function () {
+            window.localStorage.setItem(startedKey, 'true');
+          })
+          .catch(function () {
+            // Browsers may block audio until the first user gesture.
+          });
+      }
+
+      music.volume = 0.35;
+      music.muted = isMuted();
+      updateButton();
+
+      toggle.addEventListener('click', function () {
+        music.muted = !music.muted;
+        window.localStorage.setItem(mutedKey, music.muted ? 'true' : 'false');
+        updateButton();
+        if (!music.muted) {
+          playMusic();
+        }
+      });
+
+      if (!music.muted) {
+        playMusic();
+      }
+
+      ['pointerdown', 'keydown', 'touchstart'].forEach(function (eventName) {
+        document.addEventListener(eventName, playMusic, { once: true, passive: true });
+      });
+    })();
+  </script>
   <script>
     $(function () {
       if (!window.matchMedia('(pointer:fine)').matches) {
