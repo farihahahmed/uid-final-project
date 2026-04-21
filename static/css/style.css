@@ -114,6 +114,7 @@ body.custom-cursor-enabled #custom-cursor.is-visible {
 }
 
 .music-toggle-icon {
+  display: none;
   font-size: 1.05rem;
   line-height: 1;
 }
@@ -2257,7 +2258,7 @@ h1, h2, h3, .display-font {
   }
 
   .music-toggle-text {
-    display: none;
+    display: inline;
   }
 
   .grocery-grid,

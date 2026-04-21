@@ -24,8 +24,8 @@
     loop
     preload="auto"
   ></audio>
-  <button type="button" class="music-toggle" id="music-toggle" aria-pressed="false">
-    <span class="music-toggle-icon" aria-hidden="true">ðŸ”Š</span>
+  <button type="button" class="music-toggle" id="music-toggle" aria-pressed="false" aria-label="Mute music">
+    <span class="music-toggle-icon" aria-hidden="true">ON</span>
     <span class="music-toggle-text">Music On</span>
   </button>
 
@@ -90,7 +90,7 @@
       }
 
       const mutedKey = 'backgroundMusicMuted';
-      const startedKey = 'backgroundMusicStarted';
+      const timeKey = 'backgroundMusicTime';
       const icon = toggle.querySelector('.music-toggle-icon');
       const text = toggle.querySelector('.music-toggle-text');
 
@@ -101,8 +101,25 @@
       function updateButton() {
         const muted = music.muted;
         toggle.setAttribute('aria-pressed', muted ? 'true' : 'false');
-        if (icon) icon.textContent = muted ? 'ðŸ”‡' : 'ðŸ”Š';
+        toggle.setAttribute('aria-label', muted ? 'Unmute music' : 'Mute music');
+        if (icon) icon.textContent = muted ? 'OFF' : 'ON';
         if (text) text.textContent = muted ? 'Music Off' : 'Music On';
+      }
+
+      function savePosition() {
+        if (Number.isFinite(music.currentTime)) {
+          window.localStorage.setItem(timeKey, String(music.currentTime));
+        }
+      }
+
+      function restorePosition() {
+        const savedTime = parseFloat(window.localStorage.getItem(timeKey));
+        if (!Number.isFinite(savedTime) || savedTime <= 0) {
+          return;
+        }
+
+        const duration = Number.isFinite(music.duration) ? music.duration : 0;
+        music.currentTime = duration > 0 ? savedTime % duration : savedTime;
       }
 
       function playMusic() {
@@ -110,9 +127,6 @@
           return;
         }
         music.play()
-          .then(function () {
-            window.localStorage.setItem(startedKey, 'true');
-          })
           .catch(function () {
             // Browsers may block audio until the first user gesture.
           });
@@ -121,8 +135,15 @@
       music.volume = 0.35;
       music.muted = isMuted();
       updateButton();
+      music.addEventListener('loadedmetadata', restorePosition, { once: true });
+      if (music.readyState >= 1) {
+        restorePosition();
+      }
+      music.addEventListener('timeupdate', savePosition);
+      window.addEventListener('pagehide', savePosition);
 
       toggle.addEventListener('click', function () {
+        savePosition();
         music.muted = !music.muted;
         window.localStorage.setItem(mutedKey, music.muted ? 'true' : 'false');
         updateButton();
