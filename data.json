@@ -1495,6 +1495,9 @@
           {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
           {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
         ],
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+        ],
         "hint": "The marinade is all the spices + oil — not the fresh stuff!",
         "feedback_correct": "Great marinade — now let it sit!",
         "feedback_wrong": "Think spices and oil only for the marinade."
@@ -1528,6 +1531,9 @@
           {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
           {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
         ],
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+        ],
         "hint": "The fresh stuff goes in — the chicken, the peppers, and the onion.",
         "feedback_correct": "Everything's in the bag — now let it marinate!",
         "feedback_wrong": "Think fresh proteins and veggies — not the dry spices."
@@ -1560,6 +1566,9 @@
           {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
           {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
         ],
+        "set_aside": [
+          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+        ],
         "hint": "Hold and drag rightward to spread everything across the pan →",
         "feedback_correct": "Nicely spread — into the oven it goes!",
         "feedback_wrong": ""
@@ -1567,19 +1576,20 @@
       {
         "type": "timer",
         "title": "Let it roast!",
-        "instruction": "Watch the clock — hit STOP between 15 and 20 minutes!",
+        "instruction": "Watch the clock — hit STOP at EXACTLY 16 minutes!",
         "interaction": "timer",
         "scene_image": "fajitas-step5.png",
-        "timer_min": 15,
+        "timer_min": 16,
         "timer_max": 20,
-        "timer_speed": 0.001,
+        "timer_exact": 16,
+        "timer_speed": 0.05,
         "all_items": [
           {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
           {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
         ],
-        "hint": "Press START, watch the clock, and hit STOP between 15 and 20 minutes.",
+        "hint": "Press START, watch the clock, and hit STOP at exactly 16 minutes.",
         "feedback_correct": "Perfect roast! The chicken hits 165°F inside.",
-        "feedback_wrong": "Stop between 15 and 20 minutes.",
+        "feedback_wrong": "Hit STOP at exactly 16 minutes.",
         "feedback_wrong_early": "Too soon — the chicken isn't cooked through yet!",
         "feedback_wrong_late": "Too long! The veggies will get mushy."
       },

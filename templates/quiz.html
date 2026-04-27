@@ -353,9 +353,6 @@
               <button type="button" class="timer-start-btn" id="timer-start-btn">&#9654; START</button>
               <button type="button" class="timer-stop-btn" id="timer-stop-btn" style="display:none;">&#9646; STOP</button>
             </div>
-            <div class="whisk-tooltip" id="timer-tooltip">
-              Press START, then STOP<br>between 15 and 20 min
-            </div>
           </div>
         {% endif %}
 
@@ -1809,6 +1806,7 @@ if (INTERACTION === 'fill') {
 if (INTERACTION === 'timer') {
   const TIMER_MIN   = {{ question.timer_min   | default(15) }};
   const TIMER_MAX   = {{ question.timer_max   | default(20) }};
+  const TIMER_EXACT = {{ question.timer_exact | default(none) | tojson }};
   const TIMER_SPEED = {{ question.timer_speed | default(1.5) }};
   const WRONG_EARLY = {{ question.feedback_wrong_early | default('Too early! Keep roasting.') | tojson }};
   const WRONG_LATE  = {{ question.feedback_wrong_late  | default('Too long! Take it out sooner.') | tojson }};
@@ -1856,7 +1854,9 @@ if (INTERACTION === 'timer') {
     clearInterval(intervalId);
     if (stopBtn)  stopBtn.style.display  = 'none';
 
-    const isRight = gameMinutes >= TIMER_MIN && gameMinutes <= TIMER_MAX;
+    const isRight = TIMER_EXACT !== null
+                  ? gameMinutes === TIMER_EXACT
+                  : gameMinutes >= TIMER_MIN && gameMinutes <= TIMER_MAX;
     const msg     = isRight ? FEEDBACK_OK
                   : (gameMinutes < TIMER_MIN ? WRONG_EARLY : WRONG_LATE);
 
