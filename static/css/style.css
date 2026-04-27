@@ -152,7 +152,7 @@ h1, h2, h3, .display-font {
   font-weight: 700;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #ff4fa7;
+  color: #000;
   background: linear-gradient(180deg, rgba(255, 235, 244, 0.98) 0%, rgba(248, 221, 240, 0.98) 100%);
   border: 1px solid rgba(249, 198, 224, 0.95);
   border-radius: 999px;
