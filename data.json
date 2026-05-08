@@ -1,15 +1,15 @@
 {
   "mealprep": [
-  {
-    "title": "Let's meal plan!",
-    "subtitle": "Our goal: minimize grocery runs to 1 trip a month",
-    "body": "We designed a monthly meal plan so every ingredient is used before it expires — no waste, no extra trips.",
-    "center_text": true,
-    "images": [
-      "mealplan-left.png",
-      "mealplan-calendar.png",
-      "grocery-cart.png"
-    ]
+    {
+      "title": "Let's meal plan!",
+      "subtitle": "Our goal: minimize grocery runs to 1 trip a month",
+      "body": "We designed a monthly meal plan so every ingredient is used before it expires — no waste, no extra trips.",
+      "center_text": true,
+      "images": [
+        "mealplan-left.png",
+        "mealplan-calendar.png",
+        "grocery-cart.png"
+      ]
     },
     {
       "title": "We have 1 option for",
@@ -18,7 +18,10 @@
       "image": null,
       "recipe_tree": {
         "recipes": [
-          { "name": "One Pan Brown Sugar Apple Muffins", "image": "choose-muffins.png" }
+          {
+            "name": "One Pan Brown Sugar Apple Muffins",
+            "image": "choose-muffins.png"
+          }
         ]
       }
     },
@@ -30,8 +33,14 @@
       "recipe_tree": {
         "pick_one": true,
         "recipes": [
-          { "name": "One Pan Chicken Casserole", "image": "choose-casserole.png" },
-          { "name": "One Pan Chicken Fajitas", "image": "choose-fajitas.png" }
+          {
+            "name": "One Pan Chicken Casserole",
+            "image": "choose-casserole.png"
+          },
+          {
+            "name": "One Pan Chicken Fajitas",
+            "image": "choose-fajitas.png"
+          }
         ]
       }
     },
@@ -41,13 +50,31 @@
       "body": null,
       "image": null,
       "meal_table": {
-        "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "rows": ["Breakfast", "Lunch", "Dinner"],
+        "days": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "rows": [
+          "Breakfast",
+          "Lunch",
+          "Dinner"
+        ],
         "row_fills": {
-          "Breakfast": { "emoji": "🧁", "count": 2 }
+          "Breakfast": {
+            "emoji": "🧁",
+            "count": 2
+          }
         },
         "highlights": [
-          { "col_index": 0, "label": "Bake 40 mins" }
+          {
+            "col_index": 0,
+            "label": "Bake 40 mins"
+          }
         ]
       }
     },
@@ -58,28 +85,95 @@
       "body": null,
       "image": null,
       "meal_table": {
-        "days": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-        "rows": ["Breakfast", "Lunch", "Dinner"],
+        "days": [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "rows": [
+          "Breakfast",
+          "Lunch",
+          "Dinner"
+        ],
         "row_fills": {
-          "Breakfast": { "emoji": "🧁", "count": 2 }
+          "Breakfast": {
+            "emoji": "🧁",
+            "count": 2
+          }
         },
         "row_cells": {
           "Lunch": [
-            { "emoji": "🥘" }, { "emoji": "🥘" }, { "emoji": "🥘" },
-            { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }
+            {
+              "emoji": "🥘"
+            },
+            {
+              "emoji": "🥘"
+            },
+            {
+              "emoji": "🥘"
+            },
+            {
+              "emoji": "🥙"
+            },
+            {
+              "emoji": "🥙"
+            },
+            {
+              "emoji": "🥙"
+            },
+            {
+              "emoji": "🥙"
+            }
           ],
           "Dinner": [
-            { "emoji": "🥘" }, { "emoji": "🥘" }, { "emoji": "🥘" },
-            { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }, { "emoji": "🥙" }
+            {
+              "emoji": "🥘"
+            },
+            {
+              "emoji": "🥘"
+            },
+            {
+              "emoji": "🥘"
+            },
+            {
+              "emoji": "🥙"
+            },
+            {
+              "emoji": "🥙"
+            },
+            {
+              "emoji": "🥙"
+            },
+            {
+              "emoji": "🥙"
+            }
           ]
         },
         "highlights": [
-          { "col_index": 0, "label": "Bake 45 mins" },
-          { "col_index": 3, "label": "Bake 45 mins" }
+          {
+            "col_index": 0,
+            "label": "Bake 45 mins"
+          },
+          {
+            "col_index": 3,
+            "label": "Bake 45 mins"
+          }
         ],
         "batches": [
-          { "label": "Batch 1", "start_col": 0, "end_col": 2 },
-          { "label": "Batch 2", "start_col": 3, "end_col": 6 }
+          {
+            "label": "Batch 1",
+            "start_col": 0,
+            "end_col": 2
+          },
+          {
+            "label": "Batch 2",
+            "start_col": 3,
+            "end_col": 6
+          }
         ]
       }
     },
@@ -102,7 +196,6 @@
       "image": "640c2d26-d768-4d82-9062-58cc13697c3d_text.gif"
     }
   ],
-
   "recipes": {
     "muffins": {
       "display_name": "Brown Sugar Apple Muffins",
@@ -215,14 +308,14 @@
         {
           "title": "Step 4: Make the flour mixture",
           "subtitle": "Stir together in a large bowl",
-          "body": "2¼ cups flour · 1 tsp baking soda · ½ tsp salt",
+          "body": "2 1/4 cups flour · 1 tsp baking soda · 1/2 tsp salt",
           "image": "muffins-step4-flour-mix.png",
           "display_step": 4
         },
         {
           "title": "Step 5: Make the brown sugar mixture",
           "subtitle": "Stir in a separate bowl until sugar dissolves",
-          "body": "1½ cups brown sugar · 1 cup buttermilk · 3 tbsp butter · 1 egg · 1 tsp vanilla",
+          "body": "1 1/2 cups brown sugar · 1 cup buttermilk · 3 tbsp butter · 1 egg · 1 tsp vanilla",
           "image": "muffins-step5-sugar-mix.png",
           "display_step": 5
         },
@@ -250,7 +343,7 @@
         {
           "title": "Step 9: Make the topping",
           "subtitle": "Stir together in a small bowl",
-          "body": "½ cup brown sugar · ⅓ cup flour · 2 tbsp butter · cinnamon to taste",
+          "body": "1/2 cup brown sugar · 1/3 cup flour · 2 tbsp butter · cinnamon to taste",
           "image": "muffins-step9-topping-mix.png",
           "display_step": 9
         },
@@ -286,17 +379,31 @@
             "substitutions_header": "Use these instead",
             "substitutions_subheader": "(these also stay in the fridge for 1 month without expiring):",
             "substitutions": [
-              { "name": "Pears", "emoji": "🍐" },
-              { "name": "Peaches", "emoji": "🍑" },
-              { "name": "Mango", "emoji": "🥭" },
-              { "name": "Canned pears", "emoji": "🍐🥫" },
-              { "name": "Canned peaches", "emoji": "🍑🥫" }
+              {
+                "name": "Pears",
+                "emoji": "🍐"
+              },
+              {
+                "name": "Peaches",
+                "emoji": "🍑"
+              },
+              {
+                "name": "Mango",
+                "emoji": "🥭"
+              },
+              {
+                "name": "Canned pears",
+                "emoji": "🍐🥫"
+              },
+              {
+                "name": "Canned peaches",
+                "emoji": "🍑🥫"
+              }
             ]
           }
         }
       ]
     },
-
     "casserole": {
       "display_name": "Chicken Casserole",
       "emoji": "🥘",
@@ -438,7 +545,7 @@
         {
           "title": "Step 3: Make the cream mixture",
           "subtitle": "Stir together in a medium bowl",
-          "body": "1 can cream of chicken soup · ½ cup cottage cheese · ½ cup sour cream · 4 oz cream cheese (room temp) · ½ tsp onion powder · 1½ tsp Creole seasoning · 1 tsp garlic powder",
+          "body": "1 can cream of chicken soup · 1/2 cup cottage cheese · 1/2 cup sour cream · 4 oz cream cheese (room temp) · 1/2 tsp onion powder · 1 1/2 tsp Creole seasoning · 1 tsp garlic powder",
           "image": "casserole-step3.png",
           "display_step": 3
         },
@@ -452,7 +559,7 @@
         {
           "title": "Step 5: Make the cracker topping",
           "subtitle": "Combine in a medium bowl",
-          "body": "Crackers · melted butter · remaining ½ tsp garlic powder",
+          "body": "Crackers · melted butter · remaining 1/2 tsp garlic powder",
           "image": "casserole-step5.png",
           "display_step": 5
         },
@@ -479,7 +586,6 @@
         }
       ]
     },
-
     "fajitas": {
       "display_name": "Chicken Fajitas",
       "emoji": "🥙",
@@ -649,7 +755,6 @@
       ]
     }
   },
-
   "quiz": {
     "muffins": [
       {
@@ -658,21 +763,105 @@
         "instruction": "Drag the slider to set the correct temp",
         "interaction": "knob",
         "correct_value": 375,
-        "options": [250, 300, 350, 375, 400, 450],
+        "options": [
+          250,
+          300,
+          350,
+          375,
+          400,
+          450
+        ],
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "It's between 350 and 400 — closer to 400!",
         "feedback_correct": "That's right — 375°F!",
@@ -688,25 +877,105 @@
         "spray_image": "baking-spray.png",
         "spray_active_image": "baking-spray-greasy.png",
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Hold and drag rightward to spray across the whole pan.",
         "feedback_correct": "Nice — pan is all greased up!",
         "feedback_wrong": "Keep dragging until the whole pan is greased.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
         ]
       },
       {
@@ -714,22 +983,98 @@
         "title": "Make the flour mixture!",
         "instruction": "Drag the correct ingredients into the bowl",
         "interaction": "drag",
-        "correct_ids": ["flour", "baking_soda", "salt"],
+        "correct_ids": [
+          "flour",
+          "baking_soda",
+          "salt"
+        ],
         "drop_placeholder": "Drag ingredients here for flour mixture",
         "completed_bowl_image": "flour-mixture.png",
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "It's like Coca-Cola… a powder you can't bake without!",
         "feedback_correct": "You got flour, baking soda, and salt — nice work!",
@@ -740,8 +1085,14 @@
           "salt": "Hint: you're missing a tiny pinch that balances the sweetness."
         },
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          }
         ]
       },
       {
@@ -749,18 +1100,83 @@
         "title": "Make the brown sugar mixture!",
         "instruction": "Drag the correct ingredients into the bowl",
         "interaction": "drag",
-        "correct_ids": ["brown_sugar", "buttermilk", "butter", "egg", "vanilla"],
+        "correct_ids": [
+          "brown_sugar",
+          "buttermilk",
+          "butter",
+          "egg",
+          "vanilla"
+        ],
         "all_items": [
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "It's a liquid — without it the brown sugar won't dissolve!",
         "feedback_correct": "Perfect — brown sugar, buttermilk, butter, egg, and vanilla!",
@@ -775,9 +1191,18 @@
           "vanilla": "Hint: you're missing the fragrant extract for flavor."
         },
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" },
-          { "image": "flour-mixture.png", "label": "flour mixture" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          },
+          {
+            "image": "flour-mixture.png",
+            "label": "flour mixture"
+          }
         ]
       },
       {
@@ -791,30 +1216,116 @@
         "spray_active_image": "whisk-clipart.png",
         "sound_file": "whisk.wav",
         "drag_speed": 0.056875,
-        "drag_start_pct": 0.30,
-        "drag_end_pct": 0.70,
+        "drag_start_pct": 0.3,
+        "drag_end_pct": 0.7,
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Move the whisk left and right → ← to mix",
         "feedback_correct": "Perfect — the mixture is smooth and runny!",
         "feedback_wrong": "Keep whisking until the sugar fully dissolves.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" },
-          { "image": "flour-mixture.png", "label": "flour mixture" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          },
+          {
+            "image": "flour-mixture.png",
+            "label": "flour mixture"
+          }
         ]
       },
       {
@@ -830,35 +1341,126 @@
         "sound_file": "pour.wav",
         "drag_speed": 0.165,
         "drag_start_pct": 0.16,
-        "drag_end_pct": 0.50,
+        "drag_end_pct": 0.5,
         "requires_tray_setup": true,
         "tray_slot_label": "Drag flour mixture here",
         "requires_second_setup": true,
         "second_slot_label": "Drag brown sugar mixture on top",
         "quiet_intermediate": true,
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Press and drag the pouring bowl across →",
         "feedback_correct": "Nice — the mixtures are combined!",
         "feedback_wrong": "Keep pouring across the whole bowl.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" },
-          { "image": "flour-mixture.png", "label": "flour mixture", "drag_key": "flour_bowl" },
-          { "image": "brown-sugar-paste.png", "label": "brown sugar mixture", "drag_key": "brown_sugar_bowl" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          },
+          {
+            "image": "flour-mixture.png",
+            "label": "flour mixture",
+            "drag_key": "flour_bowl"
+          },
+          {
+            "image": "brown-sugar-paste.png",
+            "label": "brown sugar mixture",
+            "drag_key": "brown_sugar_bowl"
+          }
         ]
       },
       {
@@ -869,30 +1471,122 @@
         "cutting_board_image": "cutting-board.png",
         "apple_image": "apple.png",
         "knife_image": "knife.png",
-        "apple_slice_images": ["apple-slice-2.png", "apple-slice-3.png", "apple-slice-4.png"],
-        "correct_ids": ["apple"],
+        "apple_slice_images": [
+          "apple-slice-2.png",
+          "apple-slice-3.png",
+          "apple-slice-4.png"
+        ],
+        "correct_ids": [
+          "apple"
+        ],
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Drag the apples onto the cutting board",
         "feedback_correct": "Perfectly sliced!",
         "feedback_wrong": "Keep slicing top-to-bottom!",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" },
-          { "image": "flour-brown-sugar-mix.png", "label": "muffin batter" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          },
+          {
+            "image": "flour-brown-sugar-mix.png",
+            "label": "muffin batter"
+          }
         ]
       },
       {
@@ -907,28 +1601,111 @@
         "sound_file": "pour.wav",
         "drag_speed": 0.33,
         "drag_start_pct": 0.16,
-        "drag_end_pct": 0.50,
+        "drag_end_pct": 0.5,
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Move the apples left and right ← → to fold them in",
         "feedback_correct": "Nice — the apples are folded into the batter!",
         "feedback_wrong": "Keep pouring across the whole bowl.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          }
         ]
       },
       {
@@ -942,29 +1719,112 @@
         "spray_active_image": "spatula.png",
         "sound_file": "whisk.wav",
         "drag_speed": 0.056875,
-        "drag_start_pct": 0.30,
-        "drag_end_pct": 0.70,
+        "drag_start_pct": 0.3,
+        "drag_end_pct": 0.7,
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Move the spatula left and right ← → to fold",
         "feedback_correct": "Perfect — the batter is smooth and ready!",
         "feedback_wrong": "Keep folding until the batter is smooth.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)"
+          }
         ]
       },
       {
@@ -987,27 +1847,115 @@
         "batter_slot_label": "Drag batter mixture here from aside",
         "scoop_count": 5,
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "apple",       "label": "apples",         "emoji": "🍎", "image": "apples-clipart.png", "quantity": "2"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "apple",
+            "label": "apples",
+            "emoji": "🍎",
+            "image": "apples-clipart.png",
+            "quantity": "2"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Drag the muffin tray and the batter into the cook station.",
         "feedback_correct": "Nice — muffin tin is filled!",
         "feedback_wrong": "Keep scooping — 5 scoops total.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "muffin-tray-greased-clipart.png", "label": "muffin tray (greased)", "drag_key": "tray" },
-          { "image": "step-9-after.png", "label": "muffin batter", "drag_key": "batter" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "muffin-tray-greased-clipart.png",
+            "label": "muffin tray (greased)",
+            "drag_key": "tray"
+          },
+          {
+            "image": "step-9-after.png",
+            "label": "muffin batter",
+            "drag_key": "batter"
+          }
         ]
       },
       {
@@ -1015,23 +1963,99 @@
         "title": "Make the topping!",
         "instruction": "Drag the correct ingredients into the bowl",
         "interaction": "drag",
-        "correct_ids": ["topping_brown_sugar", "topping_flour", "topping_butter", "cinnamon"],
+        "correct_ids": [
+          "topping_brown_sugar",
+          "topping_flour",
+          "topping_butter",
+          "cinnamon"
+        ],
         "drop_placeholder": "Drag ingredients here for topping",
         "empty_bowl_image": "green-bowl.png",
         "completed_bowl_image": "green-bowl-2.png",
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"},
-          {"id": "topping_brown_sugar", "label": "brown sugar", "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "½ cup"},
-          {"id": "topping_flour",       "label": "flour",       "emoji": "🌾", "image": "flour-clipart.png",       "quantity": "⅓ cup"},
-          {"id": "topping_butter",      "label": "butter",      "emoji": "🧈", "image": "butter-clipart.png",      "quantity": "2 tbsp"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          },
+          {
+            "id": "topping_brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "topping_flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "1/3 cup"
+          },
+          {
+            "id": "topping_butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "2 tbsp"
+          }
         ],
         "hint": "Think small amounts — this is a crumble, not a batter.",
         "feedback_correct": "Yes — that's the crumble topping!",
@@ -1043,8 +2067,14 @@
           "cinnamon": "Hint: you're missing the warm spice that ties it all together."
         },
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "step-10-muffins-5.png", "label": "muffin tray (filled)" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "step-10-muffins-5.png",
+            "label": "muffin tray (filled)"
+          }
         ]
       },
       {
@@ -1058,25 +2088,84 @@
         "spray_active_image": "spoon.png",
         "sound_file": "whisk.wav",
         "drag_speed": 0.056875,
-        "drag_start_pct": 0.30,
-        "drag_end_pct": 0.70,
+        "drag_start_pct": 0.3,
+        "drag_end_pct": 0.7,
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          }
         ],
         "hint": "Move the spoon left and right ← → to stir",
         "feedback_correct": "Perfect — the topping is nice and crumbly!",
         "feedback_wrong": "Keep stirring until the topping is crumbly.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "step-10-muffins-5.png", "label": "muffin tray (filled)" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "step-10-muffins-5.png",
+            "label": "muffin tray (filled)"
+          }
         ]
       },
       {
@@ -1091,30 +2180,94 @@
         "spray_done_image": "bowl-empty.png",
         "quiet_intermediate": true,
         "drag_speed": 0.056875,
-        "drag_start_pct": 0.10,
-        "drag_end_pct": 0.90,
+        "drag_start_pct": 0.1,
+        "drag_end_pct": 0.9,
         "requires_tray_setup": true,
         "tray_slot_label": "Drag muffin tray here",
         "requires_second_setup": true,
         "second_slot_label": "Drag topping here",
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          }
         ],
         "hint": "Drag the topping left and right ← → to sprinkle across the tray.",
         "feedback_correct": "Crumbly and delicious — ready to bake!",
         "feedback_wrong": "Keep dragging until the whole tray is topped.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "step-10-muffins-5.png", "label": "muffin tray (filled)", "drag_key": "flour_bowl" },
-          { "image": "green-bowl-3.png", "label": "topping mixture", "drag_key": "brown_sugar_bowl" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "step-10-muffins-5.png",
+            "label": "muffin tray (filled)",
+            "drag_key": "flour_bowl"
+          },
+          {
+            "image": "green-bowl-3.png",
+            "label": "topping mixture",
+            "drag_key": "brown_sugar_bowl"
+          }
         ]
       },
       {
@@ -1139,28 +2292,98 @@
         "tray_slot_label": "Drag oven here",
         "timer_correct_value": 25,
         "timer_title": "Set the bake timer (min)",
-        "timer_options": [10, 15, 20, 25, 30, 35, 40, 45],
+        "timer_options": [
+          10,
+          15,
+          20,
+          25,
+          30,
+          35,
+          40,
+          45
+        ],
         "post_open_muffin_image": "oven-with-muffins.png",
         "post_open_closed_image": "oven-with-muffins-closed.png",
         "post_open_tooltip_tray": "Drag muffin tray to the oven",
         "post_open_tooltip_close": "Close the oven ↑",
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          }
         ],
         "hint": "Drag the handle to swing the oven door open.",
         "feedback_correct": "Door closed — now let them bake!",
         "feedback_wrong": "Keep pulling — open the door all the way.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven", "drag_key": "flour_bowl" },
-          { "image": "muffins-crumbly.png", "label": "topped muffin tray", "drag_key": "muffin_tray" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven",
+            "drag_key": "flour_bowl"
+          },
+          {
+            "image": "muffins-crumbly.png",
+            "label": "topped muffin tray",
+            "drag_key": "muffin_tray"
+          }
         ]
       },
       {
@@ -1187,15 +2410,68 @@
         "right_panel_final_image": "muffins-done.png",
         "post_open_tooltip_transfer": "Drag the muffin tray to cool →",
         "all_items": [
-          {"id": "flour",       "label": "flour",          "emoji": "🌾", "image": "flour-clipart.png", "quantity": "2¼ cups"},
-          {"id": "baking_soda", "label": "baking soda",    "emoji": "🧪", "image": "baking-soda-clipart.png", "quantity": "1 tsp"},
-          {"id": "salt",        "label": "salt",           "emoji": "🧂", "image": "salt-clipart.png", "quantity": "½ tsp"},
-          {"id": "brown_sugar", "label": "brown sugar",    "emoji": "🍯", "image": "brown-sugar-clipart.png", "quantity": "1½ cups"},
-          {"id": "buttermilk",  "label": "buttermilk",     "emoji": "🥛", "image": "buttermilk-clipart.png", "quantity": "1 cup"},
-          {"id": "butter",      "label": "butter",         "emoji": "🧈", "image": "butter-clipart.png", "quantity": "3 tbsp"},
-          {"id": "egg",         "label": "egg",            "emoji": "🥚", "image": "eggs-clipart.png", "quantity": "1"},
-          {"id": "vanilla",     "label": "vanilla extract","emoji": "🍶", "image": "vanilla-extract-clipart.png", "quantity": "1 tsp"},
-          {"id": "cinnamon",    "label": "cinnamon",       "emoji": "🪵", "image": "cinamon-clipart.png"}
+          {
+            "id": "flour",
+            "label": "flour",
+            "emoji": "🌾",
+            "image": "flour-clipart.png",
+            "quantity": "2 1/4 cups"
+          },
+          {
+            "id": "baking_soda",
+            "label": "baking soda",
+            "emoji": "🧪",
+            "image": "baking-soda-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "salt",
+            "label": "salt",
+            "emoji": "🧂",
+            "image": "salt-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "brown_sugar",
+            "label": "brown sugar",
+            "emoji": "🍯",
+            "image": "brown-sugar-clipart.png",
+            "quantity": "1 1/2 cups"
+          },
+          {
+            "id": "buttermilk",
+            "label": "buttermilk",
+            "emoji": "🥛",
+            "image": "buttermilk-clipart.png",
+            "quantity": "1 cup"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart.png",
+            "quantity": "3 tbsp"
+          },
+          {
+            "id": "egg",
+            "label": "egg",
+            "emoji": "🥚",
+            "image": "eggs-clipart.png",
+            "quantity": "1"
+          },
+          {
+            "id": "vanilla",
+            "label": "vanilla extract",
+            "emoji": "🍶",
+            "image": "vanilla-extract-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "cinnamon",
+            "label": "cinnamon",
+            "emoji": "🪵",
+            "image": "cinamon-clipart.png"
+          }
         ],
         "hint": "Pull the oven door down, then drag the tray to the cooling rack.",
         "feedback_correct": "Fresh muffins — cooling and ready!",
@@ -1208,11 +2484,14 @@
         "finish_sound": "winner.wav",
         "feedback_finish": "Congratulations — you made muffins! 🎉",
         "set_aside": [
-          { "image": "plate.png", "label": "plate", "drag_key": "plate" }
+          {
+            "image": "plate.png",
+            "label": "plate",
+            "drag_key": "plate"
+          }
         ]
       }
     ],
-
     "casserole": [
       {
         "type": "drag_drop",
@@ -1220,22 +2499,106 @@
         "instruction": "Drag the slider to set the correct temp",
         "interaction": "knob",
         "correct_value": 350,
-        "options": [250, 300, 350, 375, 400, 450],
+        "options": [
+          250,
+          300,
+          350,
+          375,
+          400,
+          450
+        ],
         "all_items": [
-          {"id": "cream_soup",     "label": "chicken soup",     "emoji": "🥫", "image": "chicken-soup-clipart.png",           "quantity": "10.5 oz can"},
-          {"id": "cottage_cheese", "label": "cottage cheese",   "emoji": "🧀", "image": "cottage-cheese-clipart.png",         "quantity": "16 oz"},
-          {"id": "sour_cream",     "label": "sour cream",       "emoji": "🥛", "image": "sour-cream-clipart.png",             "quantity": "16 oz"},
-          {"id": "cream_cheese",   "label": "cream cheese",     "emoji": "🧀", "image": "whipped-cream-cheese-clipart.png",   "quantity": "8 oz"},
-          {"id": "seasoning",      "label": "seafood rub",      "emoji": "🌶️", "image": "seafood-rub-clipart.png",            "quantity": "4.4 oz"},
-          {"id": "onion_powder",   "label": "onion powder",     "emoji": "🧅", "image": "onion-powder-clipart.png",           "quantity": "2.43 oz"},
-          {"id": "garlic_powder",  "label": "garlic powder",    "emoji": "🧄", "image": "garlic-powder-clipart.png",          "quantity": "2.33 oz"},
-          {"id": "chicken",        "label": "pulled chicken",   "emoji": "🍗", "image": "pulled-chicken-clipart.png",         "quantity": "16 oz"},
-          {"id": "crackers",       "label": "crackers",         "emoji": "🍘", "image": "crackers-clipart.png",               "quantity": "12 oz"},
-          {"id": "mozzarella",     "label": "mozzarella",       "emoji": "🧀", "image": "mozarella-clipart.png",  "quantity": "16 oz"},
-          {"id": "parsley",        "label": "parsley",          "emoji": "🌿", "image": "parsley-clipart.png",                "quantity": "1 bunch"},
-          {"id": "scallions",      "label": "scallions",        "emoji": "🧅", "image": "scallions-clipart.png",              "quantity": "1 bunch"},
-          {"id": "cinnamon",       "label": "cinnamon",         "emoji": "🪵", "image": "cinamon-clipart-2.png",             "quantity": "1.9 oz"},
-          {"id": "butter",         "label": "butter",           "emoji": "🧈", "image": "butter-clipart-2.png",               "quantity": "16 oz"}
+          {
+            "id": "cream_soup",
+            "label": "chicken soup",
+            "emoji": "🥫",
+            "image": "chicken-soup-clipart.png",
+            "quantity": "10.5 oz can"
+          },
+          {
+            "id": "cottage_cheese",
+            "label": "cottage cheese",
+            "emoji": "🧀",
+            "image": "cottage-cheese-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "sour_cream",
+            "label": "sour cream",
+            "emoji": "🥛",
+            "image": "sour-cream-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "cream_cheese",
+            "label": "cream cheese",
+            "emoji": "🧀",
+            "image": "whipped-cream-cheese-clipart.png",
+            "quantity": "8 oz"
+          },
+          {
+            "id": "seasoning",
+            "label": "seafood rub",
+            "emoji": "🌶️",
+            "image": "seafood-rub-clipart.png",
+            "quantity": "4.4 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "onion-powder-clipart.png",
+            "quantity": "2.43 oz"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "garlic-powder-clipart.png",
+            "quantity": "2.33 oz"
+          },
+          {
+            "id": "chicken",
+            "label": "pulled chicken",
+            "emoji": "🍗",
+            "image": "pulled-chicken-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "crackers",
+            "label": "crackers",
+            "emoji": "🍘",
+            "image": "crackers-clipart.png",
+            "quantity": "12 oz"
+          },
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "parsley",
+            "label": "parsley",
+            "emoji": "🌿",
+            "image": "parsley-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart-2.png",
+            "quantity": "16 oz"
+          }
         ],
         "hint": "It is the coolest baking temp on this slider.",
         "feedback_correct": "That's right — 350°F!",
@@ -1246,39 +2609,127 @@
         "title": "Make the cream mixture!",
         "instruction": "Drag the correct ingredients into the bowl",
         "interaction": "drag",
-        "correct_ids": ["cream_soup", "cottage_cheese", "sour_cream", "cream_cheese", "onion_powder", "seasoning", "garlic_powder"],
+        "correct_ids": [
+          "cream_soup",
+          "cottage_cheese",
+          "sour_cream",
+          "cream_cheese",
+          "onion_powder",
+          "seasoning",
+          "garlic_powder"
+        ],
         "drop_placeholder": "Drag ingredients here for cream mixture",
         "completed_bowl_image": "bowl-with-cheeses.png",
         "all_items": [
-          {"id": "cream_soup",     "label": "cream of chicken soup", "emoji": "🥫", "image": "chicken-soup-clipart.png",           "quantity": "1 can"},
-          {"id": "cottage_cheese", "label": "cottage cheese",        "emoji": "🧀", "image": "cottage-cheese-clipart.png",         "quantity": "½ cup"},
-          {"id": "sour_cream",     "label": "sour cream",            "emoji": "🥛", "image": "sour-cream-clipart.png",             "quantity": "½ cup"},
-          {"id": "cream_cheese",   "label": "cream cheese",          "emoji": "🧀", "image": "whipped-cream-cheese-clipart.png",   "quantity": "4 oz"},
-          {"id": "onion_powder",   "label": "onion powder",          "emoji": "🧅", "image": "onion-powder-clipart.png",           "quantity": "½ tsp"},
-          {"id": "seasoning",      "label": "Creole seasoning",      "emoji": "🌶️", "image": "seafood-rub-clipart.png",            "quantity": "1½ tsp"},
-          {"id": "garlic_powder",  "label": "garlic powder",         "emoji": "🧄", "image": "garlic-powder-clipart.png",          "quantity": "1 tsp"},
-          {"id": "chicken",        "label": "pulled chicken",        "emoji": "🍗", "image": "pulled-chicken-clipart.png",         "quantity": "16 oz"},
-          {"id": "crackers",       "label": "crackers",              "emoji": "🍘", "image": "crackers-clipart.png",               "quantity": "12 oz"},
-          {"id": "mozzarella",     "label": "mozzarella",            "emoji": "🧀", "image": "mozarella-clipart.png",  "quantity": "16 oz"},
-          {"id": "parsley",        "label": "parsley",               "emoji": "🌿", "image": "parsley-clipart.png",                "quantity": "1 bunch"},
-          {"id": "scallions",      "label": "scallions",             "emoji": "🧅", "image": "scallions-clipart.png",              "quantity": "1 bunch"},
-          {"id": "cinnamon",       "label": "cinnamon",              "emoji": "🪵", "image": "cinamon-clipart-2.png",             "quantity": "1.9 oz"},
-          {"id": "butter",         "label": "butter",                "emoji": "🧈", "image": "butter-clipart-2.png",               "quantity": "16 oz"}
+          {
+            "id": "cream_soup",
+            "label": "cream of chicken soup",
+            "emoji": "🥫",
+            "image": "chicken-soup-clipart.png",
+            "quantity": "1 can"
+          },
+          {
+            "id": "cottage_cheese",
+            "label": "cottage cheese",
+            "emoji": "🧀",
+            "image": "cottage-cheese-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "sour_cream",
+            "label": "sour cream",
+            "emoji": "🥛",
+            "image": "sour-cream-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "cream_cheese",
+            "label": "cream cheese",
+            "emoji": "🧀",
+            "image": "whipped-cream-cheese-clipart.png",
+            "quantity": "4 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "onion-powder-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "seasoning",
+            "label": "Creole seasoning",
+            "emoji": "🌶️",
+            "image": "seafood-rub-clipart.png",
+            "quantity": "1 1/2 tsp"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "garlic-powder-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "chicken",
+            "label": "pulled chicken",
+            "emoji": "🍗",
+            "image": "pulled-chicken-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "crackers",
+            "label": "crackers",
+            "emoji": "🍘",
+            "image": "crackers-clipart.png",
+            "quantity": "12 oz"
+          },
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "parsley",
+            "label": "parsley",
+            "emoji": "🌿",
+            "image": "parsley-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart-2.png",
+            "quantity": "16 oz"
+          }
         ],
         "hint": "Think creamy — soup, dairy, and the seasoning trio.",
         "feedback_correct": "Perfect — soup, cheeses, sour cream, and the seasonings are all in!",
         "feedback_wrong": "Almost! Check what goes in the cream base.",
         "missing_hints": {
-          "cream_soup":     "Hint: you're missing the canned soup that makes the base creamy.",
+          "cream_soup": "Hint: you're missing the canned soup that makes the base creamy.",
           "cottage_cheese": "Hint: you're missing a lumpy white cheese that adds body.",
-          "sour_cream":     "Hint: you're missing the tangy white dairy that smooths everything out.",
-          "cream_cheese":   "Hint: you're missing the soft spreadable cheese (4 oz, room temp).",
-          "onion_powder":   "Hint: you're missing a dry allium powder — savory, no chopping.",
-          "seasoning":      "Hint: you're missing the spicy red-pepper blend from Louisiana.",
-          "garlic_powder":  "Hint: you're missing the garlicky dry spice."
+          "sour_cream": "Hint: you're missing the tangy white dairy that smooths everything out.",
+          "cream_cheese": "Hint: you're missing the soft spreadable cheese (4 oz, room temp).",
+          "onion_powder": "Hint: you're missing a dry allium powder — savory, no chopping.",
+          "seasoning": "Hint: you're missing the spicy red-pepper blend from Louisiana.",
+          "garlic_powder": "Hint: you're missing the garlicky dry spice."
         },
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
         ]
       },
       {
@@ -1292,22 +2743,60 @@
         "spray_active_image": "spatula.png",
         "sound_file": "whisk.wav",
         "drag_speed": 0.056875,
-        "drag_start_pct": 0.30,
-        "drag_end_pct": 0.70,
+        "drag_start_pct": 0.3,
+        "drag_end_pct": 0.7,
         "all_items": [
-          {"id": "cream_soup",     "label": "cream of chicken soup", "emoji": "🥫", "image": "chicken-soup-clipart.png",           "quantity": "1 can"},
-          {"id": "cottage_cheese", "label": "cottage cheese",        "emoji": "🧀", "image": "cottage-cheese-clipart.png",         "quantity": "½ cup"},
-          {"id": "sour_cream",     "label": "sour cream",            "emoji": "🥛", "image": "sour-cream-clipart.png",             "quantity": "½ cup"},
-          {"id": "cream_cheese",   "label": "cream cheese",          "emoji": "🧀", "image": "whipped-cream-cheese-clipart.png",   "quantity": "4 oz"},
-          {"id": "onion_powder",   "label": "onion powder",          "emoji": "🧅", "image": "onion-powder-clipart.png",           "quantity": "½ tsp"},
-          {"id": "seasoning",      "label": "Creole seasoning",      "emoji": "🌶️", "image": "seafood-rub-clipart.png",            "quantity": "1½ tsp"},
-          {"id": "garlic_powder",  "label": "garlic powder",         "emoji": "🧄", "image": "garlic-powder-clipart.png",          "quantity": "1 tsp"}
+          {
+            "id": "chicken",
+            "label": "pulled chicken",
+            "emoji": "🍗",
+            "image": "pulled-chicken-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "parsley",
+            "label": "parsley",
+            "emoji": "🌿",
+            "image": "parsley-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "crackers",
+            "label": "crackers",
+            "emoji": "🍘",
+            "image": "crackers-clipart.png",
+            "quantity": "12 oz"
+          },
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "🧈",
+            "image": "butter-clipart-2.png",
+            "quantity": "16 oz"
+          }
         ],
         "hint": "Move the spatula left and right ← → to mix",
         "feedback_correct": "Perfect — the cream mixture is smooth and ready!",
         "feedback_wrong": "Keep stirring until the mixture is smooth.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
         ]
       },
       {
@@ -1315,54 +2804,185 @@
         "title": "Add the chicken!",
         "instruction": "Drag the chicken and parsley into the cream mixture",
         "interaction": "drag",
-        "correct_ids": ["chicken", "parsley"],
+        "correct_ids": [
+          "chicken",
+          "parsley"
+        ],
         "empty_bowl_image": "bowl-with-cheeses-stirred.png",
-        "completed_bowl_image": "casserole-step4.png",
+        "completed_bowl_image": "chicken-and-parsley-unmixed.png",
+        "stacked_layout": true,
         "drop_placeholder": "Drag chicken and parsley here",
         "all_items": [
-          {"id": "cream_soup",     "label": "cream of chicken soup", "emoji": "ðŸ¥«", "image": "chicken-soup-clipart.png",           "quantity": "1 can"},
-          {"id": "cottage_cheese", "label": "cottage cheese",        "emoji": "ðŸ§€", "image": "cottage-cheese-clipart.png",         "quantity": "Â½ cup"},
-          {"id": "sour_cream",     "label": "sour cream",            "emoji": "ðŸ¥›", "image": "sour-cream-clipart.png",             "quantity": "Â½ cup"},
-          {"id": "cream_cheese",   "label": "cream cheese",          "emoji": "ðŸ§€", "image": "whipped-cream-cheese-clipart.png",   "quantity": "4 oz"},
-          {"id": "onion_powder",   "label": "onion powder",          "emoji": "ðŸ§…", "image": "onion-powder-clipart.png",           "quantity": "Â½ tsp"},
-          {"id": "seasoning",      "label": "Creole seasoning",      "emoji": "ðŸŒ¶ï¸", "image": "seafood-rub-clipart.png",            "quantity": "1Â½ tsp"},
-          {"id": "garlic_powder",  "label": "garlic powder",         "emoji": "ðŸ§„", "image": "garlic-powder-clipart.png",          "quantity": "1 tsp"},
-          {"id": "chicken",        "label": "pulled chicken",        "emoji": "ðŸ—", "image": "pulled-chicken-clipart.png",         "quantity": "16 oz"},
-          {"id": "parsley",        "label": "parsley",               "emoji": "ðŸŒ¿", "image": "parsley-clipart.png",                "quantity": "1 bunch"},
-          {"id": "crackers",       "label": "crackers",              "emoji": "ðŸ˜", "image": "crackers-clipart.png",               "quantity": "12 oz"},
-          {"id": "mozzarella",     "label": "mozzarella",            "emoji": "ðŸ§€", "image": "mozarella-clipart.png",              "quantity": "16 oz"},
-          {"id": "scallions",      "label": "scallions",             "emoji": "ðŸ§…", "image": "scallions-clipart.png",              "quantity": "1 bunch"},
-          {"id": "cinnamon",       "label": "cinnamon",              "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png",              "quantity": "1.9 oz"},
-          {"id": "butter",         "label": "butter",                "emoji": "ðŸ§ˆ", "image": "butter-clipart-2.png",               "quantity": "16 oz"}
+          {
+            "id": "cream_soup",
+            "label": "cream of chicken soup",
+            "emoji": "🥫",
+            "image": "chicken-soup-clipart.png",
+            "quantity": "1 can"
+          },
+          {
+            "id": "cottage_cheese",
+            "label": "cottage cheese",
+            "emoji": "🧀",
+            "image": "cottage-cheese-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "sour_cream",
+            "label": "sour cream",
+            "emoji": "🥛",
+            "image": "sour-cream-clipart.png",
+            "quantity": "1/2 cup"
+          },
+          {
+            "id": "cream_cheese",
+            "label": "cream cheese",
+            "emoji": "🧀",
+            "image": "whipped-cream-cheese-clipart.png",
+            "quantity": "4 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "onion-powder-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "seasoning",
+            "label": "Creole seasoning",
+            "emoji": "ðŸŒ¶ï¸",
+            "image": "seafood-rub-clipart.png",
+            "quantity": "1 1/2 tsp"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "ðŸ§„",
+            "image": "garlic-powder-clipart.png",
+            "quantity": "1 tsp"
+          },
+          {
+            "id": "chicken",
+            "label": "pulled chicken",
+            "emoji": "ðŸ—",
+            "image": "pulled-chicken-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "parsley",
+            "label": "parsley",
+            "emoji": "ðŸŒ¿",
+            "image": "parsley-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "crackers",
+            "label": "crackers",
+            "emoji": "ðŸ˜",
+            "image": "crackers-clipart.png",
+            "quantity": "12 oz"
+          },
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          },
+          {
+            "id": "butter",
+            "label": "butter",
+            "emoji": "ðŸ§ˆ",
+            "image": "butter-clipart-2.png",
+            "quantity": "16 oz"
+          }
         ],
         "hint": "This step needs the main protein and the fresh green herb.",
         "feedback_correct": "Great — the chicken is coated and ready!",
         "feedback_wrong": "Think protein plus parsley for this step.",
-        "missing_hints": {
-          "chicken": "Hint: you're missing the pulled chicken.",
-          "parsley": "Hint: you're missing the leafy herb that gets folded in."
-        },
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "bowl-with-cheeses-stirred.png", "label": "cream mixture" }
-        ]
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
+        ],
+        "split_targets": [
+          {
+            "id": "chicken",
+            "label": "Drag chicken here"
+          },
+          {
+            "id": "parsley",
+            "label": "Drag parsley here"
+          }
+        ],
+        "suppress_feedback": true,
+        "then_grease": true,
+        "then_grease_tray_image": "chicken-and-parsley-unmixed.png",
+        "then_grease_tray_greased_image": "chicken-and-parsley-mixed.png",
+        "then_grease_spray_image": "spatula.png",
+        "then_grease_drag_speed": 0.056875,
+        "then_grease_drag_start_pct": 0.3,
+        "then_grease_drag_end_pct": 0.7,
+        "then_grease_feedback_correct": "Perfect — chicken and parsley are folded in!"
       },
       {
         "type": "drag_drop",
         "title": "Make the cracker topping!",
         "instruction": "Drag the topping ingredients into the bowl",
         "interaction": "drag",
-        "correct_ids": ["crackers", "butter", "topping_garlic_powder"],
+        "correct_ids": [
+          "crackers",
+          "butter",
+          "topping_garlic_powder"
+        ],
         "empty_bowl_image": "green-bowl.png",
-        "completed_bowl_image": "green-bowl-2.png",
+        "completed_bowl_image": "cracker-unmixed.png",
         "drop_placeholder": "Drag cracker topping ingredients here",
         "all_items": [
-          {"id": "crackers",              "label": "crackers",              "emoji": "ðŸ˜", "image": "crackers-clipart.png",       "quantity": "12 oz"},
-          {"id": "butter",                "label": "melted butter",         "emoji": "ðŸ§ˆ", "image": "butter-clipart-2.png",       "quantity": "4 tbsp"},
-          {"id": "topping_garlic_powder", "label": "garlic powder",         "emoji": "ðŸ§„", "image": "garlic-powder-clipart.png",  "quantity": "Â½ tsp"},
-          {"id": "mozzarella",            "label": "mozzarella",            "emoji": "ðŸ§€", "image": "mozarella-clipart.png",      "quantity": "16 oz"},
-          {"id": "scallions",             "label": "scallions",             "emoji": "ðŸ§…", "image": "scallions-clipart.png",      "quantity": "1 bunch"},
-          {"id": "cinnamon",              "label": "cinnamon",              "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png",      "quantity": "1.9 oz"}
+          {
+            "id": "crackers",
+            "label": "crackers",
+            "emoji": "ðŸ˜",
+            "image": "crackers-clipart.png",
+            "quantity": "12 oz"
+          },
+          {
+            "id": "butter",
+            "label": "melted butter",
+            "emoji": "ðŸ§ˆ",
+            "image": "butter-clipart-2.png",
+            "quantity": "4 tbsp"
+          },
+          {
+            "id": "topping_garlic_powder",
+            "label": "garlic powder",
+            "emoji": "ðŸ§„",
+            "image": "garlic-powder-clipart.png",
+            "quantity": "1/2 tsp"
+          },
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          }
         ],
         "hint": "The topping is crunchy crackers plus butter and a little garlic powder.",
         "feedback_correct": "Yes — that's the crunchy cracker topping!",
@@ -1373,80 +2993,320 @@
           "topping_garlic_powder": "Hint: you're missing the extra garlic powder for the topping."
         },
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "casserole-step4.png", "label": "chicken mixture" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "chicken-and-parsley-mixed.png",
+            "label": "chicken mixture"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Mix the cracker topping!",
+        "instruction": "Stir until the topping is evenly crumbly",
+        "interaction": "grease",
+        "tray_image": "cracker-unmixed.png",
+        "tray_greased_image": "crumbly-mix-after.png",
+        "small_tray": true,
+        "spray_image": "spatula.png",
+        "spray_active_image": "spatula.png",
+        "sound_file": "whisk.wav",
+        "drag_speed": 0.056875,
+        "drag_start_pct": 0.3,
+        "drag_end_pct": 0.7,
+        "hint": "Move the spatula left and right ← → to mix",
+        "feedback_correct": "Perfect — the topping is crumbly and ready!",
+        "feedback_wrong": "Keep stirring until the crumbs are evenly coated.",
+        "set_aside": [
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "chicken-and-parsley-mixed.png",
+            "label": "chicken mixture"
+          }
+        ],
+        "all_items": [
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          }
         ]
       },
       {
         "type": "drag_drop",
         "title": "Assemble the casserole!",
-        "instruction": "Drag the chicken mixture, mozzarella, and cracker topping into the baking dish",
-        "interaction": "drag",
-        "correct_ids": ["chicken_mixture", "mozzarella", "cracker_topping"],
-        "empty_bowl_image": "bowl-empty.png",
-        "completed_bowl_image": "casserole-step6.png",
-        "drop_placeholder": "Drag layers into the baking dish",
-        "all_items": [
-          {"id": "chicken_mixture", "label": "chicken mixture", "emoji": "ðŸ¥˜", "image": "casserole-step4.png",     "quantity": "base"},
-          {"id": "mozzarella",      "label": "mozzarella",      "emoji": "ðŸ§€", "image": "mozarella-clipart.png",  "quantity": "16 oz"},
-          {"id": "cracker_topping", "label": "cracker topping", "emoji": "ðŸ˜", "image": "green-bowl-2.png",       "quantity": "1 bowl"},
-          {"id": "scallions",       "label": "scallions",       "emoji": "ðŸ§…", "image": "scallions-clipart.png",  "quantity": "1 bunch"},
-          {"id": "cinnamon",        "label": "cinnamon",        "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png",  "quantity": "1.9 oz"}
+        "instruction": "Layer chicken mixture, mozzarella, and cracker topping into the dish.",
+        "interaction": "fill",
+        "tray_image": "baking-tray.png",
+        "batter_image": "chicken-and-parsley-mixed.png",
+        "scooper_image": "scooper.png",
+        "scooper_full_image": "spatula-w-chicken.png",
+        "tray_progress_images": [
+          "one-third.png",
+          "two-thirds.png",
+          "three-thirds.png"
         ],
-        "hint": "Layer the filling first, then cheese, then the cracker topping.",
+        "batter_empty_image": "chicken-bowl-empty.png",
+        "tray_slot_label": "Drag baking tray here from aside",
+        "batter_slot_label": "Drag chicken mixture here from aside",
+        "scoop_count": 3,
+        "scoop_tooltip": "Drag chicken mixture<br>into the baking tray<br>(3 scoops)",
+        "all_items": [
+          {
+            "id": "mozzarella",
+            "label": "mozzarella",
+            "emoji": "🧀",
+            "image": "mozarella-clipart.png",
+            "quantity": "16 oz",
+            "drag_key": "batter",
+            "phase": 2
+          },
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          }
+        ],
+        "hint": "Drag the baking tray and chicken mixture from set-aside, then scoop the chicken in. After that, drag mozzarella from ingredients and scoop it on top. Finally, drag the cracker topping from set-aside.",
         "feedback_correct": "Layered and ready for the oven!",
-        "feedback_wrong": "Think casserole layers: filling, cheese, then topping.",
-        "missing_hints": {
-          "chicken_mixture": "Hint: start with the prepared chicken mixture.",
-          "mozzarella": "Hint: add the shredded cheese layer.",
-          "cracker_topping": "Hint: finish with the crunchy cracker topping."
-        },
+        "feedback_wrong": "Drop both the baking tray and chicken mixture into the cook station.",
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" },
-          { "image": "casserole-step4.png", "label": "chicken mixture" },
-          { "image": "green-bowl-2.png", "label": "cracker topping" }
-        ]
-      },
-      {
-        "type": "timer",
-        "title": "Bake the casserole!",
-        "instruction": "Watch the clock — hit STOP when it reaches about 35 minutes!",
-        "interaction": "timer",
-        "scene_image": "casserole-step7.png",
-        "timer_min": 33,
-        "timer_max": 37,
-        "timer_speed": 0.001,
-        "all_items": [
-          {"id": "scallions", "label": "scallions", "emoji": "ðŸ§…", "image": "scallions-clipart.png", "quantity": "1 bunch"}
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          },
+          {
+            "image": "baking-tray.png",
+            "label": "baking tray",
+            "drag_key": "tray"
+          },
+          {
+            "image": "chicken-and-parsley-mixed.png",
+            "label": "chicken mixture",
+            "drag_key": "batter",
+            "phase": 1
+          },
+          {
+            "image": "crumbly-mix-after.png",
+            "label": "cracker topping",
+            "drag_key": "batter",
+            "phase": 3
+          }
         ],
-        "hint": "The recipe says about 35 minutes. Stop between 33 and 37 minutes.",
-        "feedback_correct": "Perfect bake — golden, bubbly, and ready to serve!",
-        "feedback_wrong": "Aim for about 35 minutes.",
-        "feedback_wrong_early": "Too soon — the casserole needs more time to get bubbly.",
-        "feedback_wrong_late": "Too long — the crackers may burn."
+        "phase2_batter_image": "mozarella-clipart.png",
+        "phase2_batter_empty_image": "white-bowl.png",
+        "phase2_scooper_image": "hand-mozarella-before.png",
+        "phase2_scooper_full_image": "hand-mozarella-after.png",
+        "phase2_tray_progress_images": [
+          "mozarella-one-third.png",
+          "mozarella-two-thirds.png",
+          "mozarella-three-thirds.png"
+        ],
+        "phase2_scoop_count": 3,
+        "phase2_scoop_tooltip": "Drag mozzarella<br>over the chicken<br>(3 scoops)",
+        "phase2_batter_slot_label": "Drag mozzarella here from ingredients",
+        "phase3_batter_image": "crumbly-mix-after.png",
+        "phase3_batter_empty_image": "green-bowl.png",
+        "phase3_scooper_image": "hand-mozarella-before.png",
+        "phase3_scooper_full_image": "hand-crumbly-after.png",
+        "phase3_tray_progress_images": [
+          "crumbly-one-third.png",
+          "crumbly-two-thirds.png",
+          "crumbly-three-thirds.png"
+        ],
+        "phase3_scoop_count": 3,
+        "phase3_scoop_tooltip": "Drag cracker topping<br>over the cheese<br>(3 scoops)",
+        "phase3_batter_slot_label": "Drag cracker topping here from aside",
+        "large_batter": true,
+        "phase3_batter_smaller": true
       },
       {
         "type": "drag_drop",
-        "title": "Serve and garnish!",
-        "instruction": "Drag the scallions onto the casserole",
-        "interaction": "drag",
-        "correct_ids": ["scallions"],
-        "empty_bowl_image": "casserole-step7.png",
-        "completed_bowl_image": "casserole-step8.png",
-        "drop_placeholder": "Drag scallions onto the casserole",
+        "title": "Bake the casserole!",
+        "instruction": "Drag the oven into the center, then open the door",
+        "interaction": "grease",
+        "tray_image": "oven-front.png",
+        "tray_greased_image": "oven-opened.png",
+        "spray_image": "glove.png",
+        "spray_active_image": "glove.png",
+        "drag_speed": 8.0,
+        "drag_start_pct": 0.0,
+        "drag_end_pct": 0.5,
+        "drag_axis": "y",
+        "silent": true,
+        "no_progress": true,
+        "quiet_intermediate": true,
+        "cursor_follower": true,
+        "reveal_direction": "down",
+        "requires_tray_setup": true,
+        "tray_slot_label": "Drag oven here",
+        "post_open_muffin_image": "oven-with-casserole.png",
+        "post_open_closed_image": "oven-with-casserole-closed.png",
+        "post_open_tooltip_tray": "Drag baking tray to the oven",
+        "post_open_tooltip_close": "Close the oven ↑",
+        "bake_count_up_timer": true,
+        "bake_count_up_intro": "Hit START to begin baking, then STOP at about 35 minutes.",
+        "timer_min": 33,
+        "timer_max": 37,
+        "timer_target": 35,
+        "timer_speed": 0.001,
         "all_items": [
-          {"id": "scallions", "label": "scallions", "emoji": "ðŸ§…", "image": "scallions-clipart.png", "quantity": "1 bunch"},
-          {"id": "cinnamon",  "label": "cinnamon",  "emoji": "ðŸªµ", "image": "cinamon-clipart-2.png", "quantity": "1.9 oz"}
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          }
         ],
-        "hint": "The final garnish is the green onion/scallion topping.",
-        "feedback_correct": "Casserole complete — ready for lunch or dinner!",
-        "feedback_wrong": "Only the scallions go on at the end.",
-        "missing_hints": {
-          "scallions": "Hint: garnish with the green onions."
-        }
+        "hint": "Drag the oven, then pull the handle down to open it. Drag the casserole tray inside, then push the door up to close. Then watch the clock.",
+        "feedback_correct": "Perfect bake — golden, bubbly, and ready to serve!",
+        "feedback_wrong": "Aim for about 35 minutes.",
+        "feedback_wrong_early": "Too soon — the casserole needs more time to get bubbly. Try again!",
+        "feedback_wrong_late": "Too long — the crackers may burn. Try again!",
+        "set_aside": [
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven",
+            "drag_key": "flour_bowl"
+          },
+          {
+            "image": "crumbly-three-thirds.png",
+            "label": "casserole tray",
+            "drag_key": "muffin_tray"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Slice the scallions!",
+        "instruction": "Drag the scallions onto the cutting board, then slice them with the knife.",
+        "interaction": "slice",
+        "cutting_board_image": "cutting-board.png",
+        "apple_image": "scallions-clipart.png",
+        "knife_image": "knife.png",
+        "apple_slice_images": [
+          "scallions-1.png",
+          "scallions-2.png",
+          "scallions-3.png"
+        ],
+        "single_target": true,
+        "correct_ids": [
+          "scallions"
+        ],
+        "all_items": [
+          {
+            "id": "scallions",
+            "label": "scallions",
+            "emoji": "🧅",
+            "image": "scallions-clipart.png",
+            "quantity": "1 bunch"
+          }
+        ],
+        "hint": "Drag the scallions to the cutting board, then drag the knife down to slice.",
+        "feedback_correct": "Scallions sliced!",
+        "feedback_wrong": "Drag the scallions to the board first, then slice with the knife.",
+        "set_aside": [
+          {
+            "image": "finished-casserole.png",
+            "label": "casserole (cooling)"
+          }
+        ],
+        "slice_drag_tooltip": "Drag the scallions<br>to the cutting board",
+        "slice_knife_tooltip": "Slice the scallions<br>top to bottom ↓ with the knife",
+        "big_slice_target": true
+      },
+      {
+        "type": "drag_drop",
+        "title": "Plate and serve!",
+        "instruction": "Open the oven, plate a slice, then garnish.",
+        "interaction": "grease",
+        "two_panel": true,
+        "tray_image": "oven-with-casserole-done-closed.png",
+        "tray_greased_image": "oven-with-casserole-done.png",
+        "spray_image": "glove.png",
+        "spray_active_image": "glove.png",
+        "drag_speed": 8.0,
+        "drag_start_pct": 0.0,
+        "drag_end_pct": 0.5,
+        "drag_axis": "y",
+        "silent": true,
+        "no_progress": true,
+        "quiet_intermediate": true,
+        "cursor_follower": true,
+        "reveal_direction": "down",
+        "post_open_draggable_image": "finished-casserole.png",
+        "tray_after_transfer_image": "oven-opened.png",
+        "right_panel_label": "Drag tray here",
+        "right_panel_final_image": "finished-casserole.png",
+        "post_open_tooltip_transfer": "Drag the casserole tray to the right →",
+        "left_plate_label": "Drag plate here",
+        "left_plate_final_image": "plate.png",
+        "plate_muffin_drag_image": "finished-casserole-slice.png",
+        "plate_with_muffin_image": "finished-casserole-slice.png",
+        "plate_muffin_tooltip": "Drag the slice to the plate ←",
+        "finish_sound": "winner.wav",
+        "feedback_finish": "Beautiful — congratulations on your casserole!",
+        "all_items": [],
+        "hint": "Open the oven, drag the casserole to the right, drop a plate on the left, then drag a slice onto the plate.",
+        "feedback_correct": "Plated and ready to serve!",
+        "feedback_wrong": "Keep going through the steps.",
+        "set_aside": [
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven",
+            "drag_key": "flour_bowl"
+          },
+          {
+            "image": "plate.png",
+            "label": "plate",
+            "drag_key": "plate"
+          },
+          {
+            "image": "scallions-on-board.png",
+            "label": "sliced scallions",
+            "drag_key": "scallions_board",
+            "garnish_only": true
+          }
+        ],
+        "garnish_after_plate": true,
+        "garnish_panel_label": "Drag scallions here",
+        "garnish_drag_key": "scallions_board",
+        "garnish_cursor_image": "scallion-hand.png",
+        "garnish_final_image": "silce-with-scallions.png",
+        "garnish_panel_image": "scallions-on-board.png",
+        "plate_keeps_backdrop": true
+      },
+      {
+        "type": "drag_drop",
+        "title": "Congratulations!",
+        "instruction": "You made the casserole!",
+        "interaction": "celebration",
+        "celebration_image": "silce-with-scallions.png",
+        "sound_file": "winner.wav",
+        "all_items": [],
+        "hint": "",
+        "feedback_correct": "Casserole complete!",
+        "feedback_wrong": ""
       }
     ],
-
     "fajitas": [
       {
         "type": "drag_drop",
@@ -1454,21 +3314,106 @@
         "instruction": "Drag the slider to set the correct temp",
         "interaction": "knob",
         "correct_value": 400,
-        "options": [250, 300, 350, 375, 400, 450],
+        "options": [
+          250,
+          300,
+          350,
+          375,
+          400,
+          450
+        ],
         "all_items": [
-          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
-          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
-          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
-          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
-          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
-          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
-          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
-          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
-          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
-          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
-          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
-          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
-          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+          {
+            "id": "oil",
+            "label": "vegetable oil",
+            "emoji": "🫙",
+            "image": "fajitas-vegetable-oil-clipart.png",
+            "quantity": "32 fl oz"
+          },
+          {
+            "id": "chili_powder",
+            "label": "chili powder blend",
+            "emoji": "🌶️",
+            "image": "fajitas-chili-powder-clipart.png",
+            "quantity": "1.83 oz"
+          },
+          {
+            "id": "oregano",
+            "label": "oregano",
+            "emoji": "🌿",
+            "image": "fajitas-oregano-clipart.png",
+            "quantity": "0.35 oz"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "fajitas-garlic-powder-clipart.png",
+            "quantity": "2.33 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "fajitas-onion-powder-clipart.png",
+            "quantity": "2.43 oz"
+          },
+          {
+            "id": "seafood_rub",
+            "label": "seafood spice rub",
+            "emoji": "🌶️",
+            "image": "fajitas-seafood-rub-clipart.png",
+            "quantity": "4.4 oz"
+          },
+          {
+            "id": "black_pepper",
+            "label": "black pepper",
+            "emoji": "🫙",
+            "image": "fajitas-black-pepper-clipart.png",
+            "quantity": "1.8 oz"
+          },
+          {
+            "id": "cayenne_pepper",
+            "label": "cayenne pepper",
+            "emoji": "🌶️",
+            "image": "fajitas-cayenne-clipart.png",
+            "quantity": "1.76 oz"
+          },
+          {
+            "id": "chicken_breast",
+            "label": "chicken breast",
+            "emoji": "🍗",
+            "image": "fajitas-chicken-breast-clipart.png",
+            "quantity": "1 pack"
+          },
+          {
+            "id": "pepper_blend",
+            "label": "pepper blend",
+            "emoji": "🫑",
+            "image": "fajitas-pepper-blend-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "yellow_onion",
+            "label": "yellow onion",
+            "emoji": "🧅",
+            "image": "fajitas-yellow-onion-clipart.png",
+            "quantity": "48 oz bag"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
         ],
         "hint": "This one is hotter than the muffin oven.",
         "feedback_correct": "That's right — 400°F!",
@@ -1479,24 +3424,114 @@
         "title": "Make the marinade!",
         "instruction": "Drag the correct ingredients into the bag",
         "interaction": "drag",
-        "correct_ids": ["oil", "chili_powder", "oregano", "garlic_powder", "onion_powder", "seafood_rub", "black_pepper", "cayenne_pepper"],
+        "correct_ids": [
+          "oil",
+          "chili_powder",
+          "oregano",
+          "garlic_powder",
+          "onion_powder",
+          "seafood_rub",
+          "black_pepper",
+          "cayenne_pepper"
+        ],
         "all_items": [
-          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
-          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
-          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
-          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
-          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
-          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
-          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
-          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
-          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
-          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
-          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
-          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
-          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+          {
+            "id": "oil",
+            "label": "vegetable oil",
+            "emoji": "🫙",
+            "image": "fajitas-vegetable-oil-clipart.png",
+            "quantity": "32 fl oz"
+          },
+          {
+            "id": "chili_powder",
+            "label": "chili powder blend",
+            "emoji": "🌶️",
+            "image": "fajitas-chili-powder-clipart.png",
+            "quantity": "1.83 oz"
+          },
+          {
+            "id": "oregano",
+            "label": "oregano",
+            "emoji": "🌿",
+            "image": "fajitas-oregano-clipart.png",
+            "quantity": "0.35 oz"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "fajitas-garlic-powder-clipart.png",
+            "quantity": "2.33 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "fajitas-onion-powder-clipart.png",
+            "quantity": "2.43 oz"
+          },
+          {
+            "id": "seafood_rub",
+            "label": "seafood spice rub",
+            "emoji": "🌶️",
+            "image": "fajitas-seafood-rub-clipart.png",
+            "quantity": "4.4 oz"
+          },
+          {
+            "id": "black_pepper",
+            "label": "black pepper",
+            "emoji": "🫙",
+            "image": "fajitas-black-pepper-clipart.png",
+            "quantity": "1.8 oz"
+          },
+          {
+            "id": "cayenne_pepper",
+            "label": "cayenne pepper",
+            "emoji": "🌶️",
+            "image": "fajitas-cayenne-clipart.png",
+            "quantity": "1.76 oz"
+          },
+          {
+            "id": "chicken_breast",
+            "label": "chicken breast",
+            "emoji": "🍗",
+            "image": "fajitas-chicken-breast-clipart.png",
+            "quantity": "1 pack"
+          },
+          {
+            "id": "pepper_blend",
+            "label": "pepper blend",
+            "emoji": "🫑",
+            "image": "fajitas-pepper-blend-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "yellow_onion",
+            "label": "yellow onion",
+            "emoji": "🧅",
+            "image": "fajitas-yellow-onion-clipart.png",
+            "quantity": "48 oz bag"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
         ],
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
         ],
         "hint": "The marinade is all the spices + oil — not the fresh stuff!",
         "feedback_correct": "Great marinade — now let it sit!",
@@ -1507,7 +3542,11 @@
         "title": "Load the marinade bag!",
         "instruction": "Drag the chicken, peppers, and onion into the bag",
         "interaction": "drag",
-        "correct_ids": ["chicken_breast", "pepper_blend", "yellow_onion"],
+        "correct_ids": [
+          "chicken_breast",
+          "pepper_blend",
+          "yellow_onion"
+        ],
         "empty_bowl_image": "fajitas-marinade-bag.png",
         "completed_bowl_image": "fajitas-marinade-bag-full.png",
         "drop_placeholder": "Drag ingredients into the marinade bag",
@@ -1517,22 +3556,103 @@
           "yellow_onion": "Don't forget the onion — it adds sweetness."
         },
         "all_items": [
-          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
-          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
-          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
-          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
-          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
-          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
-          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
-          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
-          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
-          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
-          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
-          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
-          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+          {
+            "id": "oil",
+            "label": "vegetable oil",
+            "emoji": "🫙",
+            "image": "fajitas-vegetable-oil-clipart.png",
+            "quantity": "32 fl oz"
+          },
+          {
+            "id": "chili_powder",
+            "label": "chili powder blend",
+            "emoji": "🌶️",
+            "image": "fajitas-chili-powder-clipart.png",
+            "quantity": "1.83 oz"
+          },
+          {
+            "id": "oregano",
+            "label": "oregano",
+            "emoji": "🌿",
+            "image": "fajitas-oregano-clipart.png",
+            "quantity": "0.35 oz"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "fajitas-garlic-powder-clipart.png",
+            "quantity": "2.33 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "fajitas-onion-powder-clipart.png",
+            "quantity": "2.43 oz"
+          },
+          {
+            "id": "seafood_rub",
+            "label": "seafood spice rub",
+            "emoji": "🌶️",
+            "image": "fajitas-seafood-rub-clipart.png",
+            "quantity": "4.4 oz"
+          },
+          {
+            "id": "black_pepper",
+            "label": "black pepper",
+            "emoji": "🫙",
+            "image": "fajitas-black-pepper-clipart.png",
+            "quantity": "1.8 oz"
+          },
+          {
+            "id": "cayenne_pepper",
+            "label": "cayenne pepper",
+            "emoji": "🌶️",
+            "image": "fajitas-cayenne-clipart.png",
+            "quantity": "1.76 oz"
+          },
+          {
+            "id": "chicken_breast",
+            "label": "chicken breast",
+            "emoji": "🍗",
+            "image": "fajitas-chicken-breast-clipart.png",
+            "quantity": "1 pack"
+          },
+          {
+            "id": "pepper_blend",
+            "label": "pepper blend",
+            "emoji": "🫑",
+            "image": "fajitas-pepper-blend-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "yellow_onion",
+            "label": "yellow onion",
+            "emoji": "🧅",
+            "image": "fajitas-yellow-onion-clipart.png",
+            "quantity": "48 oz bag"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
         ],
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
         ],
         "hint": "The fresh stuff goes in — the chicken, the peppers, and the onion.",
         "feedback_correct": "Everything's in the bag — now let it marinate!",
@@ -1552,22 +3672,103 @@
         "drag_end_pct": 0.95,
         "sound_file": "pour.wav",
         "all_items": [
-          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
-          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
-          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
-          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
-          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
-          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
-          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
-          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
-          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
-          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
-          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
-          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
-          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+          {
+            "id": "oil",
+            "label": "vegetable oil",
+            "emoji": "🫙",
+            "image": "fajitas-vegetable-oil-clipart.png",
+            "quantity": "32 fl oz"
+          },
+          {
+            "id": "chili_powder",
+            "label": "chili powder blend",
+            "emoji": "🌶️",
+            "image": "fajitas-chili-powder-clipart.png",
+            "quantity": "1.83 oz"
+          },
+          {
+            "id": "oregano",
+            "label": "oregano",
+            "emoji": "🌿",
+            "image": "fajitas-oregano-clipart.png",
+            "quantity": "0.35 oz"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "fajitas-garlic-powder-clipart.png",
+            "quantity": "2.33 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "fajitas-onion-powder-clipart.png",
+            "quantity": "2.43 oz"
+          },
+          {
+            "id": "seafood_rub",
+            "label": "seafood spice rub",
+            "emoji": "🌶️",
+            "image": "fajitas-seafood-rub-clipart.png",
+            "quantity": "4.4 oz"
+          },
+          {
+            "id": "black_pepper",
+            "label": "black pepper",
+            "emoji": "🫙",
+            "image": "fajitas-black-pepper-clipart.png",
+            "quantity": "1.8 oz"
+          },
+          {
+            "id": "cayenne_pepper",
+            "label": "cayenne pepper",
+            "emoji": "🌶️",
+            "image": "fajitas-cayenne-clipart.png",
+            "quantity": "1.76 oz"
+          },
+          {
+            "id": "chicken_breast",
+            "label": "chicken breast",
+            "emoji": "🍗",
+            "image": "fajitas-chicken-breast-clipart.png",
+            "quantity": "1 pack"
+          },
+          {
+            "id": "pepper_blend",
+            "label": "pepper blend",
+            "emoji": "🫑",
+            "image": "fajitas-pepper-blend-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "yellow_onion",
+            "label": "yellow onion",
+            "emoji": "🧅",
+            "image": "fajitas-yellow-onion-clipart.png",
+            "quantity": "48 oz bag"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
         ],
         "set_aside": [
-          { "image": "oven-lit-up-clipart.png", "label": "preheated oven" }
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
         ],
         "hint": "Hold and drag rightward to spread everything across the pan →",
         "feedback_correct": "Nicely spread — into the oven it goes!",
@@ -1584,8 +3785,20 @@
         "timer_exact": 16,
         "timer_speed": 0.05,
         "all_items": [
-          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
-          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
         ],
         "hint": "Press START, watch the clock, and hit STOP at exactly 16 minutes.",
         "feedback_correct": "Perfect roast! The chicken hits 165°F inside.",
@@ -1598,24 +3811,105 @@
         "title": "Finish it off!",
         "instruction": "Drag the cilantro and lime onto the plate",
         "interaction": "drag",
-        "correct_ids": ["cilantro", "lime"],
+        "correct_ids": [
+          "cilantro",
+          "lime"
+        ],
         "empty_bowl_image": "plate.png",
         "completed_bowl_image": "fajitas-step7.png",
         "drop_placeholder": "Drag garnish onto the plate",
         "all_items": [
-          {"id": "oil",             "label": "vegetable oil",       "emoji": "🫙", "image": "fajitas-vegetable-oil-clipart.png", "quantity": "32 fl oz"},
-          {"id": "chili_powder",    "label": "chili powder blend",  "emoji": "🌶️", "image": "fajitas-chili-powder-clipart.png", "quantity": "1.83 oz"},
-          {"id": "oregano",         "label": "oregano",             "emoji": "🌿", "image": "fajitas-oregano-clipart.png", "quantity": "0.35 oz"},
-          {"id": "garlic_powder",   "label": "garlic powder",       "emoji": "🧄", "image": "fajitas-garlic-powder-clipart.png", "quantity": "2.33 oz"},
-          {"id": "onion_powder",    "label": "onion powder",        "emoji": "🧅", "image": "fajitas-onion-powder-clipart.png", "quantity": "2.43 oz"},
-          {"id": "seafood_rub",     "label": "seafood spice rub",   "emoji": "🌶️", "image": "fajitas-seafood-rub-clipart.png", "quantity": "4.4 oz"},
-          {"id": "black_pepper",    "label": "black pepper",        "emoji": "🫙", "image": "fajitas-black-pepper-clipart.png", "quantity": "1.8 oz"},
-          {"id": "cayenne_pepper",  "label": "cayenne pepper",      "emoji": "🌶️", "image": "fajitas-cayenne-clipart.png", "quantity": "1.76 oz"},
-          {"id": "chicken_breast",  "label": "chicken breast",      "emoji": "🍗", "image": "fajitas-chicken-breast-clipart.png", "quantity": "1 pack"},
-          {"id": "pepper_blend",    "label": "pepper blend",        "emoji": "🫑", "image": "fajitas-pepper-blend-clipart.png", "quantity": "16 oz"},
-          {"id": "yellow_onion",    "label": "yellow onion",        "emoji": "🧅", "image": "fajitas-yellow-onion-clipart.png", "quantity": "48 oz bag"},
-          {"id": "cilantro",        "label": "cilantro",            "emoji": "🌿", "image": "fajitas-cilantro-clipart.png", "quantity": "1 ea"},
-          {"id": "lime",            "label": "limes",               "emoji": "🍋", "image": "fajitas-lime-clipart.png", "quantity": "1 lb bag"}
+          {
+            "id": "oil",
+            "label": "vegetable oil",
+            "emoji": "🫙",
+            "image": "fajitas-vegetable-oil-clipart.png",
+            "quantity": "32 fl oz"
+          },
+          {
+            "id": "chili_powder",
+            "label": "chili powder blend",
+            "emoji": "🌶️",
+            "image": "fajitas-chili-powder-clipart.png",
+            "quantity": "1.83 oz"
+          },
+          {
+            "id": "oregano",
+            "label": "oregano",
+            "emoji": "🌿",
+            "image": "fajitas-oregano-clipart.png",
+            "quantity": "0.35 oz"
+          },
+          {
+            "id": "garlic_powder",
+            "label": "garlic powder",
+            "emoji": "🧄",
+            "image": "fajitas-garlic-powder-clipart.png",
+            "quantity": "2.33 oz"
+          },
+          {
+            "id": "onion_powder",
+            "label": "onion powder",
+            "emoji": "🧅",
+            "image": "fajitas-onion-powder-clipart.png",
+            "quantity": "2.43 oz"
+          },
+          {
+            "id": "seafood_rub",
+            "label": "seafood spice rub",
+            "emoji": "🌶️",
+            "image": "fajitas-seafood-rub-clipart.png",
+            "quantity": "4.4 oz"
+          },
+          {
+            "id": "black_pepper",
+            "label": "black pepper",
+            "emoji": "🫙",
+            "image": "fajitas-black-pepper-clipart.png",
+            "quantity": "1.8 oz"
+          },
+          {
+            "id": "cayenne_pepper",
+            "label": "cayenne pepper",
+            "emoji": "🌶️",
+            "image": "fajitas-cayenne-clipart.png",
+            "quantity": "1.76 oz"
+          },
+          {
+            "id": "chicken_breast",
+            "label": "chicken breast",
+            "emoji": "🍗",
+            "image": "fajitas-chicken-breast-clipart.png",
+            "quantity": "1 pack"
+          },
+          {
+            "id": "pepper_blend",
+            "label": "pepper blend",
+            "emoji": "🫑",
+            "image": "fajitas-pepper-blend-clipart.png",
+            "quantity": "16 oz"
+          },
+          {
+            "id": "yellow_onion",
+            "label": "yellow onion",
+            "emoji": "🧅",
+            "image": "fajitas-yellow-onion-clipart.png",
+            "quantity": "48 oz bag"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
         ],
         "hint": "Cilantro and lime go on last — drag both onto the plate.",
         "feedback_correct": "Fajitas complete — fresh, bright, and delicious!",

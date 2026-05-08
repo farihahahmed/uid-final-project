@@ -30,9 +30,11 @@
         {% if question.all_items %}
           <div class="drag-zone" id="drag-zone">
             {% for item in question.all_items %}
-              <div class="drag-item{% if item.image %} drag-item-card{% endif %}"
+              <div class="drag-item{% if item.image %} drag-item-card{% endif %}{% if item.drag_key %} ingredient-draggable{% endif %}{% if item.phase2_only %} phase2-only phase2-hidden{% endif %}{% if item.phase3_only %} phase3-only phase3-hidden{% endif %}"
                    {% if question.interaction == 'drag' or question.interaction == 'slice' %}draggable="true"{% endif %}
                    data-id="{{ item.id }}"
+                   {% if item.drag_key %}data-drag-key="{{ item.drag_key }}"{% endif %}
+                   {% if item.phase %}data-phase="{{ item.phase }}"{% endif %}
                    id="item-{{ item.id }}">
                 {% if item.image %}
                   <img src="{{ url_for('static', filename='images/' + item.image) }}"
@@ -56,10 +58,20 @@
       <h3 class="quiz-card-header">Cook station</h3>
       <div class="quiz-card-body">
         {% if question.interaction == 'drag' %}
-          <div class="bowl-row">
-            <div class="drop-target" id="drop-zone">
-              <span class="placeholder-text" id="drop-placeholder">{{ question.drop_placeholder | default('Drag ingredients here') }}</span>
-            </div>
+          <div class="bowl-row{% if question.stacked_layout %} bowl-row-stacked{% endif %}{% if question.split_targets %} bowl-row-split{% endif %}">
+            {% if question.split_targets %}
+              <div class="split-drop-row" id="drop-zone">
+                {% for t in question.split_targets %}
+                  <div class="drop-target split-drop-target" data-accept-id="{{ t.id }}" id="drop-zone-{{ t.id }}">
+                    <span class="placeholder-text">{{ t.label }}</span>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="drop-target" id="drop-zone">
+                <span class="placeholder-text" id="drop-placeholder">{{ question.drop_placeholder | default('Drag ingredients here') }}</span>
+              </div>
+            {% endif %}
             {% set empty_bowl = question.empty_bowl_image or 'blue-bowl.png' %}
             <img
               src="{{ url_for('static', filename='images/' + empty_bowl) }}"
@@ -72,11 +84,29 @@
               alt="bowl"
               draggable="false"
             >
+            {% if question.then_grease %}
+              <div class="grease-game whisk-variant inline-grease-stage" id="inline-grease-game" style="display:none;">
+                <div class="grease-stage" id="inline-grease-stage">
+                  <img src="{{ url_for('static', filename='images/' + question.then_grease_tray_image) }}"
+                       class="grease-tray grease-tray-base" id="inline-grease-tray-base"
+                       alt="" draggable="false">
+                  <img src="{{ url_for('static', filename='images/' + question.then_grease_tray_greased_image) }}"
+                       class="grease-tray grease-tray-greased" id="inline-grease-tray-greased"
+                       alt="" draggable="false">
+                  <img src="{{ url_for('static', filename='images/' + question.then_grease_spray_image) }}"
+                       class="grease-spray" id="inline-grease-spray"
+                       alt="" draggable="false">
+                  <div class="whisk-tooltip" id="inline-spatula-tooltip">
+                    Move spatula<br>left &amp; right ← →<br>to mix batter
+                  </div>
+                </div>
+              </div>
+            {% endif %}
           </div>
         {% endif %}
 
         {% if question.interaction == 'grease' %}
-          <div class="grease-game{% if question.sound_file == 'whisk.wav' %} whisk-variant{% endif %}{% if question.spray_image == 'bowl-pouring.png' %} pour-variant{% endif %}{% if question.spray_image == 'step-8-apples-falling.png' %} apples-variant{% endif %}{% if question.spray_image == 'topping-falling.png' %} topping-variant{% endif %}{% if question.spray_image == 'glove.png' and question.cursor_follower %} bake-variant{% endif %}{% if question.two_panel %} two-panel-variant{% endif %}{% if question.requires_tray_setup %} setup-pending{% endif %}" id="grease-game">
+          <div class="grease-game{% if question.sound_file == 'whisk.wav' %} whisk-variant{% endif %}{% if question.spray_image == 'bowl-pouring.png' %} pour-variant{% endif %}{% if question.spray_image == 'step-8-apples-falling.png' %} apples-variant{% endif %}{% if question.spray_image == 'topping-falling.png' %} topping-variant{% endif %}{% if question.spray_image == 'glove.png' and question.cursor_follower %} bake-variant{% endif %}{% if question.two_panel %} two-panel-variant{% endif %}{% if question.requires_tray_setup %} setup-pending{% endif %}{% if question.small_tray %} small-tray-variant{% endif %}" id="grease-game">
             <div class="grease-stage" id="grease-stage">
               <img
                 src="{{ url_for('static', filename='images/' + question.tray_image) }}"
@@ -214,6 +244,18 @@
                 </div>
               </div>
             {% endif %}
+            {% if question.bake_count_up_timer %}
+              <div class="bake-count-up-wrap" id="bake-count-up-wrap" style="display:none;">
+                {% if question.bake_count_up_intro %}
+                  <div class="bake-count-up-intro" id="bake-count-up-intro">{{ question.bake_count_up_intro }}</div>
+                {% endif %}
+                <div class="timer-panel" id="bake-count-up-panel">
+                  <div class="timer-display" id="bake-count-up-display">00:00</div>
+                  <button type="button" class="timer-start-btn" id="bake-count-up-start">&#9654; START</button>
+                  <button type="button" class="timer-stop-btn" id="bake-count-up-stop" style="display:none;">&#9646; STOP</button>
+                </div>
+              </div>
+            {% endif %}
           </div>
         {% endif %}
 
@@ -222,7 +264,7 @@
             <div class="slice-stage" id="slice-stage">
               <img src="{{ url_for('static', filename='images/' + question.cutting_board_image) }}"
                    class="slice-board" alt="cutting board" draggable="false">
-              <div class="slice-apples" id="slice-apples">
+              <div class="slice-apples{% if question.single_target %} single-target{% endif %}" id="slice-apples">
                 <img class="slice-apple" id="slice-apple-1"
                      data-src-0="{{ url_for('static', filename='images/' + question.apple_image) }}"
                      data-src-1="{{ url_for('static', filename='images/' + question.apple_slice_images[0]) }}"
@@ -230,6 +272,7 @@
                      data-src-3="{{ url_for('static', filename='images/' + question.apple_slice_images[2]) }}"
                      src="{{ url_for('static', filename='images/' + question.apple_image) }}"
                      alt="apple" draggable="false">
+                {% if not question.single_target %}
                 <img class="slice-apple" id="slice-apple-2"
                      data-src-0="{{ url_for('static', filename='images/' + question.apple_image) }}"
                      data-src-1="{{ url_for('static', filename='images/' + question.apple_slice_images[0]) }}"
@@ -237,14 +280,15 @@
                      data-src-3="{{ url_for('static', filename='images/' + question.apple_slice_images[2]) }}"
                      src="{{ url_for('static', filename='images/' + question.apple_image) }}"
                      alt="apple" draggable="false">
+                {% endif %}
               </div>
               <img src="{{ url_for('static', filename='images/' + question.knife_image) }}"
                    class="slice-knife" id="slice-knife" alt="knife" draggable="false">
               <div class="whisk-tooltip" id="slice-tooltip">
-                Drag the apples<br>to the cutting board
+                {{ question.slice_drag_tooltip | default('Drag the apples<br>to the cutting board') | safe }}
               </div>
             </div>
-            <div class="slice-progress-label" id="slice-progress-label">Keep slicing — 0/8</div>
+            <div class="slice-progress-label" id="slice-progress-label">Keep slicing — 0/{{ (question.apple_slice_images | length) * (1 if question.single_target else 2) }}</div>
             <div class="slice-progress-track">
               <div class="slice-progress-fill" id="slice-progress-fill"></div>
             </div>
@@ -252,7 +296,7 @@
         {% endif %}
 
         {% if question.interaction == 'fill' %}
-          <div class="fill-game" id="fill-game">
+          <div class="fill-game{% if question.large_batter %} large-batter-variant{% endif %}" id="fill-game">
             <div class="fill-slots">
               <div class="fill-slot" id="fill-slot-tray" data-accept="tray">
                 <span class="fill-slot-label">{{ question.tray_slot_label }}</span>
@@ -267,14 +311,19 @@
                 <span class="fill-slot-label">{{ question.batter_slot_label }}</span>
                 <img class="fill-slot-image" id="fill-batter-img"
                      data-base="{{ url_for('static', filename='images/' + question.batter_image) }}"
+                     {% if question.batter_empty_image %}
+                     data-empty="{{ url_for('static', filename='images/' + question.batter_empty_image) }}"
+                     {% endif %}
                      alt="" draggable="false">
               </div>
             </div>
+            {% if question.scooper_image and (question.scoop_count is not defined or question.scoop_count > 0) %}
             <img src="{{ url_for('static', filename='images/' + question.scooper_image) }}"
                  class="fill-scooper" id="fill-scooper"
                  data-idle="{{ url_for('static', filename='images/' + question.scooper_image) }}"
                  data-full="{{ url_for('static', filename='images/' + question.scooper_full_image) }}"
                  alt="" draggable="false">
+            {% endif %}
             <div class="whisk-tooltip" id="fill-tooltip" style="display:none;"></div>
           </div>
         {% endif %}
@@ -338,6 +387,15 @@
           </div>
         {% endif %}
 
+        {% if question.interaction == 'celebration' %}
+          <div class="celebration-game" id="celebration-game">
+            <img src="{{ url_for('static', filename='images/' + question.celebration_image) }}"
+                 class="celebration-image" alt="finished dish" draggable="false">
+            <h2 class="celebration-text">Congratulations!</h2>
+            <p class="celebration-sub">You made the casserole!</p>
+          </div>
+        {% endif %}
+
         {% if question.interaction == 'timer' %}
           <div class="timer-game" id="timer-game">
             <div class="timer-scene-wrap">
@@ -376,8 +434,9 @@
           <div class="set-aside-zone" id="set-aside-zone">
             {% if question.set_aside %}
               {% for item in question.set_aside %}
-                <div class="set-aside-item{% if item.drag_key %} set-aside-draggable{% endif %}"
-                     {% if item.drag_key %}data-drag-key="{{ item.drag_key }}"{% endif %}>
+                <div class="set-aside-item{% if item.drag_key %} set-aside-draggable{% endif %}{% if item.phase2_only %} phase2-only phase2-hidden{% endif %}{% if item.phase3_only %} phase3-only phase3-hidden{% endif %}{% if item.garnish_only %} garnish-only garnish-hidden{% endif %}"
+                     {% if item.drag_key %}data-drag-key="{{ item.drag_key }}"{% endif %}
+                     {% if item.phase %}data-phase="{{ item.phase }}"{% endif %}>
                   <img
                     src="{{ url_for('static', filename='images/' + item.image) }}"
                     class="set-aside-image"
@@ -492,44 +551,56 @@ if (INTERACTION === 'drag') {
   // ── Drop zone events ──────────────────────────────────────────────────────
   const dropZone = document.getElementById('drop-zone');
   const dragZone = document.getElementById('drag-zone');
+  const splitTargets = Array.from(document.querySelectorAll('.split-drop-target'));
+  const SUPPRESS_FEEDBACK = {{ 'true' if question.suppress_feedback else 'false' }};
 
-  dropZone.addEventListener('dragover', e => {
-    e.preventDefault();
-    dropZone.classList.add('dragover');
-  });
+  function attachDropToTarget(zone, acceptId) {
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+      zone.classList.add('dragover');
+    });
+    zone.addEventListener('dragleave', () => {
+      zone.classList.remove('dragover');
+    });
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('dragover');
+      const id = e.dataTransfer.getData('text/plain');
+      if (!id || droppedIds.includes(id)) return;
+      // Split target: only accept matching id
+      if (acceptId && id !== acceptId) return;
+      // Split target: only one item per zone
+      if (acceptId && zone.querySelector('.drag-item')) return;
 
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-  });
+      const original = document.getElementById('item-' + id);
+      if (!original) return;
+      original.classList.add('is-dropped');
 
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
+      const clone = original.cloneNode(true);
+      clone.id = 'clone-' + id;
+      clone.dataset.id = id;
+      clone.classList.remove('is-dropped', 'dragging');
+      clone.style.opacity = '';
+      clone.style.visibility = '';
+      clone.setAttribute('draggable', 'true');
+      wireDragItem(clone);
 
-    const id = e.dataTransfer.getData('text/plain');
-    if (!id || droppedIds.includes(id)) return;
+      const placeholder = zone.querySelector('.placeholder-text');
+      if (placeholder) placeholder.style.display = 'none';
+      const mainPlaceholder = document.getElementById('drop-placeholder');
+      if (mainPlaceholder) mainPlaceholder.style.display = 'none';
+      zone.appendChild(clone);
+      droppedIds.push(id);
+      playSound(CORRECT_IDS.includes(id));
+      evaluate();
+    });
+  }
 
-    // Keep original in place (hidden) so the ingredients grid doesn't reflow.
-    const original = document.getElementById('item-' + id);
-    if (!original) return;
-    original.classList.add('is-dropped');
-
-    // Clone into the bowl drop zone so the user sees it there & can drag back.
-    const clone = original.cloneNode(true);
-    clone.id = 'clone-' + id;
-    clone.dataset.id = id;
-    clone.classList.remove('is-dropped', 'dragging');
-    clone.style.opacity = '';
-    clone.style.visibility = '';
-    clone.setAttribute('draggable', 'true');
-    wireDragItem(clone);
-
-    document.getElementById('drop-placeholder').style.display = 'none';
-    dropZone.appendChild(clone);
-    droppedIds.push(id);
-    playSound(CORRECT_IDS.includes(id));
-    evaluate();
-  });
+  if (splitTargets.length) {
+    splitTargets.forEach(zone => attachDropToTarget(zone, zone.dataset.acceptId));
+  } else {
+    attachDropToTarget(dropZone, null);
+  }
 
   // ── Drag items BACK to ingredients list ───────────────────────────────────
   dragZone.addEventListener('dragover', e => {
@@ -543,12 +614,21 @@ if (INTERACTION === 'drag') {
 
   function returnToList(id) {
     const clone = document.getElementById('clone-' + id);
-    if (clone) clone.remove();
+    if (clone) {
+      // re-show the parent slot's placeholder if a split target now empties
+      const parentZone = clone.closest('.split-drop-target');
+      clone.remove();
+      if (parentZone) {
+        const ph = parentZone.querySelector('.placeholder-text');
+        if (ph) ph.style.display = '';
+      }
+    }
     const original = document.getElementById('item-' + id);
     if (original) original.classList.remove('is-dropped');
     droppedIds = droppedIds.filter(i => i !== id);
-    if (dropZone.querySelectorAll('.drag-item').length === 0) {
-      document.getElementById('drop-placeholder').style.display = '';
+    if (!splitTargets.length && dropZone.querySelectorAll('.drag-item').length === 0) {
+      const ph = document.getElementById('drop-placeholder');
+      if (ph) ph.style.display = '';
     }
     evaluate();
   }
@@ -562,11 +642,15 @@ if (INTERACTION === 'drag') {
   });
 
   // ── Click clone in drop zone to return it (fallback) ─────────────────────
-  dropZone.addEventListener('click', e => {
-    const item = e.target.closest('.drag-item');
-    if (!item) return;
-    returnToList(item.dataset.id);
-  });
+  function attachClickReturn(zone) {
+    zone.addEventListener('click', e => {
+      const item = e.target.closest('.drag-item');
+      if (!item) return;
+      returnToList(item.dataset.id);
+    });
+  }
+  if (splitTargets.length) splitTargets.forEach(attachClickReturn);
+  else attachClickReturn(dropZone);
 
   // ── Live evaluation ─────────────────────────────────────────────────────
   function evaluate() {
@@ -595,9 +679,29 @@ if (INTERACTION === 'drag') {
 
     const bowlImg = document.getElementById('bowl-image');
     if (bowlImg) {
-      bowlImg.src = (isRight && bowlImg.dataset.done)
-        ? bowlImg.dataset.done
-        : bowlImg.dataset.empty;
+      if (isRight && bowlImg.dataset.done) {
+        bowlImg.src = bowlImg.dataset.done;
+        bowlImg.classList.add('is-done');
+      } else {
+        bowlImg.src = bowlImg.dataset.empty;
+        bowlImg.classList.remove('is-done');
+      }
+    }
+
+    if (SUPPRESS_FEEDBACK) {
+      // Skip feedback UI entirely; just save + advance when correct
+      if (isRight) {
+        const splitRow = document.querySelector('.split-drop-row');
+        if (splitRow) splitRow.classList.add('is-hidden');
+        saveAnswer({ dropped: droppedIds, correct: true });
+        const inlineGrease = document.getElementById('inline-grease-game');
+        if (inlineGrease) {
+          startInlineStir();
+        } else {
+          unlockNext();
+        }
+      }
+      return;
     }
 
     if (isRight) {
@@ -670,6 +774,81 @@ if (INTERACTION === 'drag') {
       saveAnswer({ dropped: droppedIds, correct: true });
       unlockNext();
     }
+  }
+
+  // ── Inline stir mechanic (then_grease) ─────────────────────────────────────
+  function startInlineStir() {
+    const game = document.getElementById('inline-grease-game');
+    const stage = document.getElementById('inline-grease-stage');
+    const greased = document.getElementById('inline-grease-tray-greased');
+    const spray = document.getElementById('inline-grease-spray');
+    const tooltip = document.getElementById('inline-spatula-tooltip');
+    const bowlImg = document.getElementById('bowl-image');
+    if (bowlImg) bowlImg.style.display = 'none';
+    if (!game || !stage || !greased || !spray) return;
+    game.style.display = '';
+
+    const DRAG_SPEED      = {{ question.then_grease_drag_speed | default(0.056875) }};
+    const DRAG_START_PCT  = {{ question.then_grease_drag_start_pct | default(0.30) }};
+    const DRAG_END_PCT    = {{ question.then_grease_drag_end_pct   | default(0.70) }};
+    const FEEDBACK_OK_LOC = {{ (question.then_grease_feedback_correct or 'Perfect — folded in!') | tojson }};
+
+    let stageRect = stage.getBoundingClientRect();
+    let progress = 0;
+    let dragging = false;
+    let lastX = 0;
+    let done = false;
+
+    function placeSpray(pct) {
+      const x = (DRAG_START_PCT + pct * (DRAG_END_PCT - DRAG_START_PCT)) * stageRect.width;
+      spray.style.left = x + 'px';
+    }
+    placeSpray(0);
+    greased.style.clipPath = 'inset(0 100% 0 0)';
+
+    function setProgress(p) {
+      progress = Math.max(progress, Math.min(1, p));
+      const invPct = (1 - progress) * 100;
+      greased.style.clipPath = 'inset(0 ' + invPct + '% 0 0)';
+      if (!done && progress >= 0.98) {
+        done = true;
+        if (tooltip) tooltip.style.display = 'none';
+        playSound(true);
+        showFeedback(true, FEEDBACK_OK_LOC, '');
+        saveAnswer({ stirred: true, correct: true });
+        unlockNext();
+      }
+    }
+
+    function onDown(e) {
+      if (done) return;
+      stageRect = stage.getBoundingClientRect();
+      dragging = true;
+      lastX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0].clientX);
+      if (tooltip) tooltip.classList.add('is-hidden');
+      e.preventDefault();
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      const x = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0].clientX);
+      if (x === undefined) return;
+      const deltaPx = Math.abs(x - lastX);
+      lastX = x;
+      setProgress(progress + (deltaPx / stageRect.width) * DRAG_SPEED);
+      const cur = (x - stageRect.left) / stageRect.width;
+      const clamped = Math.max(DRAG_START_PCT, Math.min(DRAG_END_PCT, cur));
+      placeSpray((clamped - DRAG_START_PCT) / (DRAG_END_PCT - DRAG_START_PCT));
+    }
+    function onUp() {
+      dragging = false;
+    }
+
+    spray.addEventListener('mousedown', onDown);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    spray.addEventListener('touchstart', onDown, { passive: false });
+    document.addEventListener('touchmove', onMove, { passive: true });
+    document.addEventListener('touchend', onUp);
   }
 }
 
@@ -779,11 +958,27 @@ if (INTERACTION === 'grease') {
   const TWO_PANEL         = {{ 'true' if question.two_panel else 'false' }};
   const POST_OPEN_DRAGGABLE = {{ (question.post_open_draggable_image or '') | tojson }};
   const POST_TIP_TRANSFER = {{ (question.post_open_tooltip_transfer or '') | tojson }};
+  const TRAY_AFTER_TRANSFER = {{ (question.tray_after_transfer_image or '') | tojson }};
+  const GARNISH_ENABLED = {{ 'true' if question.garnish_after_plate else 'false' }};
+  const GARNISH_PANEL_LABEL = {{ (question.garnish_panel_label or '') | tojson }};
+  const GARNISH_DRAG_KEY = {{ (question.garnish_drag_key or 'scallions_board') | tojson }};
+  const GARNISH_CURSOR_IMAGE = {{ (question.garnish_cursor_image or '') | tojson }};
+  const GARNISH_CURSOR_AFTER_IMAGE = {{ (question.garnish_cursor_after_image or '') | tojson }};
+  const GARNISH_FINAL_IMAGE = {{ (question.garnish_final_image or '') | tojson }};
+  const GARNISH_PANEL_IMAGE = {{ (question.garnish_panel_image or 'scallions-on-board.png') | tojson }};
+  const PLATE_KEEPS_BACKDROP = {{ 'true' if question.plate_keeps_backdrop else 'false' }};
   const PLATE_MUFFIN_TIP     = {{ (question.plate_muffin_tooltip or '') | tojson }};
   const PLATE_MUFFIN_DRAG    = {{ (question.plate_muffin_drag_image or '') | tojson }};
   const PLATE_WITH_MUFFIN    = {{ (question.plate_with_muffin_image or '') | tojson }};
   const FINISH_SOUND_FILE    = {{ (question.finish_sound or '') | tojson }};
   const FEEDBACK_FINISH      = {{ (question.feedback_finish or '') | tojson }};
+  const BAKE_COUNT_UP        = {{ 'true' if question.bake_count_up_timer else 'false' }};
+  const BAKE_COUNT_UP_MIN    = {{ question.timer_min   | default(33) }};
+  const BAKE_COUNT_UP_MAX    = {{ question.timer_max   | default(37) }};
+  const BAKE_COUNT_UP_TARGET = {{ question.timer_target | default(35) }};
+  const BAKE_COUNT_UP_SPEED  = {{ question.timer_speed | default(0.001) }};
+  const BAKE_WRONG_EARLY     = {{ (question.feedback_wrong_early or 'Too soon — keep baking!') | tojson }};
+  const BAKE_WRONG_LATE      = {{ (question.feedback_wrong_late  or 'Too long — pull it out sooner.') | tojson }};
   const SOUND_FINISH = FINISH_SOUND_FILE
     ? new Audio("{{ url_for('static', filename='sounds/') }}" + FINISH_SOUND_FILE)
     : null;
@@ -821,6 +1016,65 @@ if (INTERACTION === 'grease') {
     // pct 0..1 across usable range
     const x = (START_PCT + pct * (END_PCT - START_PCT)) * stageRect.width;
     spray.style.left = `${x}px`;
+  }
+
+  function startBakeCountUp() {
+    const display = document.getElementById('bake-count-up-display');
+    const startBtn = document.getElementById('bake-count-up-start');
+    const stopBtn  = document.getElementById('bake-count-up-stop');
+    if (!display || !startBtn || !stopBtn) return;
+    const TICK_MS = Math.max(1, Math.round((BAKE_COUNT_UP_SPEED * 1000) / 60));
+    let mins = 0, secs = 0, running = false, intervalId = null;
+    const pad = n => String(n).padStart(2, '0');
+    const update = () => { display.textContent = pad(mins) + ':' + pad(secs); };
+    function tick() {
+      secs++;
+      if (secs >= 60) { secs = 0; mins++; }
+      update();
+      if (mins > BAKE_COUNT_UP_MAX) stopBake();
+    }
+    const wrap = document.getElementById('bake-count-up-wrap');
+    function startBake() {
+      if (running) return;
+      const line = wrap && wrap.querySelector('.bake-feedback-line');
+      if (line) line.style.display = 'none';
+      mins = 0; secs = 0; update();
+      running = true;
+      startBtn.style.display = 'none';
+      stopBtn.style.display  = '';
+      intervalId = setInterval(tick, TICK_MS);
+    }
+    function stopBake() {
+      if (!running) return;
+      running = false;
+      clearInterval(intervalId);
+      stopBtn.style.display = 'none';
+      const isRight = mins >= BAKE_COUNT_UP_MIN && mins <= BAKE_COUNT_UP_MAX;
+      const msg = isRight ? FEEDBACK_OK : (mins < BAKE_COUNT_UP_MIN ? BAKE_WRONG_EARLY : BAKE_WRONG_LATE);
+      playSound(isRight);
+      saveAnswer({ baked: true, correct: isRight, stopped_at: pad(mins) + ':' + pad(secs) });
+      if (isRight) {
+        showFeedback(true, msg, '');
+        unlockNext();
+      } else {
+        $('#next-btn').css({ 'pointer-events': 'none', opacity: 0.5 }).addClass('disabled-link');
+        if (wrap) {
+          let line = wrap.querySelector('.bake-feedback-line');
+          if (!line) {
+            line = document.createElement('div');
+            line.className = 'bake-feedback-line';
+            wrap.appendChild(line);
+          }
+          line.textContent = msg;
+          line.style.display = '';
+        }
+        startBtn.innerHTML = '&#10227; RESTART';
+        startBtn.style.display = '';
+      }
+    }
+    update();
+    startBtn.addEventListener('click', startBake);
+    stopBtn.addEventListener('click', stopBake);
   }
 
   function setProgress(p) {
@@ -861,9 +1115,20 @@ if (INTERACTION === 'grease') {
         if (TWO_PANEL) document.body.classList.add('two-panel-active');
         const tt = document.getElementById('handle-tooltip');
         if (tt) tt.style.display = 'none';
-        const timerPanel = document.getElementById('bake-timer-panel');
-        if (timerPanel) timerPanel.style.display = '';
-        if (hint) hint.textContent = 'Set the bake timer to ' + TIMER_CORRECT + ' minutes';
+        const countUpWrap = document.getElementById('bake-count-up-wrap');
+        if (countUpWrap) {
+          countUpWrap.style.display = '';
+          // Let the cook-station body overflow visibly so the feedback line under
+          // the timer isn't clipped by the card's overflow:hidden.
+          const csBody = document.querySelector('.quiz-cook-station .quiz-card-body');
+          if (csBody) csBody.classList.add('cook-overflow-visible');
+          if (hint) hint.textContent = 'Watch the clock — hit STOP at about ' + BAKE_COUNT_UP_TARGET + ' minutes.';
+          startBakeCountUp();
+        } else {
+          const timerPanel = document.getElementById('bake-timer-panel');
+          if (timerPanel) timerPanel.style.display = '';
+          if (hint) hint.textContent = 'Set the bake timer to ' + TIMER_CORRECT + ' minutes';
+        }
         return;
       }
       done = true;
@@ -973,6 +1238,12 @@ if (INTERACTION === 'grease') {
           rightSlot.classList.add('is-filled');
           if (rightFinal) rightFinal.style.display = '';
           if (!QUIET_INTERMEDIATE) playSound(true);
+          // After the tray transfers, swap the oven base image (e.g. to oven-opened.png).
+          if (TRAY_AFTER_TRANSFER && trayBaseImg) {
+            trayBaseImg.src = "{{ url_for('static', filename='images/') }}" + TRAY_AFTER_TRANSFER;
+            // Hide the greased overlay so the new base image is fully visible.
+            if (greased) greased.style.display = 'none';
+          }
           // If a plate slot is configured, enter the plate phase; otherwise finish.
           const plateSlot = document.getElementById('grease-left-plate-slot');
           if (plateSlot) {
@@ -1114,10 +1385,29 @@ if (INTERACTION === 'grease') {
                     ev.clientY >= r.top  && ev.clientY <= r.bottom;
         ghost.remove();
         if (hit) {
-          // Swap plate → plate-with-muffin
-          plateFinal.src = "{{ url_for('static', filename='images/') }}" + PLATE_WITH_MUFFIN;
+          // Keep the plate as backdrop and overlay the slice on top, OR swap the
+          // plate image directly (legacy muffins behavior).
+          if (PLATE_KEEPS_BACKDROP) {
+            let overlay = document.getElementById('grease-plate-overlay');
+            if (!overlay) {
+              overlay = document.createElement('img');
+              overlay.id = 'grease-plate-overlay';
+              overlay.className = 'grease-plate-overlay';
+              overlay.alt = 'slice';
+              overlay.draggable = false;
+              plateFinal.parentNode.appendChild(overlay);
+            }
+            overlay.src = "{{ url_for('static', filename='images/') }}" + PLATE_WITH_MUFFIN;
+            overlay.style.display = '';
+          } else {
+            plateFinal.src = "{{ url_for('static', filename='images/') }}" + PLATE_WITH_MUFFIN;
+          }
           const tip = document.getElementById('plate-muffin-tooltip');
           if (tip) tip.style.display = 'none';
+          if (GARNISH_ENABLED) {
+            enterAwaitGarnishPhase();
+            return;
+          }
           done = true;
           bakePhase = 'done';
           // Play winner sound (don't layer the regular correct chime on top)
@@ -1129,6 +1419,152 @@ if (INTERACTION === 'grease') {
           $('#hint-text').text('');
           box.show();
           saveAnswer({ plated_muffin: true, correct: true });
+          unlockNext();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  }
+
+  function enterAwaitGarnishPhase() {
+    bakePhase = 'await_garnish';
+    const rightSlot = document.getElementById('grease-right-slot');
+    let rightFinal = document.getElementById('grease-right-final');
+    // Detach the previous slice-from-tray listener by replacing the node.
+    if (rightFinal) {
+      const fresh = rightFinal.cloneNode(true);
+      rightFinal.parentNode.replaceChild(fresh, rightFinal);
+      rightFinal = fresh;
+      rightFinal.style.display = 'none';
+      rightFinal.style.pointerEvents = 'none';
+      rightFinal.style.cursor = '';
+    }
+    if (rightSlot) {
+      rightSlot.classList.remove('is-filled');
+      const lbl = rightSlot.querySelector('.fill-slot-label');
+      if (lbl) {
+        lbl.textContent = GARNISH_PANEL_LABEL || 'Drag scallions here';
+        lbl.style.display = '';
+      }
+    }
+    document.querySelectorAll('.set-aside-item.garnish-only').forEach(el => el.classList.remove('garnish-hidden'));
+    enableGarnishDrag();
+  }
+
+  function enableGarnishDrag() {
+    // Phase 1 of garnish: drag the sliced-scallions image from set-aside into the right panel slot.
+    const rightSlot = document.getElementById('grease-right-slot');
+    const rightFinal = document.getElementById('grease-right-final');
+    const items = document.querySelectorAll('.set-aside-item[data-drag-key="' + (GARNISH_DRAG_KEY || 'scallions_board') + '"]');
+    items.forEach(item => {
+      item.style.cursor = 'grab';
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        const ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top  = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.9';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          ghost.remove();
+          if (!rightSlot) return;
+          const r = rightSlot.getBoundingClientRect();
+          const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                      ev.clientY >= r.top  && ev.clientY <= r.bottom;
+          if (hit) {
+            item.classList.add('is-used');
+            rightSlot.classList.add('is-filled');
+            if (rightFinal) {
+              rightFinal.src = "{{ url_for('static', filename='images/') }}" + (GARNISH_PANEL_IMAGE || 'scallions-on-board.png');
+              rightFinal.style.display = '';
+              rightFinal.classList.add('garnish-source');
+            }
+            const lbl = rightSlot.querySelector('.fill-slot-label');
+            if (lbl) lbl.style.display = 'none';
+            enableScallionsToPlate();
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
+  }
+
+  function enableScallionsToPlate() {
+    // Phase 2 of garnish: drag the scallions image from the right panel onto the plated slice.
+    const rightFinal = document.getElementById('grease-right-final');
+    const plateFinal = document.getElementById('grease-left-final');
+    if (!rightFinal || !plateFinal) return;
+    rightFinal.style.pointerEvents = 'auto';
+    rightFinal.style.cursor = 'grab';
+    rightFinal.setAttribute('draggable', 'false');
+    rightFinal.addEventListener('dragstart', e => e.preventDefault());
+    rightFinal.addEventListener('mousedown', function onScallionDown(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      // Hide the source scallion image once the user starts dragging — only the hand
+      // follows the cursor, no slice or board image rides along.
+      rightFinal.style.visibility = 'hidden';
+      const ghost = document.createElement('img');
+      ghost.src = "{{ url_for('static', filename='images/') }}" + (GARNISH_CURSOR_IMAGE || 'scallion-hand.png');
+      ghost.style.position = 'fixed';
+      ghost.style.width = '110px';
+      ghost.style.height = 'auto';
+      ghost.style.pointerEvents = 'none';
+      ghost.style.zIndex = '9999';
+      ghost.style.left = (e.clientX - 30) + 'px';
+      ghost.style.top  = (e.clientY - 30) + 'px';
+      ghost.draggable = false;
+      document.body.appendChild(ghost);
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - 30) + 'px';
+        ghost.style.top  = (ev.clientY - 30) + 'px';
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        ghost.remove();
+        const r = plateFinal.getBoundingClientRect();
+        const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                    ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        if (!hit) {
+          // Bring the source scallion image back if the drop missed
+          rightFinal.style.visibility = '';
+        }
+        if (hit) {
+          if (GARNISH_FINAL_IMAGE) {
+            const overlay = document.getElementById('grease-plate-overlay');
+            if (PLATE_KEEPS_BACKDROP && overlay) {
+              overlay.src = "{{ url_for('static', filename='images/') }}" + GARNISH_FINAL_IMAGE;
+            } else {
+              plateFinal.src = "{{ url_for('static', filename='images/') }}" + GARNISH_FINAL_IMAGE;
+            }
+          }
+          rightFinal.style.display = 'none';
+          done = true;
+          bakePhase = 'done';
+          if (SOUND_FINISH) { try { SOUND_FINISH.currentTime = 0; SOUND_FINISH.play().catch(() => {}); } catch (_) {} }
+          if (hint) hint.textContent = '';
+          const box = $('#feedback-box');
+          box.removeClass('correct wrong').addClass('correct');
+          $('#feedback-text').text(FEEDBACK_FINISH || FEEDBACK_OK);
+          $('#hint-text').text('');
+          box.show();
+          saveAnswer({ garnished: true, correct: true });
           unlockNext();
         }
       };
@@ -1465,6 +1901,18 @@ if (INTERACTION === 'grease') {
 // ════════════════════════════════════════════════════════════════════════════
 // SLICE (step 7 — drag apple to board, then slice downward with knife)
 // ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'celebration') {
+  const SOUND_FILE = {{ (question.sound_file or 'success.wav') | tojson }};
+  try {
+    const a = new Audio("{{ url_for('static', filename='sounds/') }}" + SOUND_FILE);
+    a.volume = 0.7;
+    a.play().catch(() => {});
+  } catch (_) {}
+  showFeedback(true, FEEDBACK_OK || 'Casserole complete!', '');
+  saveAnswer({ celebration: true, correct: true });
+  unlockNext();
+}
+
 if (INTERACTION === 'slice') {
   const SOUND_SLICE = new Audio("{{ url_for('static', filename='sounds/slice.wav') }}");
   SOUND_SLICE.volume = 0.7;
@@ -1473,10 +1921,15 @@ if (INTERACTION === 'slice') {
   }
   const stage     = document.getElementById('slice-stage');
   const applesEl  = document.getElementById('slice-apples');
-  const apples    = [document.getElementById('slice-apple-1'), document.getElementById('slice-apple-2')];
+  const apples    = [
+    document.getElementById('slice-apple-1'),
+    document.getElementById('slice-apple-2')
+  ].filter(Boolean);
   const knife     = document.getElementById('slice-knife');
   const tooltip   = document.getElementById('slice-tooltip');
   const TOTAL_SLICES = 3;
+  const SLICE_DRAG_ID = (CORRECT_IDS && CORRECT_IDS[0]) || 'apple';
+  const SLICE_TIP_KNIFE = {{ (question.slice_knife_tooltip or 'Slice the apples<br>top to bottom ↓ with the knife') | tojson }};
 
   let applesOnBoard = false;
   let slicesDone = [0, 0];
@@ -1486,7 +1939,7 @@ if (INTERACTION === 'slice') {
   let sliceApple = -1;
 
   // ── Pointer-based drag for the apple card onto the cutting board ─────────
-  const appleCard = document.querySelector('.drag-item[data-id="apple"]');
+  const appleCard = document.querySelector('.drag-item[data-id="' + SLICE_DRAG_ID + '"]');
   let ghost = null;
   let carrying = false;
 
@@ -1522,7 +1975,7 @@ if (INTERACTION === 'slice') {
       applesEl.classList.add('visible');
       knife.classList.add('visible');
       stage.classList.add('knife-mode');
-      if (tooltip) tooltip.innerHTML = 'Slice the apples<br>top to bottom ↓ with the knife';
+      if (tooltip) tooltip.innerHTML = SLICE_TIP_KNIFE;
       appleCard.classList.add('is-dropped');
     }
   }
@@ -1565,10 +2018,11 @@ if (INTERACTION === 'slice') {
 
   const sliceFill = document.getElementById('slice-progress-fill');
   const sliceLabel = document.getElementById('slice-progress-label');
-  const TOTAL_SLICE_COUNT = TOTAL_PER_APPLE * 2;
+  const TOTAL_SLICE_COUNT = TOTAL_PER_APPLE * apples.length;
   function updateSliceProgress() {
     if (!sliceFill) return;
-    const completed = slicesDone[0] + slicesDone[1];
+    let completed = 0;
+    for (let i = 0; i < apples.length; i++) completed += slicesDone[i];
     sliceFill.style.width = `${(completed / TOTAL_SLICE_COUNT) * 100}%`;
     if (sliceLabel) {
       if (completed >= TOTAL_SLICE_COUNT) {
@@ -1581,13 +2035,15 @@ if (INTERACTION === 'slice') {
 
   // ── Slicing: a downward swipe over an apple advances THAT apple's state ──
   function advanceSlice(i) {
-    if (i < 0 || i > 1) return;
+    if (i < 0 || i >= apples.length) return;
     if (slicesDone[i] >= TOTAL_PER_APPLE) return;
     slicesDone[i]++;
     apples[i].src = apples[i].getAttribute('data-src-' + slicesDone[i]);
     playSliceSound();
     updateSliceProgress();
-    if (slicesDone[0] >= TOTAL_PER_APPLE && slicesDone[1] >= TOTAL_PER_APPLE) {
+    let allDone = true;
+    for (let j = 0; j < apples.length; j++) if (slicesDone[j] < TOTAL_PER_APPLE) allDone = false;
+    if (allDone) {
       showFeedback(true, FEEDBACK_OK, '');
       saveAnswer({ sliced: true, correct: true });
       unlockNext();
@@ -1597,8 +2053,6 @@ if (INTERACTION === 'slice') {
   function appleIndexAt(x, y) {
     for (let i = 0; i < apples.length; i++) {
       const r = apples[i].getBoundingClientRect();
-      // Only count if pointer is horizontally over the apple (vertical range
-      // is forgiving so the downward swipe can start above and end below).
       if (x >= r.left && x <= r.right) return i;
     }
     return -1;
@@ -1648,22 +2102,60 @@ if (INTERACTION === 'fill') {
   const batterImg    = document.getElementById('fill-batter-img');
   const scooper      = document.getElementById('fill-scooper');
   const tooltip      = document.getElementById('fill-tooltip');
-  const TOTAL_SCOOPS = 5;
+  let TOTAL_SCOOPS = {{ question.scoop_count | default(5) }};
+  let SCOOP_TOOLTIP = {{ (question.scoop_tooltip or 'Drag batter into<br>the muffin tray<br>(' ~ (question.scoop_count | default(5)) ~ ' scoops)') | tojson }};
+  const TRAY_PRE_FILLED = {{ 'true' if question.tray_pre_filled else 'false' }};
 
-  let trayFilled = false, batterFilled = false;
+  // Optional phase 2 — fires after phase 1 scoops are exhausted.
+  const HAS_PHASE2 = {{ 'true' if question.phase2_batter_image else 'false' }};
+  const PHASE2_BATTER_IMAGE         = {{ (question.phase2_batter_image or '') | tojson }};
+  const PHASE2_BATTER_EMPTY_IMAGE   = {{ (question.phase2_batter_empty_image or '') | tojson }};
+  const PHASE2_SCOOPER_IMAGE        = {{ (question.phase2_scooper_image or '') | tojson }};
+  const PHASE2_SCOOPER_FULL_IMAGE   = {{ (question.phase2_scooper_full_image or '') | tojson }};
+  const PHASE2_TRAY_PROGRESS        = {{ (question.phase2_tray_progress_images or []) | tojson }};
+  const PHASE2_SCOOP_COUNT          = {{ question.phase2_scoop_count | default(3) }};
+  const PHASE2_SCOOP_TOOLTIP        = {{ (question.phase2_scoop_tooltip or '') | tojson }};
+  const PHASE2_BATTER_SLOT_LABEL    = {{ (question.phase2_batter_slot_label or '') | tojson }};
+  // Optional phase 3 — fires after phase 2 scoops are exhausted.
+  const HAS_PHASE3 = {{ 'true' if question.phase3_batter_image else 'false' }};
+  const PHASE3_BATTER_IMAGE         = {{ (question.phase3_batter_image or '') | tojson }};
+  const PHASE3_BATTER_EMPTY_IMAGE   = {{ (question.phase3_batter_empty_image or '') | tojson }};
+  const PHASE3_SCOOPER_IMAGE        = {{ (question.phase3_scooper_image or '') | tojson }};
+  const PHASE3_SCOOPER_FULL_IMAGE   = {{ (question.phase3_scooper_full_image or '') | tojson }};
+  const PHASE3_TRAY_PROGRESS        = {{ (question.phase3_tray_progress_images or []) | tojson }};
+  const PHASE3_SCOOP_COUNT          = {{ question.phase3_scoop_count | default(3) }};
+  const PHASE3_SCOOP_TOOLTIP        = {{ (question.phase3_scoop_tooltip or '') | tojson }};
+  const PHASE3_BATTER_SLOT_LABEL    = {{ (question.phase3_batter_slot_label or '') | tojson }};
+  const STATIC_PREFIX               = "{{ url_for('static', filename='images/') }}";
+
+  let trayFilled = TRAY_PRE_FILLED, batterFilled = false;
   let scoops = 0;
+  let phase = 1;
   let stage = 'setup';     // 'setup' → 'scoop' → 'done'
 
+  game.classList.add('current-phase-1');
+
+  if (TRAY_PRE_FILLED) {
+    traySlot.classList.add('is-filled');
+    trayImg.src = trayImg.dataset.base;
+  }
+
   // ── Phase 1: make set-aside items pointer-draggable into the slots ───────
-  const setAsideDraggables = document.querySelectorAll('.set-aside-draggable');
-  let ghost = null, carrying = null;  // carrying = drag_key
+  const setAsideDraggables = document.querySelectorAll('.set-aside-draggable, .ingredient-draggable');
+  let ghost = null, carrying = null, carryingEl = null;  // carrying = drag_key
 
   function startCarry(e, el) {
     if (stage !== 'setup') return;
     const key = el.getAttribute('data-drag-key');
     if (key === 'tray' && trayFilled) return;
     if (key === 'batter' && batterFilled) return;
+    // Phase gating: a batter source tagged with data-phase must match the active phase.
+    if (key === 'batter') {
+      const elPhase = parseInt(el.getAttribute('data-phase') || '1', 10);
+      if (elPhase !== phase) return;
+    }
     carrying = key;
+    carryingEl = el;
     ghost = el.cloneNode(true);
     ghost.style.position = 'fixed';
     ghost.style.pointerEvents = 'none';
@@ -1690,13 +2182,17 @@ if (INTERACTION === 'fill') {
       trayFilled = true;
       traySlot.classList.add('is-filled');
       trayImg.src = trayImg.dataset.base;
-      const srcEl = document.querySelector('.set-aside-draggable[data-drag-key="tray"]');
+      const srcEl = document.querySelector('[data-drag-key="tray"]');
       if (srcEl) srcEl.classList.add('is-used');
     } else if (key === 'batter' && !batterFilled) {
       batterFilled = true;
       batterSlot.classList.add('is-filled');
+      batterImg.style.display = '';
+      batterImg.classList.remove('is-empty');
       batterImg.src = batterImg.dataset.base;
-      const srcEl = document.querySelector('.set-aside-draggable[data-drag-key="batter"]');
+      const srcEl = carryingEl
+        || Array.from(document.querySelectorAll('[data-drag-key="batter"]'))
+                .find(el => !el.classList.contains('is-used'));
       if (srcEl) srcEl.classList.add('is-used');
     }
     if (trayFilled && batterFilled) enterScoopPhase();
@@ -1713,6 +2209,7 @@ if (INTERACTION === 'fill') {
     } else if (key === 'batter' && hitSlot(x, y, batterSlot)) {
       fillSlot('batter');
     }
+    carryingEl = null;
   }
 
   setAsideDraggables.forEach(el => {
@@ -1737,10 +2234,95 @@ if (INTERACTION === 'fill') {
 
   // ── Phase 2: scooper cursor — drag batter → tray to scoop ────────────────
   function enterScoopPhase() {
+    if (TOTAL_SCOOPS <= 0) {
+      stage = 'done';
+      game.classList.add('is-done');
+      showFeedback(true, FEEDBACK_OK, '');
+      saveAnswer({ filled: true, correct: true });
+      unlockNext();
+      return;
+    }
     stage = 'scoop';
     game.classList.add('scooper-mode');
-    scooper.classList.add('visible');
-    if (tooltip) { tooltip.innerHTML = 'Drag batter into<br>the muffin tray<br>(5 scoops)'; tooltip.style.display = ''; }
+    game.classList.remove('phase2-scoop-mode', 'phase3-scoop-mode');
+    if (phase >= 2) game.classList.add('phase' + phase + '-scoop-mode');
+    if (scooper) scooper.classList.add('visible');
+    if (tooltip) { tooltip.innerHTML = SCOOP_TOOLTIP; tooltip.style.display = ''; }
+  }
+
+  function enterNextPhase(opts) {
+    phase = opts.phase;
+    stage = 'setup';
+    batterFilled = false;
+    scoops = 0;
+    TOTAL_SCOOPS = opts.scoopCount;
+    SCOOP_TOOLTIP = opts.scoopTooltip || SCOOP_TOOLTIP;
+
+    game.classList.remove('scooper-mode', 'phase2-scoop-mode');
+    if (scooper) scooper.classList.remove('visible');
+    if (tooltip) tooltip.style.display = 'none';
+
+    if (batterImg) {
+      batterImg.style.display = 'none';
+      batterImg.classList.remove('is-empty');
+    }
+    batterSlot.classList.remove('is-filled');
+    const slotLabel = batterSlot.querySelector('.fill-slot-label');
+    if (slotLabel) slotLabel.textContent = opts.batterSlotLabel;
+
+    if (opts.batterImage) batterImg.dataset.base = STATIC_PREFIX + opts.batterImage;
+    if (opts.batterEmpty) batterImg.dataset.empty = STATIC_PREFIX + opts.batterEmpty;
+    else batterImg.removeAttribute('data-empty');
+
+    opts.trayProgress.forEach((img, i) => {
+      trayImg.setAttribute('data-progress-' + (i + 1), STATIC_PREFIX + img);
+    });
+    for (let i = opts.trayProgress.length + 1; i <= 9; i++) {
+      trayImg.removeAttribute('data-progress-' + i);
+    }
+
+    if (opts.scooperIdle) {
+      scooper.dataset.idle = STATIC_PREFIX + opts.scooperIdle;
+      scooper.src = scooper.dataset.idle;
+    }
+    if (opts.scooperFull) {
+      scooper.dataset.full = STATIC_PREFIX + opts.scooperFull;
+    }
+
+    document.querySelectorAll('.phase' + opts.phase + '-only').forEach(el =>
+      el.classList.remove('phase' + opts.phase + '-hidden')
+    );
+
+    game.classList.remove('current-phase-1', 'current-phase-2', 'current-phase-3');
+    game.classList.add('current-phase-' + opts.phase);
+  }
+
+  function enterPhase2Setup() {
+    enterNextPhase({
+      phase: 2,
+      scoopCount: PHASE2_SCOOP_COUNT,
+      scoopTooltip: PHASE2_SCOOP_TOOLTIP,
+      batterSlotLabel: PHASE2_BATTER_SLOT_LABEL,
+      batterImage: PHASE2_BATTER_IMAGE,
+      batterEmpty: PHASE2_BATTER_EMPTY_IMAGE,
+      trayProgress: PHASE2_TRAY_PROGRESS,
+      scooperIdle: PHASE2_SCOOPER_IMAGE,
+      scooperFull: PHASE2_SCOOPER_FULL_IMAGE,
+    });
+  }
+
+  function enterPhase3Setup() {
+    enterNextPhase({
+      phase: 3,
+      scoopCount: PHASE3_SCOOP_COUNT,
+      scoopTooltip: PHASE3_SCOOP_TOOLTIP,
+      batterSlotLabel: PHASE3_BATTER_SLOT_LABEL,
+      batterImage: PHASE3_BATTER_IMAGE,
+      batterEmpty: PHASE3_BATTER_EMPTY_IMAGE,
+      trayProgress: PHASE3_TRAY_PROGRESS,
+      scooperIdle: PHASE3_SCOOPER_IMAGE,
+      scooperFull: PHASE3_SCOOPER_FULL_IMAGE,
+    });
   }
 
   function moveScooper(clientX, clientY) {
@@ -1766,6 +2348,7 @@ if (INTERACTION === 'fill') {
     if (!hitSlot(x, y, batterSlot)) return;
     scooping = true;
     scooper.src = scooper.dataset.full;
+    scooper.classList.add('is-grabbing');
     e.preventDefault();
   }
   function onScoopUp(e) {
@@ -1777,14 +2360,27 @@ if (INTERACTION === 'fill') {
           : (e.changedTouches && e.changedTouches[0] ? e.changedTouches[0].clientY : 0);
     const droppedOnTray = hitSlot(x, y, traySlot);
     scooper.src = scooper.dataset.idle;
+    scooper.classList.remove('is-grabbing');
     if (droppedOnTray && scoops < TOTAL_SCOOPS) {
       scoops++;
       const next = trayImg.getAttribute('data-progress-' + scoops);
       if (next) trayImg.src = next;
       playSound(true);
       if (scoops >= TOTAL_SCOOPS) {
+        if (batterImg && batterImg.dataset.empty) {
+          batterImg.src = batterImg.dataset.empty;
+          batterImg.classList.add('is-empty');
+        }
+        if (HAS_PHASE2 && phase === 1) {
+          enterPhase2Setup();
+          return;
+        }
+        if (HAS_PHASE3 && phase === 2) {
+          enterPhase3Setup();
+          return;
+        }
         stage = 'done';
-        game.classList.remove('scooper-mode');
+        game.classList.remove('scooper-mode', 'phase2-scoop-mode');
         game.classList.add('is-done');
         scooper.classList.remove('visible');
         if (tooltip) tooltip.style.display = 'none';

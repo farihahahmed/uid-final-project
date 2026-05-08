@@ -2382,6 +2382,11 @@ h1, h2, h3, .display-font {
   width: 40%;
   height: 60%;
 }
+.grease-game.small-tray-variant .grease-tray {
+  width: 36%;
+  height: 54%;
+  inset: 35% 32% 11% 32%;
+}
 .grease-game.whisk-variant .grease-spray {
   top: 15%;
   height: 34%;
@@ -2806,6 +2811,83 @@ body.two-panel-active #custom-cursor { display: block !important; }
 }
 #fill-slot-tray   { flex: 3; }
 #fill-slot-batter { flex: 1; }
+
+.fill-game.large-batter-variant #fill-slot-tray   { flex: 2; }
+.fill-game.large-batter-variant #fill-slot-batter { flex: 1.4; }
+.fill-game.large-batter-variant #fill-slot-batter .fill-slot-image {
+  max-width: 110%;
+  max-height: 110%;
+}
+.fill-game.large-batter-variant .fill-scooper {
+  height: 33%;
+}
+.fill-game.large-batter-variant.phase3-scoop-mode .fill-scooper.is-grabbing {
+  height: 66%;
+}
+/* Step 7: phase 3 (cracker topping) batter image rendered 10% smaller after drop */
+.fill-game.large-batter-variant.current-phase-3 #fill-slot-batter .fill-slot-image {
+  max-width: 99%;
+  max-height: 99%;
+}
+/* Single-target slice mode: center the lone item, render 50% bigger */
+.slice-apples.single-target {
+  justify-content: center;
+}
+.slice-apples.single-target .slice-apple {
+  height: 100%;
+  max-width: 68%;
+}
+/* Celebration interaction */
+.celebration-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 24px;
+  text-align: center;
+}
+.celebration-image {
+  max-width: 360px;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+.celebration-text {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #c2185b;
+  margin: 8px 0 0;
+}
+.celebration-sub {
+  font-size: 1.1rem;
+  color: #4a4a4a;
+  margin: 0;
+}
+.fill-game.large-batter-variant.current-phase-1 #fill-slot-batter .fill-slot-image {
+  max-width: 77%;
+  max-height: 77%;
+}
+.set-aside-item.phase2-hidden,
+.set-aside-item.phase3-hidden,
+.set-aside-item.garnish-hidden,
+.drag-item.phase2-hidden,
+.drag-item.phase3-hidden { display: none; }
+
+/* Slice overlaid on top of the plate (step 10 plate-and-serve) */
+.grease-plate-overlay {
+  position: absolute;
+  inset: 25%;
+  width: 50%;
+  height: 50%;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 6;
+}
+.fill-game.large-batter-variant #fill-slot-batter .fill-slot-image.is-empty {
+  max-width: 88%;
+  max-height: 88%;
+}
 #fill-slot-tray { justify-content: flex-start; padding-left: 2%; }
 #fill-slot-tray .fill-slot-label,
 #fill-slot-batter .fill-slot-label {
@@ -2870,7 +2952,9 @@ body.two-panel-active #custom-cursor { display: block !important; }
 .fill-game.scooper-mode .fill-slot { cursor: none; }
 
 .set-aside-item.set-aside-draggable { cursor: grab; }
-.set-aside-item.is-used { display: none; }
+.set-aside-item.is-used,
+.drag-item.is-used { display: none; }
+.drag-item.ingredient-draggable { cursor: grab; }
 
 /* Slice tooltip: keep clear of the cutting board */
 #slice-tooltip {
@@ -3090,6 +3174,63 @@ body.two-panel-active #custom-cursor { display: block !important; }
   user-select: none;
 }
 
+.bowl-row.bowl-row-stacked {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  background: #fff7f1;
+  border: 2px dashed #f3c6d9;
+  border-radius: 18px;
+  padding: 12px;
+}
+
+.bowl-row.bowl-row-stacked .drop-target {
+  width: 100%;
+  height: auto;
+  min-height: 130px;
+  flex: 0 0 auto;
+}
+
+.bowl-row.bowl-row-stacked .bowl-image-side {
+  width: 60%;
+  max-width: 200px;
+  align-self: center;
+}
+
+.bowl-row .split-drop-row {
+  display: flex !important;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+.bowl-row .split-drop-row.is-hidden {
+  display: none !important;
+}
+.bowl-row.bowl-row-stacked .inline-grease-stage {
+  width: 100%;
+  padding: 0;
+}
+.bowl-row.bowl-row-stacked .inline-grease-stage .grease-stage {
+  aspect-ratio: 16 / 9;
+  background: transparent;
+  border: none;
+}
+.bowl-row .split-drop-row .split-drop-target {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 110px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.bowl-row.bowl-row-stacked .bowl-image-side.is-done {
+  width: 48%;
+  max-width: 160px;
+}
+
 .drag-zone.dragover {
   outline: 3px dashed var(--pink-dark);
   outline-offset: 4px;
@@ -3163,6 +3304,57 @@ body.two-panel-active #custom-cursor { display: block !important; }
   width: 100%;
   max-width: 320px;
   flex-shrink: 0;
+}
+.bake-count-up-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 4px;
+}
+.bake-count-up-intro {
+  text-align: center;
+  font-weight: 700;
+  color: #dc2626;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  max-width: none;
+}
+.bake-count-up-wrap .timer-panel {
+  padding: 8px 16px;
+  gap: 8px;
+  max-width: 260px;
+}
+.bake-count-up-wrap .timer-display {
+  font-size: 2.2rem;
+  padding: 6px 18px;
+}
+.bake-count-up-wrap .timer-start-btn,
+.bake-count-up-wrap .timer-stop-btn {
+  padding: 8px 22px;
+  font-size: 1rem;
+}
+/* Compact wrong-answer feedback for the bake step — red-on-pink like earlier feedback */
+.bake-feedback-line {
+  text-align: center;
+  font-weight: 700;
+  color: #b91c1c;
+  background: #fee2e2;
+  border: 2px solid #fca5a5;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+/* Allow the bake-count-up panel + feedback to overflow the cook-station card. */
+.quiz-cook-station .quiz-card-body.cook-overflow-visible {
+  overflow: visible;
 }
 .timer-display {
   font-family: 'Courier New', Courier, monospace;

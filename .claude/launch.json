@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "flask",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-c", "import os; os.environ.setdefault('FLASK_APP','app.py'); from app import app; app.run(host='127.0.0.1', port=int(os.environ.get('PORT','5050')), debug=False)"],
+      "port": 5050,
+      "autoPort": true
+    }
+  ]
+}
