@@ -1516,9 +1516,6 @@ if (INTERACTION === 'grease') {
     rightFinal.addEventListener('mousedown', function onScallionDown(e) {
       e.preventDefault();
       e.stopPropagation();
-      // Hide the source scallion image once the user starts dragging — only the hand
-      // follows the cursor, no slice or board image rides along.
-      rightFinal.style.visibility = 'hidden';
       const ghost = document.createElement('img');
       ghost.src = "{{ url_for('static', filename='images/') }}" + (GARNISH_CURSOR_IMAGE || 'scallion-hand.png');
       ghost.style.position = 'fixed';
@@ -1541,10 +1538,6 @@ if (INTERACTION === 'grease') {
         const r = plateFinal.getBoundingClientRect();
         const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
                     ev.clientY >= r.top  && ev.clientY <= r.bottom;
-        if (!hit) {
-          // Bring the source scallion image back if the drop missed
-          rightFinal.style.visibility = '';
-        }
         if (hit) {
           if (GARNISH_FINAL_IMAGE) {
             const overlay = document.getElementById('grease-plate-overlay');

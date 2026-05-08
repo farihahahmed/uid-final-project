@@ -6,8 +6,16 @@
   {% if recipe_name == 'muffins' %}
     <img src="{{ url_for('static', filename='images/plate-with-muffin.png') }}"
          alt="plated muffin"
-         class="result-hero-image mb-3"
-         style="max-width: 320px; width: 100%; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 6px 14px rgba(0,0,0,0.15));">
+         class="result-hero-image result-hero-image-muffin mb-3">
+  {% elif recipe_name == 'casserole' %}
+    <div class="result-hero-stack result-hero-stack-casserole mb-3" aria-hidden="true">
+      <img src="{{ url_for('static', filename='images/plate.png') }}"
+           alt=""
+           class="result-hero-plate">
+      <img src="{{ url_for('static', filename='images/silce-with-scallions.png') }}"
+           alt="plated casserole"
+           class="result-hero-overlay result-hero-overlay-casserole">
+    </div>
   {% else %}
     <div class="display-1 mb-3">🎉</div>
   {% endif %}

@@ -3293,18 +3293,6 @@
         "garnish_final_image": "silce-with-scallions.png",
         "garnish_panel_image": "scallions-on-board.png",
         "plate_keeps_backdrop": true
-      },
-      {
-        "type": "drag_drop",
-        "title": "Congratulations!",
-        "instruction": "You made the casserole!",
-        "interaction": "celebration",
-        "celebration_image": "silce-with-scallions.png",
-        "sound_file": "winner.wav",
-        "all_items": [],
-        "hint": "",
-        "feedback_correct": "Casserole complete!",
-        "feedback_wrong": ""
       }
     ],
     "fajitas": [

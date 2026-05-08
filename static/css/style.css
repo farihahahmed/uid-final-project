@@ -704,6 +704,43 @@ h1, h2, h3, .display-font {
   max-width: 480px;
 }
 
+.result-hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.15));
+}
+
+.result-hero-image-muffin {
+  max-width: 320px;
+}
+
+.result-hero-stack {
+  position: relative;
+  width: min(100%, 300px);
+  margin: 0 auto;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.14));
+}
+
+.result-hero-plate {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.result-hero-overlay {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -52%);
+  height: auto;
+}
+
+.result-hero-overlay-casserole {
+  width: min(56%, 170px);
+}
+
 .result-score-card {
   display: inline-block;
   padding: 14px 26px;
