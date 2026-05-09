@@ -152,7 +152,7 @@ h1, h2, h3, .display-font {
   font-weight: 700;
   letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: #000;
+  color: #ff4fa7;
   background: linear-gradient(180deg, rgba(255, 235, 244, 0.98) 0%, rgba(248, 221, 240, 0.98) 100%);
   border: 1px solid rgba(249, 198, 224, 0.95);
   border-radius: 999px;
@@ -301,6 +301,9 @@ h1, h2, h3, .display-font {
   white-space: pre-line;
 }
 
+.slide-subtitle-gap {
+  margin-top: 36px;
+}
 .slide-subtitle-compact {
   font-size: 1.75rem;
   white-space: nowrap;
@@ -740,6 +743,27 @@ h1, h2, h3, .display-font {
 .result-hero-overlay-casserole {
   width: min(56%, 170px);
 }
+.result-hero-overlay-fajitas {
+  width: min(70%, 220px);
+}
+/* Push the casserole + fajitas hero stacks down so the result-page content
+   centers vertically, matching the look of the muffins result page. */
+.result-hero-stack-casserole,
+.result-hero-stack-fajitas {
+  margin-top: 80px;
+}
+/* Fajita plate is a square top-down image, so cap its display size and
+   tighten its margins so the overall hero footprint matches the slim
+   casserole plate stack. */
+.result-hero-stack-fajitas {
+  width: min(100%, 220px);
+  margin-top: 0;
+  margin-bottom: 0 !important;
+}
+.result-hero-stack-fajitas .result-hero-overlay-fajitas {
+  width: min(82%, 190px);
+  transform: translate(-50%, -50%);
+}
 
 .result-score-card {
   display: inline-block;
@@ -939,7 +963,7 @@ h1, h2, h3, .display-font {
   flex-direction: column;
   width: 100%;
   max-width: 1100px;
-  margin: 0 auto;
+  margin: 36px auto 0;
   gap: 18px;
 }
 
@@ -1449,6 +1473,17 @@ h1, h2, h3, .display-font {
 .quiz-ingredients .quiz-card-body::-webkit-scrollbar-thumb:hover {
   background: #ec7aa8;
 }
+.quiz-cook-station .quiz-card-body {
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #f3a4c4 #fde6ef;
+}
+.quiz-cook-station .quiz-card-body::-webkit-scrollbar { width: 10px; }
+.quiz-cook-station .quiz-card-body::-webkit-scrollbar-track { background: #fde6ef; border-radius: 999px; }
+.quiz-cook-station .quiz-card-body::-webkit-scrollbar-thumb { background: #f3a4c4; border-radius: 999px; }
+
 .quiz-set-aside .quiz-card-body {
   overflow-y: auto;
   overflow-x: hidden;
@@ -1781,6 +1816,29 @@ h1, h2, h3, .display-font {
   width: 100%;
   max-width: 440px;
 }
+.oven-check-btn {
+  align-self: center;
+  margin-top: 8px;
+  padding: 12px 36px;
+  background: linear-gradient(135deg, #ff5fa2 0%, #ff2e8a 60%, #ff006e 100%);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(255, 0, 110, 0.45), 0 0 0 3px rgba(255, 95, 162, 0.18);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+.oven-check-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 24px rgba(255, 0, 110, 0.55), 0 0 0 4px rgba(255, 95, 162, 0.25);
+}
+.oven-check-btn:active { transform: translateY(0); filter: brightness(0.96); }
 
 .oven-slider-title {
   font-family: 'Inter', Arial, sans-serif;
@@ -2443,6 +2501,86 @@ h1, h2, h3, .display-font {
   height: 67%;
 }
 
+/* Plate (or other) backdrop sitting behind the tray */
+.grease-backdrop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 92%;
+  height: auto;
+  max-height: 92%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+/* Lime variant (steps 12-14): plate centers on the tray and is sized just
+   larger than the tray, mirroring the result-page proportions. */
+.grease-game.lime-variant .grease-backdrop {
+  top: 60%;
+  left: 50%;
+  width: auto;
+  height: 73%;
+  max-width: none;
+  max-height: 73%;
+}
+/* Slight extra height so the round plate isn't clipped at the bottom. */
+.grease-game.lime-variant .grease-stage {
+  aspect-ratio: 16 / 10;
+}
+/* Compensate the tray position so it sits at roughly the same absolute spot
+   as before despite the slightly taller stage. */
+.grease-game.lime-variant .grease-tray {
+  inset: 34% 6% 4% 6% !important;
+  width: 88% !important;
+  height: 52% !important;
+}
+
+/* ── Lime variant (fajitas step 9) ─────────────────────────────────── */
+/* Tray sits lower; the drop slot is slim (less internal padding). */
+.grease-game.lime-variant .grease-tray {
+  inset: 38% 6% 4% 6%;
+  width: 88%;
+  height: 58%;
+}
+.grease-game.lime-variant .grease-setup-slot {
+  top: 38%;
+  left: 6%;
+  width: 88%;
+  height: 58%;
+  padding: 6px;
+}
+.grease-game.lime-variant .grease-setup-slot-2 {
+  top: 38%;
+  left: 6%;
+  width: 88%;
+  height: 14%;
+  padding: 4px 8px;
+  background: rgba(255, 253, 251, 0.92);
+}
+.grease-game.lime-variant .grease-setup-slot-2 .fill-slot-label {
+  font-size: 0.95rem;
+}
+/* After both setups complete, lime sits fixed at the top-left of the tray */
+.grease-game.lime-variant.swipe-mode .grease-spray {
+  position: absolute !important;
+  top: 28% !important;
+  left: 2% !important;
+  height: 33% !important;
+  width: auto !important;
+  z-index: 4;
+  pointer-events: none;
+}
+.grease-game.lime-variant.swipe-mode #pour-tooltip,
+.grease-game.lime-variant.swipe-mode #handle-tooltip,
+.grease-game.lime-variant.swipe-mode #topping-tooltip {
+  display: block !important;
+  top: 4%;
+  right: 4%;
+  left: auto;
+}
+
 /* Setup phase (step 6) — hide tray/spray/pour-tooltip until aside item is dropped */
 .grease-game.setup-pending .grease-tray,
 .grease-game.setup-pending .grease-spray,
@@ -2454,6 +2592,10 @@ h1, h2, h3, .display-font {
    once the pour phase begins. */
 .grease-game.pour-variant #setup-tooltip,
 .grease-game.pour-variant #second-setup-tooltip { display: none !important; }
+/* Same for the lime-variant (fajitas steps 12-14): the slot label inside the
+   stage is enough; the swipe instruction will appear after the drop. */
+.grease-game.lime-variant #setup-tooltip,
+.grease-game.lime-variant #second-setup-tooltip { display: none !important; }
 .grease-setup-slot {
   position: absolute;
   top: 18%;
@@ -2816,6 +2958,114 @@ body.two-panel-active #custom-cursor { display: block !important; }
 .slice-knife.visible { display: block; }
 .slice-stage.knife-mode { cursor: none; }
 
+/* ── Pair stage (drag two items into two side-by-side slots) ─────────── */
+.pair-game {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #fff7f1;
+  border: 2px dashed #f3c6d9;
+  border-radius: 18px;
+  padding: 4%;
+}
+.pair-slots {
+  display: flex;
+  gap: 3%;
+  width: 100%;
+  height: 100%;
+  align-items: stretch;
+}
+.pair-slot {
+  flex: 1;
+  position: relative;
+  border: 2px dashed #f3c6d9;
+  border-radius: 14px;
+  background: #fffdfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.pair-slot.is-filled {
+  background: transparent;
+}
+.pair-slot-label {
+  font-weight: 600;
+  color: var(--pink, #d9377f);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 0 8px;
+  pointer-events: none;
+}
+.pair-slot-image {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+/* Plate (left slot) renders 50% larger and can overflow the slot bounds. */
+#pair-slot-left { overflow: visible; }
+#pair-slot-left-img {
+  max-width: 83%;
+  max-height: 83%;
+}
+.pair-slot-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 78%;
+  max-height: 78%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 3;
+}
+.pair-phase3-instr {
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  color: #dc2626;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  padding: 8px 14px;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 6;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.pair-phase3-count { display: block; margin-top: 4px; font-weight: 700; }
+#pair-follower {
+  position: fixed;
+  width: 180px;
+  height: auto;
+  pointer-events: none;
+  z-index: 99999;
+  user-select: none;
+  display: none;
+}
+.pair-phase2-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  color: #dc2626;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  text-align: center;
+  padding: 8px 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  z-index: 4;
+}
+
 /* ── Fill stage (step 10 — two panels + scoop) ───────────────────────── */
 .fill-game {
   position: relative;
@@ -2866,6 +3116,68 @@ body.two-panel-active #custom-cursor { display: block !important; }
   max-width: 99%;
   max-height: 99%;
 }
+/* Multi-target slice mode: 3 separate cutting boards side-by-side */
+.slice-stage-multi {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  gap: 2%;
+  padding: 3% 2%;
+  background: #fff7f1;
+}
+.slice-board-slot {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+.slice-board-slot .slice-board-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+.slice-board-slot .slice-board-tooltip {
+  position: absolute;
+  top: 50%;
+  left: 41%;
+  transform: translate(-50%, -50%);
+  color: #d12d4f;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-align: center;
+  background: rgba(255,255,255,0.9);
+  padding: 3px 8px;
+  border-radius: 8px;
+  pointer-events: none;
+  z-index: 3;
+  white-space: nowrap;
+  max-width: 80%;
+}
+.slice-board-slot.filled .slice-board-tooltip { display: none; }
+.slice-board-slot .slice-apple.multi-apple {
+  position: absolute;
+  top: 50%;
+  left: 41%;
+  transform: translate(-50%, -50%);
+  height: 55%;
+  max-width: 55%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
+}
+.slice-game-multi .slice-apples.multi-target { display: none !important; }
+.slice-game-multi #slice-tooltip {
+  top: 4%;
+  left: 4%;
+  right: auto;
+  font-size: 0.85rem;
+}
+
 /* Single-target slice mode: center the lone item, render 50% bigger */
 .slice-apples.single-target {
   justify-content: center;
@@ -2908,8 +3220,255 @@ body.two-panel-active #custom-cursor { display: block !important; }
 .set-aside-item.phase2-hidden,
 .set-aside-item.phase3-hidden,
 .set-aside-item.garnish-hidden,
+.set-aside-item.fridge-hidden,
+.set-aside-item.intro-hidden,
+.set-aside-item.lime-hidden,
+.set-aside-item.cilantro-hidden,
 .drag-item.phase2-hidden,
 .drag-item.phase3-hidden { display: none; }
+
+/* Lime/cilantro finale: drop zone where the oven was, and meat panel */
+.lime-cilantro-zone {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 78%;
+  aspect-ratio: 1.5 / 1;
+  border: 3px dashed #f3c6d9;
+  border-radius: 18px;
+  background: #fffdfb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  color: #d12d4f;
+  font-weight: 800;
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 12px;
+}
+.lime-cilantro-zone.is-filled { border-style: solid; border-color: #c9a96e; background: transparent; }
+.lime-cilantro-zone img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+.lime-cilantro-progress {
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  text-align: center;
+  z-index: 5;
+}
+.lime-cilantro-progress .lc-label { font-size: 1.1rem; }
+.lime-cilantro-progress .lc-label {
+  color: #b8324a;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+.lime-cilantro-progress .lc-track {
+  width: 100%;
+  height: 10px;
+  background: #ffe0e8;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.lime-cilantro-progress .lc-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #f6a8c2, #d12d4f);
+  transition: width 200ms ease;
+}
+body.lc-cursor-none, body.lc-cursor-none * { cursor: none !important; }
+body.lc-cursor-none #custom-cursor { display: none !important; }
+
+/* Finale layout overrides: collapse two-panel, allow normal cursor on stage */
+.grease-game.lc-finale.two-panel-variant { grid-template-columns: 1fr; }
+.grease-game.lc-finale .grease-stage,
+.grease-game.lc-finale .grease-stage * { cursor: auto !important; }
+body.lc-cursor-none .grease-game.lc-finale .grease-stage,
+body.lc-cursor-none .grease-game.lc-finale .grease-stage * { cursor: none !important; }
+
+/* Meat background fills the stage */
+.lc-meat-bg {
+  position: absolute;
+  inset: 4%;
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 1;
+}
+/* Drop zone — proportions match muffins/6 second-slot prompt */
+.lc-drop-zone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70%;
+  padding: 18px 24px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 14px;
+  text-align: center;
+  color: #d12d4f;
+  font-weight: 800;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+  z-index: 5;
+}
+.lc-tip {
+  top: 6%;
+  right: 6%;
+  left: auto;
+  z-index: 6;
+}
+#lc-follower {
+  position: fixed;
+  width: 180px;
+  height: auto;
+  pointer-events: none;
+  z-index: 99999;
+  user-select: none;
+  display: none;
+}
+
+/* Fridge finale: tooltip floats top-right of the cook station, fridge centers */
+.fill-game .fridge-tooltip {
+  position: absolute;
+  top: 6%;
+  right: 6%;
+  color: #dc2626;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.25;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+/* Timer phase: match casserole bake step 8 — fridge centered in a 16:9 dashed
+   container, identical proportions to .grease-stage. Only ONE dashed outline. */
+.fill-game.fridge-centered {
+  background: transparent;
+  border: none;
+  padding: 0;
+  aspect-ratio: auto;
+  height: auto;
+}
+.fill-game.fridge-centered .fill-slots {
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  align-items: stretch;
+  padding: 0;
+  margin: 0;
+}
+.fill-game.fridge-centered #fill-slot-batter {
+  flex: 0 0 100%;
+  max-width: none;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #fff7f1;
+  border: 2px dashed #f3c6d9;
+  border-radius: 18px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fill-game.fridge-centered #fill-slot-batter .fill-slot-image {
+  position: relative;
+  inset: auto;
+  width: auto;
+  height: 80%;
+  max-width: 88%;
+  max-height: 80%;
+  object-fit: contain;
+}
+/* Tighten the gap between fridge and timer panel below */
+.fill-game.fridge-centered + #fridge-timer-wrap,
+#fridge-timer-wrap {
+  margin-top: 8px;
+  gap: 8px;
+}
+/* Hide system cursor (and the site's custom pixel arrow) during fridge glove drags */
+body.fridge-cursor-none,
+body.fridge-cursor-none * { cursor: none !important; }
+body.fridge-cursor-none #custom-cursor { display: none !important; }
+
+/* During the fajitas fridge intro, force the fridge image to a fixed box so that
+   closed-fridge.png and open-fridge-with-fajita.png render at identical dimensions. */
+.fill-game.fridge-intro-active #fill-slot-tray .fill-slot-image {
+  width: 88%;
+  height: 88%;
+  max-width: 88%;
+  max-height: 88%;
+  object-fit: contain;
+}
+
+/* Timer with bake style — visually mirrors casserole/8 bake-variant-done state.
+   Same dimensions as .grease-stage / .grease-tray. */
+.timer-game.bake-style .timer-scene-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #fff7f1;
+  border: 2px dashed #f3c6d9;
+  border-radius: 18px;
+  flex: 0 0 auto;
+  height: auto;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.timer-game.bake-style .timer-scene {
+  position: absolute;
+  inset: 4% 4%;
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  display: block;
+  border-radius: 0;
+}
+.timer-game.bake-style { gap: 8px; }
+.timer-game.bake-style .timer-panel {
+  padding: 8px 16px;
+  gap: 8px;
+  max-width: 260px;
+}
+.timer-game.bake-style .timer-display {
+  font-size: 2.2rem;
+  padding: 6px 18px;
+}
+.timer-game.bake-style .bake-count-up-intro {
+  margin: 0;
+}
+
+/* Fixed-height feedback slot under the timer — keeps timer position stable */
+.fridge-feedback-slot {
+  min-height: 56px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+.fridge-feedback-slot .bake-feedback-line { margin-top: 0; }
+.fridge-feedback-slot .bake-feedback-line-ok {
+  color: #166534;
+  background: #dcfce7;
+  border-color: #86efac;
+}
 
 /* Slice overlaid on top of the plate (step 10 plate-and-serve) */
 .grease-plate-overlay {
@@ -3292,12 +3851,29 @@ body.two-panel-active #custom-cursor { display: block !important; }
   pointer-events: none;
 }
 
-/* Never let feedback boxes overflow the cook-station card */
+/* Cap feedback boxes inside the cook-station card; scroll when too tall */
 #feedback-good,
 #feedback-box {
   flex: 0 0 auto;
-  max-height: 140px;
-  overflow: hidden;
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #86efac #dcfce7;
+}
+#feedback-good::-webkit-scrollbar,
+#feedback-box::-webkit-scrollbar {
+  width: 8px;
+}
+#feedback-good::-webkit-scrollbar-thumb,
+#feedback-box::-webkit-scrollbar-thumb {
+  background: #86efac;
+  border-radius: 999px;
+}
+#feedback-good::-webkit-scrollbar-track,
+#feedback-box::-webkit-scrollbar-track {
+  background: rgba(220, 252, 231, 0.6);
+  border-radius: 999px;
 }
 
 /* ── TIMER GAME ─────────────────────────────────────────────────────────── */

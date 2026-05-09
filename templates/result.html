@@ -16,6 +16,15 @@
            alt="plated casserole"
            class="result-hero-overlay result-hero-overlay-casserole">
     </div>
+  {% elif recipe_name == 'fajitas' %}
+    <div class="result-hero-stack result-hero-stack-fajitas mb-3" aria-hidden="true">
+      <img src="{{ url_for('static', filename='images/fajita-plate.png') }}"
+           alt=""
+           class="result-hero-plate">
+      <img src="{{ url_for('static', filename='images/fajitas-with-avocado.png') }}"
+           alt="plated fajitas"
+           class="result-hero-overlay result-hero-overlay-fajitas">
+    </div>
   {% else %}
     <div class="display-1 mb-3">🎉</div>
   {% endif %}

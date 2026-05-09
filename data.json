@@ -1,7 +1,7 @@
 {
   "mealprep": [
     {
-      "title": "Let's meal plan!",
+      "title": "BEFORE we start: Let's meal plan!",
       "subtitle": "Our goal: minimize grocery runs to 1 trip a month",
       "body": "We designed a monthly meal plan so every ingredient is used before it expires — no waste, no extra trips.",
       "center_text": true,
@@ -14,7 +14,7 @@
     {
       "title": "We have 1 option for",
       "subtitle": "Breakfast or a Snack",
-      "body": "If you get bored, swap apples for other fruits (like pears, peaches, or mango!). These recipes are remixable, so you never get bored.",
+      "body": "If you get bored, swap apples for other fruits (like pears, peaches, or mango!).<br>These recipes are remixable, so you never get bored.",
       "image": null,
       "recipe_tree": {
         "recipes": [
@@ -28,7 +28,7 @@
     {
       "title": "We have 2 options for",
       "subtitle": "Lunch or Dinner",
-      "body": "If you get bored, swap chicken for other proteins (like tofu, turkey, or shrimp!). These recipes are remixable, so you never get bored.",
+      "body": "If you get bored, swap chicken for other proteins (like tofu, turkey, or shrimp!).<br>These recipes are remixable, so you never get bored.",
       "image": null,
       "recipe_tree": {
         "pick_one": true,
@@ -45,7 +45,7 @@
       }
     },
     {
-      "title": "Muffins: bake once, eat all week",
+      "title": "For your muffins: bake once, eat all week",
       "subtitle": "Bake for 40 min on Sunday → Get 14 muffins → Eat 2 muffins a day × 7 days",
       "body": null,
       "image": null,
@@ -79,7 +79,7 @@
       }
     },
     {
-      "title": "Casserole 🥘 & Fajitas 🥙: bake twice, eat all week",
+      "title": "For your Casserole 🥘 & Fajitas 🥙: bake 2x, eat all week",
       "subtitle": "Bake 45 min on Sun + Wed → Get 2 batches → Each lasts 3–4 days",
       "subtitle_compact": false,
       "body": null,
@@ -180,18 +180,20 @@
     {
       "title": "Weekly cook time: just 90 mins",
       "subtitle": "We're lazy — so we bake in parallel",
-      "body": "Muffins and casserole can bake at the same time on Sundays — overlapping bake times means less time in the kitchen.",
+      "body": "Muffins and casserole can bake at the same time on Sundays.<br>Overlapping bake times means less time in the kitchen.",
       "image": "energy-saving-bear.gif"
     },
     {
       "title": "Total monthly cost: $265 — huge savings!!!",
       "subtitle": "Muffins $49 · Casserole $113 · Fajitas $103",
+      "subtitle_gap": true,
       "body": null,
       "image": "save-dat-money.gif"
     },
     {
       "title": "They're all one-pan, dump-and-bake recipes!",
       "subtitle": "Minimal dishes to wash, minimal cooking ability",
+      "subtitle_gap": true,
       "body": "Just chop, dump, and bake — less cleanup, less stress.",
       "image": "640c2d26-d768-4d82-9062-58cc13697c3d_text.gif"
     }
@@ -865,7 +867,8 @@
         ],
         "hint": "It's between 350 and 400 — closer to 400!",
         "feedback_correct": "That's right — 375°F!",
-        "feedback_wrong": "Not quite! Think between 350 and 400."
+        "feedback_wrong": "Not quite! Think between 350 and 400.",
+        "requires_check": true
       },
       {
         "type": "grease",
@@ -2485,7 +2488,7 @@
         "feedback_finish": "Congratulations — you made muffins! 🎉",
         "set_aside": [
           {
-            "image": "plate.png",
+            "image": "fajita-plate.png",
             "label": "plate",
             "drag_key": "plate"
           }
@@ -2602,7 +2605,8 @@
         ],
         "hint": "It is the coolest baking temp on this slider.",
         "feedback_correct": "That's right — 350°F!",
-        "feedback_wrong": "Not quite! Pick the lowest baking temperature here."
+        "feedback_wrong": "Not quite! Pick the lowest baking temperature here.",
+        "requires_check": true
       },
       {
         "type": "drag_drop",
@@ -2717,13 +2721,13 @@
         "feedback_correct": "Perfect — soup, cheeses, sour cream, and the seasonings are all in!",
         "feedback_wrong": "Almost! Check what goes in the cream base.",
         "missing_hints": {
-          "cream_soup": "Hint: you're missing the canned soup that makes the base creamy.",
-          "cottage_cheese": "Hint: you're missing a lumpy white cheese that adds body.",
-          "sour_cream": "Hint: you're missing the tangy white dairy that smooths everything out.",
-          "cream_cheese": "Hint: you're missing the soft spreadable cheese (4 oz, room temp).",
-          "onion_powder": "Hint: you're missing a dry allium powder — savory, no chopping.",
-          "seasoning": "Hint: you're missing the spicy red-pepper blend from Louisiana.",
-          "garlic_powder": "Hint: you're missing the garlicky dry spice."
+          "cream_soup": "Hint: comes from a metal can on the pantry shelf — silky, savory, often paired with rice.",
+          "cottage_cheese": "Hint: a curdy white dairy your fitness friends love for the protein.",
+          "sour_cream": "Hint: a tangy cultured spoonful that crowns most baked potatoes.",
+          "cream_cheese": "Hint: a soft, spreadable block — bagel-shop staple.",
+          "onion_powder": "Hint: a savory dry powder that brings the base flavor without the tears.",
+          "seasoning": "Hint: a Louisiana-style red blend with a slow-burn kick.",
+          "garlic_powder": "Hint: a sharp dry aromatic — no chopping required."
         },
         "set_aside": [
           {
@@ -2905,9 +2909,9 @@
             "quantity": "16 oz"
           }
         ],
-        "hint": "This step needs the main protein and the fresh green herb.",
+        "hint": "Two ingredients only — one cooked, one for a pop of color.",
         "feedback_correct": "Great — the chicken is coated and ready!",
-        "feedback_wrong": "Think protein plus parsley for this step.",
+        "feedback_wrong": "Just two essentials — one savory, one fresh.",
         "set_aside": [
           {
             "image": "oven-lit-up-clipart.png",
@@ -2984,13 +2988,13 @@
             "quantity": "1 bunch"
           }
         ],
-        "hint": "The topping is crunchy crackers plus butter and a little garlic powder.",
+        "hint": "Three pantry items — something crunchy, something fatty, and a savory kick.",
         "feedback_correct": "Yes — that's the crunchy cracker topping!",
         "feedback_wrong": "Not quite — build the crunchy topping, not the filling.",
         "missing_hints": {
           "crackers": "Hint: you're missing the crunchy base.",
           "butter": "Hint: you're missing the melted fat that holds the crumbs together.",
-          "topping_garlic_powder": "Hint: you're missing the extra garlic powder for the topping."
+          "topping_garlic_powder": "Hint: a savory dry powder that echoes the cream layer's flavor."
         },
         "set_aside": [
           {
@@ -3270,20 +3274,14 @@
         "feedback_wrong": "Keep going through the steps.",
         "set_aside": [
           {
-            "image": "oven-lit-up-clipart.png",
-            "label": "preheated oven",
-            "drag_key": "flour_bowl"
-          },
-          {
-            "image": "plate.png",
+            "image": "fajita-plate.png",
             "label": "plate",
             "drag_key": "plate"
           },
           {
             "image": "scallions-on-board.png",
             "label": "sliced scallions",
-            "drag_key": "scallions_board",
-            "garnish_only": true
+            "drag_key": "scallions_board"
           }
         ],
         "garnish_after_plate": true,
@@ -3385,7 +3383,7 @@
             "id": "yellow_onion",
             "label": "yellow onion",
             "emoji": "🧅",
-            "image": "fajitas-yellow-onion-clipart.png",
+            "image": "fajitas-onion-clipart.png",
             "quantity": "48 oz bag"
           },
           {
@@ -3401,16 +3399,46 @@
             "emoji": "🍋",
             "image": "fajitas-lime-clipart.png",
             "quantity": "1 lb bag"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
           }
         ],
         "hint": "This one is hotter than the muffin oven.",
         "feedback_correct": "That's right — 400°F!",
-        "feedback_wrong": "Not quite! Go hotter than 375°F."
+        "feedback_wrong": "Not quite! Go hotter than 375°F.",
+        "set_aside": [],
+        "requires_check": true
       },
       {
         "type": "drag_drop",
-        "title": "Make the marinade!",
-        "instruction": "Drag the correct ingredients into the bag",
+        "title": "Make the 'everything' marinade!",
+        "instruction": "Drag the correct ingredients into the bag.",
         "interaction": "drag",
         "correct_ids": [
           "oil",
@@ -3420,129 +3448,11 @@
           "onion_powder",
           "seafood_rub",
           "black_pepper",
-          "cayenne_pepper"
-        ],
-        "all_items": [
-          {
-            "id": "oil",
-            "label": "vegetable oil",
-            "emoji": "🫙",
-            "image": "fajitas-vegetable-oil-clipart.png",
-            "quantity": "32 fl oz"
-          },
-          {
-            "id": "chili_powder",
-            "label": "chili powder blend",
-            "emoji": "🌶️",
-            "image": "fajitas-chili-powder-clipart.png",
-            "quantity": "1.83 oz"
-          },
-          {
-            "id": "oregano",
-            "label": "oregano",
-            "emoji": "🌿",
-            "image": "fajitas-oregano-clipart.png",
-            "quantity": "0.35 oz"
-          },
-          {
-            "id": "garlic_powder",
-            "label": "garlic powder",
-            "emoji": "🧄",
-            "image": "fajitas-garlic-powder-clipart.png",
-            "quantity": "2.33 oz"
-          },
-          {
-            "id": "onion_powder",
-            "label": "onion powder",
-            "emoji": "🧅",
-            "image": "fajitas-onion-powder-clipart.png",
-            "quantity": "2.43 oz"
-          },
-          {
-            "id": "seafood_rub",
-            "label": "seafood spice rub",
-            "emoji": "🌶️",
-            "image": "fajitas-seafood-rub-clipart.png",
-            "quantity": "4.4 oz"
-          },
-          {
-            "id": "black_pepper",
-            "label": "black pepper",
-            "emoji": "🫙",
-            "image": "fajitas-black-pepper-clipart.png",
-            "quantity": "1.8 oz"
-          },
-          {
-            "id": "cayenne_pepper",
-            "label": "cayenne pepper",
-            "emoji": "🌶️",
-            "image": "fajitas-cayenne-clipart.png",
-            "quantity": "1.76 oz"
-          },
-          {
-            "id": "chicken_breast",
-            "label": "chicken breast",
-            "emoji": "🍗",
-            "image": "fajitas-chicken-breast-clipart.png",
-            "quantity": "1 pack"
-          },
-          {
-            "id": "pepper_blend",
-            "label": "pepper blend",
-            "emoji": "🫑",
-            "image": "fajitas-pepper-blend-clipart.png",
-            "quantity": "16 oz"
-          },
-          {
-            "id": "yellow_onion",
-            "label": "yellow onion",
-            "emoji": "🧅",
-            "image": "fajitas-yellow-onion-clipart.png",
-            "quantity": "48 oz bag"
-          },
-          {
-            "id": "cilantro",
-            "label": "cilantro",
-            "emoji": "🌿",
-            "image": "fajitas-cilantro-clipart.png",
-            "quantity": "1 ea"
-          },
-          {
-            "id": "lime",
-            "label": "limes",
-            "emoji": "🍋",
-            "image": "fajitas-lime-clipart.png",
-            "quantity": "1 lb bag"
-          }
-        ],
-        "set_aside": [
-          {
-            "image": "oven-lit-up-clipart.png",
-            "label": "preheated oven"
-          }
-        ],
-        "hint": "The marinade is all the spices + oil — not the fresh stuff!",
-        "feedback_correct": "Great marinade — now let it sit!",
-        "feedback_wrong": "Think spices and oil only for the marinade."
-      },
-      {
-        "type": "drag_drop",
-        "title": "Load the marinade bag!",
-        "instruction": "Drag the chicken, peppers, and onion into the bag",
-        "interaction": "drag",
-        "correct_ids": [
+          "cayenne_pepper",
           "chicken_breast",
           "pepper_blend",
           "yellow_onion"
         ],
-        "empty_bowl_image": "fajitas-marinade-bag.png",
-        "completed_bowl_image": "fajitas-marinade-bag-full.png",
-        "drop_placeholder": "Drag ingredients into the marinade bag",
-        "missing_hints": {
-          "chicken_breast": "The main protein goes in — look for the chicken.",
-          "pepper_blend": "The colorful veggies need to soak in the marinade too.",
-          "yellow_onion": "Don't forget the onion — it adds sweetness."
-        },
         "all_items": [
           {
             "id": "oil",
@@ -3618,7 +3528,7 @@
             "id": "yellow_onion",
             "label": "yellow onion",
             "emoji": "🧅",
-            "image": "fajitas-yellow-onion-clipart.png",
+            "image": "fajitas-onion-clipart.png",
             "quantity": "48 oz bag"
           },
           {
@@ -3634,6 +3544,34 @@
             "emoji": "🍋",
             "image": "fajitas-lime-clipart.png",
             "quantity": "1 lb bag"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
           }
         ],
         "set_aside": [
@@ -3642,23 +3580,38 @@
             "label": "preheated oven"
           }
         ],
-        "hint": "The fresh stuff goes in — the chicken, the peppers, and the onion.",
-        "feedback_correct": "Everything's in the bag — now let it marinate!",
-        "feedback_wrong": "Think fresh proteins and veggies — not the dry spices."
+        "hint": "Everything from the pantry shelf — dried, ground, and the slick that carries them. Skip anything fresh from the produce aisle.",
+        "feedback_correct": "Great marinade — now let it sit!",
+        "feedback_wrong": "Pantry-only — leave the fresh produce for later.",
+        "empty_bowl_image": "empty-fajita-bowl.png",
+        "completed_bowl_image": "fajita-unmixed-bowl.png",
+        "missing_hints": {
+          "oil": "Hint: don't forget the slick golden liquid that carries all the dry flavors.",
+          "chili_powder": "Hint: missing the smoky red-rust blend that gives the dish its warm color.",
+          "oregano": "Hint: a fragrant dried green herb — at home in both Italian and Mexican kitchens.",
+          "garlic_powder": "Hint: a sharp, pungent allium in dry powder form.",
+          "onion_powder": "Hint: another dry allium — its sweeter, milder cousin.",
+          "seafood_rub": "Hint: a Cajun-style seasoning blend most often paired with shrimp.",
+          "black_pepper": "Hint: the everyday spice that lives next to the salt shaker.",
+          "cayenne_pepper": "Hint: the rusty-red dust that brings the heat.",
+          "chicken_breast": "Hint: don't forget the lean main protein.",
+          "pepper_blend": "Hint: a colorful mix of strips — fresh from the produce aisle.",
+          "yellow_onion": "Hint: a sharp aromatic that softens when cooked and stings when raw."
+        }
       },
       {
-        "type": "grease",
-        "title": "Spread on the sheet pan!",
-        "instruction": "Hold and drag right to spread the marinated fajitas across the pan",
+        "type": "drag_drop",
+        "title": "Mix the marinade!",
+        "instruction": "Stir until the marinade is evenly mixed",
         "interaction": "grease",
-        "tray_image": "fajitas-pan-empty.png",
-        "tray_greased_image": "fajitas-step4.png",
-        "spray_image": "fajitas-spatula.png",
-        "spray_active_image": "fajitas-spatula.png",
-        "drag_axis": "x",
-        "drag_start_pct": 0.0,
-        "drag_end_pct": 0.95,
-        "sound_file": "pour.wav",
+        "tray_image": "fajita-unmixed-bowl.png",
+        "tray_greased_image": "fajita-mixed-bowl.png",
+        "spray_image": "spatula.png",
+        "spray_active_image": "spatula.png",
+        "sound_file": "whisk.wav",
+        "drag_speed": 0.056875,
+        "drag_start_pct": 0.3,
+        "drag_end_pct": 0.7,
         "all_items": [
           {
             "id": "oil",
@@ -3734,8 +3687,110 @@
             "id": "yellow_onion",
             "label": "yellow onion",
             "emoji": "🧅",
-            "image": "fajitas-yellow-onion-clipart.png",
+            "image": "fajitas-onion-clipart.png",
             "quantity": "48 oz bag"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          }
+        ],
+        "hint": "Move the spatula left and right ← → to mix the marinade.",
+        "feedback_correct": "Marinade is mixed and ready!",
+        "feedback_wrong": "Keep stirring until everything is combined.",
+        "set_aside": [
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Bag and chill the marinade!",
+        "instruction": "Scoop into the baggie, then drag the fridge to chill it.",
+        "interaction": "fill",
+        "tray_image": "empty-baggie.png",
+        "batter_image": "fajita-mixed-bowl.png",
+        "batter_empty_image": "empty-fajita-bowl.png",
+        "scooper_image": "hand-mozarella-before.png",
+        "scooper_full_image": "hand-with-fajita-mix.png",
+        "tray_progress_images": [
+          "baggie-one-third.png",
+          "baggie-two-thirds.png",
+          "baggie-three-thirds.png"
+        ],
+        "tray_slot_label": "Drag empty baggie here from aside",
+        "batter_slot_label": "Drag marinade bowl here from aside",
+        "scoop_count": 3,
+        "scoop_tooltip": "Drag marinade<br>into the baggie<br>(3 scoops)",
+        "large_batter": true,
+        "all_items": [
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
           },
           {
             "id": "cilantro",
@@ -3752,26 +3807,161 @@
             "quantity": "1 lb bag"
           }
         ],
+        "hint": "Drag the empty baggie and the marinade bowl from set-aside, then scoop the marinade into the baggie.",
+        "feedback_correct": "Marinade is bagged — ready to chill!",
+        "feedback_wrong": "Drop both the baggie and the bowl, then scoop.",
         "set_aside": [
           {
             "image": "oven-lit-up-clipart.png",
             "label": "preheated oven"
+          },
+          {
+            "image": "empty-baggie.png",
+            "label": "empty baggie",
+            "drag_key": "tray"
+          },
+          {
+            "image": "fajita-mixed-bowl.png",
+            "label": "marinade bowl",
+            "drag_key": "batter"
+          },
+          {
+            "image": "closed-fridge.png",
+            "label": "fridge",
+            "drag_key": "fridge",
+            "fridge_only": true
           }
         ],
-        "hint": "Hold and drag rightward to spread everything across the pan →",
-        "feedback_correct": "Nicely spread — into the oven it goes!",
-        "feedback_wrong": ""
+        "fridge_finale": true,
+        "fridge_drag_key": "fridge",
+        "fridge_drop_label": "Drag fridge here from aside",
+        "fridge_closed_image": "closed-fridge.png",
+        "fridge_open_empty_image": "open-fridge-empty.png",
+        "fridge_open_full_image": "open-fridge-with-fajita.png",
+        "fridge_glove_image": "glove.png",
+        "fridge_open_tooltip": "Drag the fridge door<br>to the right →<br>to open it",
+        "fridge_transfer_tooltip": "Drag the baggie<br>into the fridge",
+        "fridge_close_tooltip": "Drag the fridge door<br>to the right →<br>to close it",
+        "fridge_timer_intro": "Hit START to chill, then STOP at about 30 minutes.",
+        "fridge_timer_min": 28,
+        "fridge_timer_max": 32,
+        "fridge_timer_target": 30,
+        "fridge_timer_speed": 0.001,
+        "fridge_feedback_correct": "Marinade chilled — perfect!",
+        "fridge_feedback_wrong_early": "Too soon — chill longer!",
+        "fridge_feedback_wrong_late": "Too long — pull it out sooner."
+      },
+      {
+        "type": "drag_drop",
+        "title": "Spread on the sheet pan!",
+        "instruction": "Pull the marinade out of the fridge, then scoop it onto the tray.",
+        "interaction": "fill",
+        "fridge_intro": true,
+        "intro_closed_image": "closed-fridge.png",
+        "intro_open_image": "open-fridge-with-fajita.png",
+        "intro_open_empty_image": "open-fridge-empty.png",
+        "intro_extracted_image": "baggie-three-thirds.png",
+        "intro_glove_image": "glove.png",
+        "intro_open_tooltip": "Drag the fridge door<br>to the right →<br>to open it",
+        "intro_extract_tooltip": "Drag the baggie<br>out of the fridge",
+        "tray_image": "baking-tray.png",
+        "batter_image": "baggie-three-thirds.png",
+        "batter_empty_image": "empty-baggie.png",
+        "scooper_image": "hand-mozarella-before.png",
+        "scooper_full_image": "hand-with-fajita-mix.png",
+        "tray_progress_images": [
+          "tray-one-third.png",
+          "tray-two-thirds.png",
+          "tray-three-thirds.png"
+        ],
+        "scoop_count": 3,
+        "tray_slot_label": "Drag baking tray here from aside",
+        "batter_slot_label": "marinade",
+        "scoop_tooltip": "Drag marinade<br>onto the baking tray<br>(3 scoops)",
+        "large_batter": true,
+        "all_items": [
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          }
+        ],
+        "hint": "Pull the fridge open, drag the baggie out, then drag the baking tray and scoop the marinade in.",
+        "feedback_correct": "Marinade spread on the tray — ready to roast!",
+        "feedback_wrong": "Pull marinade from fridge, then scoop into the tray.",
+        "set_aside": [
+          {
+            "image": "oven-lit-up-clipart.png",
+            "label": "preheated oven",
+            "drag_key": "oven"
+          },
+          {
+            "image": "baking-tray.png",
+            "label": "baking tray",
+            "drag_key": "tray"
+          }
+        ],
+        "oven_outro": true,
+        "oven_outro_drop_label": "Drag preheated oven here",
+        "oven_outro_drag_key": "oven",
+        "oven_outro_closed_image": "oven-front.png",
+        "oven_outro_open_image": "oven-opened.png",
+        "oven_outro_open_with_image": "oven-opened-with-fajitas.png",
+        "oven_outro_closed_with_image": "oven-closed-with-fajitas.png",
+        "oven_outro_open_tooltip": "Pull the oven door<br>down ↓<br>to open it",
+        "oven_outro_transfer_tooltip": "Drag the tray<br>into the oven",
+        "oven_outro_close_tooltip": "Pull the door up ↑<br>to close it",
+        "oven_outro_finish_message": "In the oven — ready to roast!"
       },
       {
         "type": "timer",
-        "title": "Let it roast!",
-        "instruction": "Watch the clock — hit STOP at EXACTLY 16 minutes!",
+        "title": "Roast the fajitas!",
+        "instruction": "Watch the clock — hit STOP at about 20 minutes.",
         "interaction": "timer",
-        "scene_image": "fajitas-step5.png",
-        "timer_min": 16,
-        "timer_max": 20,
-        "timer_exact": 16,
-        "timer_speed": 0.05,
+        "scene_image": "oven-closed-with-fajitas.png",
+        "bake_style": true,
+        "bake_count_up_intro": "Hit START to begin roasting, then STOP at about 20 minutes.",
+        "timer_min": 18,
+        "timer_max": 22,
+        "timer_target": 20,
+        "timer_speed": 0.001,
         "all_items": [
           {
             "id": "cilantro",
@@ -3786,103 +3976,90 @@
             "emoji": "🍋",
             "image": "fajitas-lime-clipart.png",
             "quantity": "1 lb bag"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
           }
         ],
-        "hint": "Press START, watch the clock, and hit STOP at exactly 16 minutes.",
-        "feedback_correct": "Perfect roast! The chicken hits 165°F inside.",
-        "feedback_wrong": "Hit STOP at exactly 16 minutes.",
-        "feedback_wrong_early": "Too soon — the chicken isn't cooked through yet!",
-        "feedback_wrong_late": "Too long! The veggies will get mushy."
+        "hint": "Hit START, watch the clock, hit STOP at about 20 minutes.",
+        "feedback_correct": "Perfect roast — fajitas are sizzling, ready to plate!",
+        "feedback_wrong": "Aim for about 20 minutes.",
+        "feedback_wrong_early": "Too soon — fajitas need more time to roast. Try again!",
+        "feedback_wrong_late": "Too long — the chicken will dry out. Try again!",
+        "set_aside": []
       },
       {
         "type": "drag_drop",
         "title": "Finish it off!",
-        "instruction": "Drag the cilantro and lime onto the plate",
-        "interaction": "drag",
+        "instruction": "Drag avocado, cilantro, and lime to the cutting board, then chop each twice.",
+        "interaction": "slice",
+        "cutting_board_image": "cutting-board.png",
+        "knife_image": "knife.png",
+        "slice_targets": [
+          {
+            "id": "avocado",
+            "image": "avocado-ingredient-list.png",
+            "slice_images": [
+              "avocado-1.png",
+              "avocado-2.png"
+            ]
+          },
+          {
+            "id": "cilantro",
+            "image": "fajitas-cilantro-clipart.png",
+            "slice_images": [
+              "cilantro-1.png",
+              "cilantro-2.png"
+            ]
+          },
+          {
+            "id": "lime",
+            "image": "fajitas-lime-clipart.png",
+            "slice_images": [
+              "lime-1.png",
+              "lime-2.png"
+            ]
+          }
+        ],
         "correct_ids": [
+          "avocado",
           "cilantro",
           "lime"
         ],
-        "empty_bowl_image": "plate.png",
-        "completed_bowl_image": "fajitas-step7.png",
-        "drop_placeholder": "Drag garnish onto the plate",
+        "slice_drag_tooltip": "Drag avocado, cilantro,<br>and lime to the cutting board",
+        "slice_knife_tooltip": "Chop each one<br>top to bottom ↓<br>twice with the knife",
         "all_items": [
           {
-            "id": "oil",
-            "label": "vegetable oil",
-            "emoji": "🫙",
-            "image": "fajitas-vegetable-oil-clipart.png",
-            "quantity": "32 fl oz"
-          },
-          {
-            "id": "chili_powder",
-            "label": "chili powder blend",
-            "emoji": "🌶️",
-            "image": "fajitas-chili-powder-clipart.png",
-            "quantity": "1.83 oz"
-          },
-          {
-            "id": "oregano",
-            "label": "oregano",
-            "emoji": "🌿",
-            "image": "fajitas-oregano-clipart.png",
-            "quantity": "0.35 oz"
-          },
-          {
-            "id": "garlic_powder",
-            "label": "garlic powder",
-            "emoji": "🧄",
-            "image": "fajitas-garlic-powder-clipart.png",
-            "quantity": "2.33 oz"
-          },
-          {
-            "id": "onion_powder",
-            "label": "onion powder",
-            "emoji": "🧅",
-            "image": "fajitas-onion-powder-clipart.png",
-            "quantity": "2.43 oz"
-          },
-          {
-            "id": "seafood_rub",
-            "label": "seafood spice rub",
-            "emoji": "🌶️",
-            "image": "fajitas-seafood-rub-clipart.png",
-            "quantity": "4.4 oz"
-          },
-          {
-            "id": "black_pepper",
-            "label": "black pepper",
-            "emoji": "🫙",
-            "image": "fajitas-black-pepper-clipart.png",
-            "quantity": "1.8 oz"
-          },
-          {
-            "id": "cayenne_pepper",
-            "label": "cayenne pepper",
-            "emoji": "🌶️",
-            "image": "fajitas-cayenne-clipart.png",
-            "quantity": "1.76 oz"
-          },
-          {
-            "id": "chicken_breast",
-            "label": "chicken breast",
-            "emoji": "🍗",
-            "image": "fajitas-chicken-breast-clipart.png",
-            "quantity": "1 pack"
-          },
-          {
-            "id": "pepper_blend",
-            "label": "pepper blend",
-            "emoji": "🫑",
-            "image": "fajitas-pepper-blend-clipart.png",
-            "quantity": "16 oz"
-          },
-          {
-            "id": "yellow_onion",
-            "label": "yellow onion",
-            "emoji": "🧅",
-            "image": "fajitas-yellow-onion-clipart.png",
-            "quantity": "48 oz bag"
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
           },
           {
             "id": "cilantro",
@@ -3897,11 +4074,563 @@
             "emoji": "🍋",
             "image": "fajitas-lime-clipart.png",
             "quantity": "1 lb bag"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
           }
         ],
-        "hint": "Cilantro and lime go on last — drag both onto the plate.",
-        "feedback_correct": "Fajitas complete — fresh, bright, and delicious!",
-        "feedback_wrong": "Just the fresh garnish — cilantro and lime."
+        "hint": "Drag each ingredient onto the board, then drag the knife down to chop.",
+        "feedback_correct": "Garnish chopped — fajitas are almost ready!",
+        "feedback_wrong": "Drag avocado, cilantro, and lime onto the board and chop each.",
+        "set_aside": [
+          {
+            "image": "oven-closed-with-fajitas.png",
+            "label": "oven with fajitas"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Pull the fajitas!",
+        "instruction": "Open the oven and move the tray out to cool.",
+        "interaction": "grease",
+        "two_panel": true,
+        "tray_image": "oven-closed-with-fajitas.png",
+        "tray_greased_image": "oven-opened-with-fajitas.png",
+        "spray_image": "glove.png",
+        "spray_active_image": "glove.png",
+        "drag_speed": 8.0,
+        "drag_start_pct": 0.0,
+        "drag_end_pct": 0.5,
+        "drag_axis": "y",
+        "silent": true,
+        "no_progress": true,
+        "quiet_intermediate": true,
+        "cursor_follower": true,
+        "reveal_direction": "down",
+        "post_open_draggable_image": "fajita-meat-grilled.png",
+        "tray_after_transfer_image": "oven-opened.png",
+        "right_panel_label": "Drag tray here",
+        "right_panel_final_image": "fajita-meat-grilled.png",
+        "post_open_tooltip_tray": "Pull the door down ↓",
+        "post_open_tooltip_close": "Drag the tray to the right →",
+        "post_open_tooltip_transfer": "Drag the tray to the right →",
+        "requires_tray_setup": true,
+        "tray_slot_label": "Drag oven here",
+        "tray_drag_key": "oven_fajitas",
+        "all_items": [
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          }
+        ],
+        "hint": "Pull the door down to open the oven, then drag the tray to the right.",
+        "feedback_correct": "Cooling on the rack — fajitas are ready to serve!",
+        "feedback_wrong": "Open the oven and drag the tray to the right.",
+        "set_aside": [
+          {
+            "image": "oven-closed-with-fajitas.png",
+            "label": "oven with fajitas",
+            "drag_key": "oven_fajitas"
+          },
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado"
+          },
+          {
+            "image": "cilantro-on-board.png",
+            "label": "chopped cilantro"
+          },
+          {
+            "image": "lime-on-board.png",
+            "label": "chopped lime"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Squeeze the lime!",
+        "instruction": "Place the cooked fajitas down, then squeeze lime juice over them.",
+        "interaction": "grease",
+        "tray_image": "fajita-meat-grilled.png",
+        "tray_greased_image": "fajita-meat-grilled.png",
+        "spray_image": "lime-on-board.png",
+        "spray_active_image": "lime-on-board.png",
+        "spray_done_image": "lime-on-board.png",
+        "sound_file": "pour.wav",
+        "drag_speed": 0.055,
+        "drag_start_pct": 0.16,
+        "drag_end_pct": 0.5,
+        "requires_second_setup": true,
+        "second_slot_label": "Drag lime on top",
+        "spray_drag_key": "lime_squeeze",
+        "swipe_with_hand": true,
+        "hand_idle_image": "hand-mozarella.png",
+        "hand_press_image": "lime-squeeze-hand.png",
+        "swipe_tooltip": "Move your hand<br>left &amp; right ← →<br>to squeeze",
+        "quiet_intermediate": true,
+        "all_items": [
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          }
+        ],
+        "hint": "Press and drag the lime board across ←  →",
+        "feedback_correct": "Lime juice on the fajitas — fresh!",
+        "feedback_wrong": "Keep moving the lime back and forth.",
+        "set_aside": [
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado"
+          },
+          {
+            "image": "cilantro-on-board.png",
+            "label": "chopped cilantro"
+          },
+          {
+            "image": "lime-on-board.png",
+            "label": "chopped lime",
+            "drag_key": "lime_squeeze"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Sprinkle the cilantro!",
+        "instruction": "Place the cooked fajitas down, then sprinkle cilantro over them.",
+        "interaction": "grease",
+        "tray_image": "fajita-meat-grilled.png",
+        "tray_greased_image": "fajita-meat-with-cilantro.png",
+        "spray_image": "cilantro-on-board.png",
+        "spray_active_image": "cilantro-on-board.png",
+        "spray_done_image": "cilantro-on-board.png",
+        "sound_file": "pour.wav",
+        "drag_speed": 0.055,
+        "drag_start_pct": 0.16,
+        "drag_end_pct": 0.5,
+        "requires_second_setup": true,
+        "second_slot_label": "Drag cilantro on top",
+        "spray_drag_key": "cilantro_sprinkle",
+        "swipe_with_hand": true,
+        "hand_idle_image": "hand-mozarella.png",
+        "hand_press_image": "cilantro-hand.png",
+        "swipe_tooltip": "Move your hand<br>left &amp; right ← →<br>to sprinkle",
+        "quiet_intermediate": true,
+        "all_items": [
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          }
+        ],
+        "hint": "Press and drag the cilantro board across ← →",
+        "feedback_correct": "Cilantro on top — fajitas are ready to serve!",
+        "feedback_wrong": "Keep moving the cilantro back and forth.",
+        "set_aside": [
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado"
+          },
+          {
+            "image": "cilantro-on-board.png",
+            "label": "chopped cilantro",
+            "drag_key": "cilantro_sprinkle"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Plate it up!",
+        "instruction": "Drag a plate onto the left, then the finished fajitas onto the right.",
+        "interaction": "pair",
+        "left_slot_label": "Drag plate here from aside panel",
+        "left_drag_key": "plate",
+        "left_final_image": "fajita-plate.png",
+        "right_slot_label": "Drag fajitas here from aside panel",
+        "right_drag_key": "fajita_with_cilantro",
+        "right_final_image": "fajita-meat-with-cilantro.png",
+        "phase2_drag_key": "tortilla",
+        "phase2_label": "Drag tortilla here from ingredients",
+        "phase2_target": "left",
+        "phase2_overlay_image": "tortilla.png",
+        "phase3_count": 3,
+        "phase3_label": "Drag fajita meat into tortilla ←",
+        "phase3_hand_idle": "hand-mozarella.png",
+        "phase3_hand_press": "meat-hand.png",
+        "phase3_from_slot": "right",
+        "phase3_to_slot": "left",
+        "phase3_step_images": [
+          "fajita-one-third.png",
+          "fajita-two-third.png",
+          "fajita-three-thirds.png"
+        ],
+        "all_items": [
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "tortilla",
+            "label": "tortillas",
+            "emoji": "🫓",
+            "image": "tortilla-ingredients.png",
+            "quantity": "6 ct",
+            "drag_key": "tortilla"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": ""
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          }
+        ],
+        "hint": "Drag the plate to the left side and the fajitas to the right.",
+        "feedback_correct": "Plated and ready to serve!",
+        "feedback_wrong": "Drag both the plate and the fajitas into place.",
+        "set_aside": [
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado"
+          },
+          {
+            "image": "fajita-plate.png",
+            "label": "plate",
+            "drag_key": "plate"
+          },
+          {
+            "image": "fajita-meat-with-cilantro.png",
+            "label": "finished fajitas",
+            "drag_key": "fajita_with_cilantro"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Add the salsa!",
+        "instruction": "Spread salsa across the fajita.",
+        "interaction": "grease",
+        "backdrop_image": "fajita-plate.png",
+        "tray_image": "fajita-three-thirds.png",
+        "tray_greased_image": "fajita-with-salsa.png",
+        "spray_image": "salsa-dip.png",
+        "spray_active_image": "salsa-dip.png",
+        "spray_done_image": "salsa-dip.png",
+        "sound_file": "pour.wav",
+        "drag_speed": 0.055,
+        "drag_start_pct": 0.16,
+        "drag_end_pct": 0.5,
+        "requires_second_setup": true,
+        "second_slot_label": "Drag salsa here from ingredients",
+        "spray_drag_key": "salsa_spread",
+        "swipe_with_hand": true,
+        "hand_idle_image": "hand-mozarella.png",
+        "hand_press_image": "hand-mozarella.png",
+        "swipe_tooltip": "Move salsa<br>left &amp; right ← →<br>to spread",
+        "quiet_intermediate": true,
+        "all_items": [
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "salsa",
+            "label": "salsa dip",
+            "emoji": "🥫",
+            "image": "salsa-dip.png",
+            "quantity": "",
+            "drag_key": "salsa_spread"
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": ""
+          }
+        ],
+        "hint": "Press and drag the salsa back and forth ← →",
+        "feedback_correct": "Salsa on top — looks delicious!",
+        "feedback_wrong": "Keep moving the salsa back and forth.",
+        "set_aside": [
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Add the cheese!",
+        "instruction": "Spread cheese dip across the fajita.",
+        "interaction": "grease",
+        "backdrop_image": "fajita-plate.png",
+        "tray_image": "fajita-with-salsa.png",
+        "tray_greased_image": "fajita-with-cheese.png",
+        "spray_image": "cheese-dip.png",
+        "spray_active_image": "cheese-dip.png",
+        "spray_done_image": "cheese-dip.png",
+        "sound_file": "pour.wav",
+        "drag_speed": 0.055,
+        "drag_start_pct": 0.16,
+        "drag_end_pct": 0.5,
+        "requires_second_setup": true,
+        "second_slot_label": "Drag cheese here from ingredients",
+        "spray_drag_key": "cheese_spread",
+        "swipe_with_hand": true,
+        "hand_idle_image": "hand-mozarella.png",
+        "hand_press_image": "hand-mozarella.png",
+        "swipe_tooltip": "Move cheese<br>left &amp; right ← →<br>to spread",
+        "quiet_intermediate": true,
+        "all_items": [
+          {
+            "id": "avocado",
+            "label": "avocado",
+            "emoji": "🥑",
+            "image": "avocado-ingredient-list.png",
+            "quantity": "1"
+          },
+          {
+            "id": "cilantro",
+            "label": "cilantro",
+            "emoji": "🌿",
+            "image": "fajitas-cilantro-clipart.png",
+            "quantity": "1 ea"
+          },
+          {
+            "id": "lime",
+            "label": "limes",
+            "emoji": "🍋",
+            "image": "fajitas-lime-clipart.png",
+            "quantity": "1 lb bag"
+          },
+          {
+            "id": "cheese",
+            "label": "cheese dip",
+            "emoji": "🧀",
+            "image": "cheese-dip.png",
+            "quantity": "",
+            "drag_key": "cheese_spread"
+          }
+        ],
+        "hint": "Press and drag the cheese back and forth ← →",
+        "feedback_correct": "Cheesy goodness — fajitas are ready!",
+        "feedback_wrong": "Keep moving the cheese back and forth.",
+        "set_aside": [
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado"
+          }
+        ]
+      },
+      {
+        "type": "drag_drop",
+        "title": "Top with avocado!",
+        "instruction": "Spread chopped avocado across the fajita.",
+        "interaction": "grease",
+        "backdrop_image": "fajita-plate.png",
+        "tray_image": "fajita-with-cheese.png",
+        "tray_greased_image": "fajitas-with-avocado.png",
+        "spray_image": "chopped-avocado.png",
+        "spray_active_image": "chopped-avocado.png",
+        "spray_done_image": "chopped-avocado.png",
+        "sound_file": "pour.wav",
+        "drag_speed": 0.055,
+        "drag_start_pct": 0.16,
+        "drag_end_pct": 0.5,
+        "requires_second_setup": true,
+        "second_slot_label": "Drag avocado here from aside panel",
+        "spray_drag_key": "avocado_spread",
+        "swipe_with_hand": true,
+        "hand_idle_image": "hand-mozarella.png",
+        "hand_press_image": "hand-mozarella.png",
+        "swipe_tooltip": "Move avocado<br>left &amp; right ← →<br>to spread",
+        "quiet_intermediate": true,
+        "all_items": [],
+        "hint": "Press and drag the avocado back and forth ← →",
+        "feedback_correct": "Avocado on top — fajitas are perfect!",
+        "feedback_finish": "You did it! Your fajitas are ready to serve.",
+        "finish_sound": "winner.wav",
+        "feedback_wrong": "Keep moving the avocado back and forth.",
+        "set_aside": [
+          {
+            "image": "chopped-avocado.png",
+            "label": "chopped avocado",
+            "drag_key": "avocado_spread"
+          }
+        ]
       }
     ]
   }

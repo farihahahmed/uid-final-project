@@ -106,8 +106,12 @@
         {% endif %}
 
         {% if question.interaction == 'grease' %}
-          <div class="grease-game{% if question.sound_file == 'whisk.wav' %} whisk-variant{% endif %}{% if question.spray_image == 'bowl-pouring.png' %} pour-variant{% endif %}{% if question.spray_image == 'step-8-apples-falling.png' %} apples-variant{% endif %}{% if question.spray_image == 'topping-falling.png' %} topping-variant{% endif %}{% if question.spray_image == 'glove.png' and question.cursor_follower %} bake-variant{% endif %}{% if question.two_panel %} two-panel-variant{% endif %}{% if question.requires_tray_setup %} setup-pending{% endif %}{% if question.small_tray %} small-tray-variant{% endif %}" id="grease-game">
+          <div class="grease-game{% if question.sound_file == 'whisk.wav' %} whisk-variant{% endif %}{% if question.spray_image == 'bowl-pouring.png' %} pour-variant{% endif %}{% if question.spray_image == 'lime-on-board.png' or question.spray_image == 'cilantro-on-board.png' or question.spray_image == 'salsa-dip.png' or question.spray_image == 'cheese-dip.png' or question.spray_image == 'chopped-avocado.png' %} lime-variant{% endif %}{% if question.spray_image == 'step-8-apples-falling.png' %} apples-variant{% endif %}{% if question.spray_image == 'topping-falling.png' %} topping-variant{% endif %}{% if question.spray_image == 'glove.png' and question.cursor_follower %} bake-variant{% endif %}{% if question.two_panel %} two-panel-variant{% endif %}{% if question.requires_tray_setup %} setup-pending{% endif %}{% if question.small_tray %} small-tray-variant{% endif %}" id="grease-game">
             <div class="grease-stage" id="grease-stage">
+              {% if question.backdrop_image %}
+                <img src="{{ url_for('static', filename='images/' + question.backdrop_image) }}"
+                     class="grease-backdrop" alt="" draggable="false">
+              {% endif %}
               <img
                 src="{{ url_for('static', filename='images/' + question.tray_image) }}"
                 class="grease-tray grease-tray-base"
@@ -171,6 +175,11 @@
               {% if question.spray_image == 'glove.png' %}
                 <div class="whisk-tooltip" id="handle-tooltip"{% if question.requires_tray_setup %} style="display:none;"{% endif %}>
                   Pull oven door down ↓
+                </div>
+              {% endif %}
+              {% if question.spray_image == 'lime-on-board.png' or question.spray_image == 'cilantro-on-board.png' or question.spray_image == 'salsa-dip.png' or question.spray_image == 'cheese-dip.png' or question.spray_image == 'chopped-avocado.png' %}
+                <div class="whisk-tooltip" id="pour-tooltip"{% if question.requires_tray_setup or question.requires_second_setup %} style="display:none;"{% endif %}>
+                  {{ question.swipe_tooltip | default('Move your hand<br>left &amp; right ← →<br>to squeeze') | safe }}
                 </div>
               {% endif %}
               {% if question.spray_image == 'fajitas-spatula.png' %}
@@ -260,8 +269,27 @@
         {% endif %}
 
         {% if question.interaction == 'slice' %}
-          <div class="slice-game" id="slice-game">
-            <div class="slice-stage" id="slice-stage">
+          <div class="slice-game{% if question.slice_targets %} slice-game-multi{% endif %}" id="slice-game">
+            <div class="slice-stage{% if question.slice_targets %} slice-stage-multi{% endif %}" id="slice-stage">
+              {% if question.slice_targets %}
+                {% for t in question.slice_targets %}
+                  <div class="slice-board-slot" data-slot-id="{{ t.id }}">
+                    <img src="{{ url_for('static', filename='images/' + question.cutting_board_image) }}"
+                         class="slice-board-bg" alt="cutting board" draggable="false">
+                    <div class="slice-board-tooltip">{{ t.drop_label | default('Drag ' ~ t.id ~ ' here') }}</div>
+                    <img class="slice-apple multi-apple" id="slice-apple-{{ loop.index }}"
+                         data-id="{{ t.id }}"
+                         data-slice-count="{{ t.slice_images | length }}"
+                         data-src-0="{{ url_for('static', filename='images/' + t.image) }}"
+                         {% for img in t.slice_images %}
+                         data-src-{{ loop.index }}="{{ url_for('static', filename='images/' + img) }}"
+                         {% endfor %}
+                         src="{{ url_for('static', filename='images/' + t.image) }}"
+                         alt="{{ t.id }}" draggable="false" style="display:none;">
+                  </div>
+                {% endfor %}
+                <div class="slice-apples multi-target" id="slice-apples"></div>
+              {% else %}
               <img src="{{ url_for('static', filename='images/' + question.cutting_board_image) }}"
                    class="slice-board" alt="cutting board" draggable="false">
               <div class="slice-apples{% if question.single_target %} single-target{% endif %}" id="slice-apples">
@@ -282,13 +310,14 @@
                      alt="apple" draggable="false">
                 {% endif %}
               </div>
+              {% endif %}
               <img src="{{ url_for('static', filename='images/' + question.knife_image) }}"
                    class="slice-knife" id="slice-knife" alt="knife" draggable="false">
-              <div class="whisk-tooltip" id="slice-tooltip">
+              <div class="whisk-tooltip" id="slice-tooltip"{% if question.slice_targets %} style="display:none;"{% endif %}>
                 {{ question.slice_drag_tooltip | default('Drag the apples<br>to the cutting board') | safe }}
               </div>
             </div>
-            <div class="slice-progress-label" id="slice-progress-label">Keep slicing — 0/{{ (question.apple_slice_images | length) * (1 if question.single_target else 2) }}</div>
+            <div class="slice-progress-label" id="slice-progress-label">Slice 0/{% if question.slice_targets %}{{ question.slice_targets | map(attribute='slice_images') | map('length') | sum }}{% else %}{{ (question.apple_slice_images | length) * (1 if question.single_target else 2) }}{% endif %}</div>
             <div class="slice-progress-track">
               <div class="slice-progress-fill" id="slice-progress-fill"></div>
             </div>
@@ -328,6 +357,30 @@
           </div>
         {% endif %}
 
+        {% if question.interaction == 'pair' %}
+          <div class="pair-game" id="pair-game">
+            <div class="pair-slots">
+              <div class="pair-slot" id="pair-slot-left" data-accept="{{ question.left_drag_key }}">
+                <span class="pair-slot-label">{{ question.left_slot_label }}</span>
+                <img class="pair-slot-image" id="pair-slot-left-img"
+                     src="{{ url_for('static', filename='images/' + question.left_final_image) }}"
+                     style="display:none;" alt="" draggable="false">
+              </div>
+              <div class="pair-slot" id="pair-slot-right" data-accept="{{ question.right_drag_key }}">
+                <span class="pair-slot-label">{{ question.right_slot_label }}</span>
+                <img class="pair-slot-image" id="pair-slot-right-img"
+                     src="{{ url_for('static', filename='images/' + question.right_final_image) }}"
+                     style="display:none;" alt="" draggable="false">
+              </div>
+            </div>
+          </div>
+          {% if question.phase3_count %}
+            <div class="slice-progress-track" id="pair-progress-track" style="margin-top:14px; display:none;">
+              <div class="slice-progress-fill" id="pair-progress-fill"></div>
+            </div>
+          {% endif %}
+        {% endif %}
+
         {% if question.interaction == 'knob' %}
           {% set knob_label = 'Oven temp' if question.correct_value > 100 else 'Bake timer' %}
           <div class="oven-game" id="oven-game">
@@ -355,7 +408,7 @@
                 </div>
 
                 <div class="oven-slider-panel">
-                  <div class="oven-slider-title">Slide to set it</div>
+                  <div class="oven-slider-title">Slide to set it{% if question.requires_check %}, then check{% endif %}</div>
                   <input
                     type="range"
                     id="oven-slider"
@@ -381,6 +434,9 @@
                       </button>
                     {% endfor %}
                   </div>
+                  {% if question.requires_check %}
+                    <button type="button" class="oven-check-btn" id="oven-check-btn">Check</button>
+                  {% endif %}
                 </div>
               </div>
             </div>
@@ -397,7 +453,7 @@
         {% endif %}
 
         {% if question.interaction == 'timer' %}
-          <div class="timer-game" id="timer-game">
+          <div class="timer-game{% if question.bake_style %} bake-style{% endif %}" id="timer-game">
             <div class="timer-scene-wrap">
               <img
                 src="{{ url_for('static', filename='images/' + question.scene_image) }}"
@@ -406,6 +462,9 @@
                 draggable="false"
               >
             </div>
+            {% if question.bake_count_up_intro %}
+              <div class="bake-count-up-intro">{{ question.bake_count_up_intro }}</div>
+            {% endif %}
             <div class="timer-panel" id="timer-panel">
               <div class="timer-display" id="timer-display">00:00</div>
               <button type="button" class="timer-start-btn" id="timer-start-btn">&#9654; START</button>
@@ -434,7 +493,7 @@
           <div class="set-aside-zone" id="set-aside-zone">
             {% if question.set_aside %}
               {% for item in question.set_aside %}
-                <div class="set-aside-item{% if item.drag_key %} set-aside-draggable{% endif %}{% if item.phase2_only %} phase2-only phase2-hidden{% endif %}{% if item.phase3_only %} phase3-only phase3-hidden{% endif %}{% if item.garnish_only %} garnish-only garnish-hidden{% endif %}"
+                <div class="set-aside-item{% if item.drag_key %} set-aside-draggable{% endif %}{% if item.phase2_only %} phase2-only phase2-hidden{% endif %}{% if item.phase3_only %} phase3-only phase3-hidden{% endif %}{% if item.garnish_only %} garnish-only garnish-hidden{% endif %}{% if item.fridge_only %} fridge-only fridge-hidden{% endif %}{% if item.intro_only %} intro-only intro-hidden{% endif %}{% if item.lime_only %} lime-only lime-hidden{% endif %}{% if item.cilantro_only %} cilantro-only cilantro-hidden{% endif %}"
                      {% if item.drag_key %}data-drag-key="{{ item.drag_key }}"{% endif %}
                      {% if item.phase %}data-phase="{{ item.phase }}"{% endif %}>
                   <img
@@ -495,8 +554,19 @@ function unlockNext() {
 // ── Helper: sound effects ────────────────────────────────────────────────────
 const SOUND_CORRECT = new Audio("{{ url_for('static', filename='sounds/correct-answer.wav') }}");
 const SOUND_WRONG   = new Audio("{{ url_for('static', filename='sounds/wrong-answer.wav') }}");
+const SOUND_BUZZER_GLOBAL = new Audio("{{ url_for('static', filename='sounds/buzzer.mp3') }}");
 SOUND_CORRECT.volume = 0.6;
 SOUND_WRONG.volume   = 0.6;
+SOUND_BUZZER_GLOBAL.volume = 0.7;
+function playBuzzer() {
+  try {
+    const a = SOUND_BUZZER_GLOBAL.cloneNode(true);
+    a.volume = SOUND_BUZZER_GLOBAL.volume;
+    a.play().catch(() => {});
+  } catch (_) {
+    try { SOUND_BUZZER_GLOBAL.currentTime = 0; SOUND_BUZZER_GLOBAL.play().catch(() => {}); } catch (__) {}
+  }
+}
 
 function playSound(correct) {
   const src = correct ? SOUND_CORRECT : SOUND_WRONG;
@@ -537,6 +607,42 @@ if (INTERACTION === 'drag') {
 
   let droppedIds = [];
   const wrongSaved = new Set(); // tracks wrong items already counted so we don't double-penalise
+
+  // ── Always-available "Show hint" button (toggles to "Hide hint") ─────────
+  // Available before any drops; visibility persists across drops, and the
+  // user can hide it themselves.
+  let hintShown = false;
+  function refreshHintBox() {
+    const hintBox = document.getElementById('feedback-hint');
+    if (!hintBox) return;
+    const missingIds = CORRECT_IDS.filter(id => !droppedIds.includes(id));
+    const lines = missingIds.map(id => MISSING_HINTS[id]).filter(Boolean);
+    if (!lines.length) {
+      hintBox.innerHTML = '';
+      hintBox.style.display = 'none';
+      return;
+    }
+    const esc = s => $('<div>').text(s).html();
+    hintBox.innerHTML = '<strong>Hint:</strong><br>' + lines.map(esc).join('<br>');
+    hintBox.style.display = hintShown ? 'block' : 'none';
+  }
+  function syncHintBtnLabel() {
+    const hintBtn = document.getElementById('show-hint-btn');
+    if (!hintBtn) return;
+    hintBtn.textContent = hintShown ? 'Hide hint 💡' : 'Show hint 💡';
+  }
+  (function setupAlwaysOnHintButton() {
+    const hintBtn = document.getElementById('show-hint-btn');
+    if (!hintBtn) return;
+    if (!MISSING_HINTS || Object.keys(MISSING_HINTS).length === 0) return;
+    hintBtn.style.display = '';
+    syncHintBtnLabel();
+    hintBtn.addEventListener('click', () => {
+      hintShown = !hintShown;
+      syncHintBtnLabel();
+      refreshHintBox();
+    });
+  })();
 
   // ── Drag events on items ──────────────────────────────────────────────────
   function wireDragItem(item) {
@@ -674,8 +780,14 @@ if (INTERACTION === 'drag') {
     const hintBox = $('#feedback-hint');
     goodBox.hide().empty().removeClass('correct wrong').addClass('correct feedback-good');
     box.hide();
-    hintBtn.hide();
-    hintBox.hide().empty();
+    // Keep the always-on Show-hint button visible while there are still hints
+    // for ingredients not yet dropped; only hide it once all are placed.
+    const stillMissingHints = CORRECT_IDS.some(id => !droppedIds.includes(id) && MISSING_HINTS[id]);
+    if (stillMissingHints) hintBtn.show(); else { hintBtn.hide(); hintShown = false; }
+    // Refresh the hint contents to reflect what's still missing, and preserve
+    // whatever visibility state the user chose (Show/Hide).
+    refreshHintBox();
+    syncHintBtnLabel();
 
     const bowlImg = document.getElementById('bowl-image');
     if (bowlImg) {
@@ -746,15 +858,7 @@ if (INTERACTION === 'drag') {
         box.show();
       }
 
-      // Yellow hint, revealed on button click
-      if (hintLines.length) {
-        const safeHints = hintLines.map(esc);
-        hintBox.html('<strong>Hint:</strong><br>' + safeHints.join('<br>'));
-        hintBtn.show().off('click').on('click', function () {
-          hintBox.show();
-          hintBtn.hide();
-        });
-      }
+      // (Hints are surfaced via the always-on Show-hint button wired up above.)
     }
 
     // Only penalise once per wrong item actually dropped — not for missing items
@@ -793,6 +897,11 @@ if (INTERACTION === 'drag') {
     let lastX = 0;
     let done = false;
 
+    // Inline stir uses whisk.wav, looped while user drags the spatula.
+    const SOUND_STIR = new Audio("{{ url_for('static', filename='sounds/whisk.wav') }}");
+    SOUND_STIR.loop = true;
+    SOUND_STIR.volume = 0.55;
+
     function placeSpray(pct) {
       const x = (DRAG_START_PCT + pct * (DRAG_END_PCT - DRAG_START_PCT)) * stageRect.width;
       spray.style.left = x + 'px';
@@ -807,6 +916,7 @@ if (INTERACTION === 'drag') {
       if (!done && progress >= 0.98) {
         done = true;
         if (tooltip) tooltip.style.display = 'none';
+        try { SOUND_STIR.pause(); } catch (_) {}
         playSound(true);
         showFeedback(true, FEEDBACK_OK_LOC, '');
         saveAnswer({ stirred: true, correct: true });
@@ -819,7 +929,8 @@ if (INTERACTION === 'drag') {
       stageRect = stage.getBoundingClientRect();
       dragging = true;
       lastX = e.clientX !== undefined ? e.clientX : (e.touches && e.touches[0].clientX);
-      if (tooltip) tooltip.classList.add('is-hidden');
+      // Keep tooltip visible throughout the stir; start whisk loop.
+      try { SOUND_STIR.currentTime = 0; SOUND_STIR.play().catch(()=>{}); } catch (_) {}
       e.preventDefault();
     }
     function onMove(e) {
@@ -834,6 +945,7 @@ if (INTERACTION === 'drag') {
       placeSpray((clamped - DRAG_START_PCT) / (DRAG_END_PCT - DRAG_START_PCT));
     }
     function onUp() {
+      if (dragging) { try { SOUND_STIR.pause(); } catch (_) {} }
       dragging = false;
     }
 
@@ -850,6 +962,11 @@ if (INTERACTION === 'drag') {
 // KNOB / BUTTON PICKER
 // ════════════════════════════════════════════════════════════════════════════
 if (INTERACTION === 'knob') {
+  const REQUIRES_CHECK = {{ 'true' if question.requires_check else 'false' }};
+  const SOUND_BUZZER = new Audio("{{ url_for('static', filename='sounds/buzzer.mp3') }}");
+  const SOUND_BOOP   = new Audio("{{ url_for('static', filename='sounds/boop.mp3') }}");
+  SOUND_BUZZER.volume = 0.7;
+  SOUND_BOOP.volume   = 0.5;
   let selected = null;
   let interacted = false;
 
@@ -908,16 +1025,32 @@ if (INTERACTION === 'knob') {
     lastEvaluated = selected;
   }
 
+  let lastTickValue = null;
+  function playKnobTick() {
+    // Neutral "boop" tick while sliding — the answer isn't committed
+    // until the user clicks Check, so don't reveal correctness via audio.
+    if (selected === lastTickValue) return;
+    lastTickValue = selected;
+    try {
+      const a = SOUND_BOOP.cloneNode(true);
+      a.volume = SOUND_BOOP.volume;
+      a.play().catch(() => {});
+    } catch (_) {
+      try { SOUND_BOOP.currentTime = 0; SOUND_BOOP.play().catch(() => {}); } catch (__) {}
+    }
+  }
+
   slider.addEventListener('input', () => {
     const index = parseInt(slider.value, 10);
     interacted = true;
     selected = OPTIONS[index];
     syncKnob(index);
-    evaluateKnob(false); // update UI only — don't save mid-drag positions
+    if (REQUIRES_CHECK) playKnobTick();
+    else evaluateKnob(false); // immediate-feedback mode
   });
 
   slider.addEventListener('change', () => {
-    evaluateKnob(true); // save once the slider settles
+    if (!REQUIRES_CHECK) evaluateKnob(true);
   });
 
   optionLabels.forEach(label => {
@@ -927,15 +1060,63 @@ if (INTERACTION === 'knob') {
       interacted = true;
       selected = OPTIONS[index];
       syncKnob(index);
-      evaluateKnob(true);
+      if (REQUIRES_CHECK) playKnobTick();
+      else evaluateKnob(true);
     });
   });
+
+  if (REQUIRES_CHECK) {
+    const checkBtn = document.getElementById('oven-check-btn');
+    if (checkBtn) {
+      checkBtn.addEventListener('click', () => {
+        // If the user hasn't moved the slider yet, still evaluate the default value.
+        if (!interacted) {
+          interacted = true;
+          selected = OPTIONS[parseInt(slider.value, 10)];
+        }
+        const isRight = selected === CORRECT_VAL;
+        ovenGame.classList.toggle('is-correct', isRight);
+        ovenGame.classList.toggle('is-wrong', !isRight);
+        const ovenImg = document.getElementById('oven-preview-image');
+        if (ovenImg) ovenImg.src = isRight ? ovenImg.dataset.lit : ovenImg.dataset.dark;
+        let msg = FEEDBACK_OK;
+        if (!isRight) {
+          const unit = CORRECT_VAL > 100 ? '°F' : ' min';
+          msg = selected < CORRECT_VAL
+            ? `Not quite! A bit higher than ${selected}${unit}`
+            : `Not quite! A bit lower than ${selected}${unit}`;
+        }
+        // Always show fresh feedback. On wrong, swap the chime for the buzzer.
+        if (isRight) {
+          showFeedback(true, msg, '');
+        } else {
+          // Render feedback inline (so showFeedback's chime doesn't play),
+          // then play the buzzer instead.
+          const box = $('#feedback-box');
+          box.removeClass('correct wrong').addClass('wrong');
+          $('#feedback-text').text(msg);
+          $('#hint-text').text('');
+          box.show();
+          try { SOUND_BUZZER.currentTime = 0; SOUND_BUZZER.play().catch(()=>{}); } catch(_) {}
+        }
+        // Always record the attempt so each wrong Check counts toward the tally.
+        saveAnswer({ selected, correct: isRight });
+        if (isRight) unlockNext();
+        lastEvaluated = selected;
+      });
+    }
+  }
 }
 
 // ════════════════════════════════════════════════════════════════════════════
 // GREASE THE PAN
 // ════════════════════════════════════════════════════════════════════════════
 if (INTERACTION === 'grease') {
+  // Track mouse position globally so late-spawning followers can initialize correctly.
+  document.addEventListener('mousemove', (e) => {
+    window.__lastMouseX = e.clientX;
+    window.__lastMouseY = e.clientY;
+  }, { capture: true });
   const SILENT = {{ 'true' if question.silent else 'false' }};
   const DRAG_AXIS = {{ (question.drag_axis or 'x') | tojson }};
   const NO_PROGRESS = {{ 'true' if question.no_progress else 'false' }};
@@ -953,6 +1134,14 @@ if (INTERACTION === 'grease') {
   const POST_OPEN_DRAGGABLE = {{ (question.post_open_draggable_image or '') | tojson }};
   const POST_TIP_TRANSFER = {{ (question.post_open_tooltip_transfer or '') | tojson }};
   const TRAY_AFTER_TRANSFER = {{ (question.tray_after_transfer_image or '') | tojson }};
+  const LIME_CILANTRO_FINALE = {{ 'true' if question.lime_cilantro_finale else 'false' }};
+  const LC_LIME_BOARD     = {{ (question.lime_board_image or 'lime-on-board.png') | tojson }};
+  const LC_CILANTRO_BOARD = {{ (question.cilantro_board_image or 'cilantro-on-board.png') | tojson }};
+  const LC_HAND_IDLE      = {{ (question.hand_idle_image or 'hand-mozarella.png') | tojson }};
+  const LC_LIME_PRESS     = {{ (question.lime_press_image or 'lime-squeeze-hand.png') | tojson }};
+  const LC_CILANTRO_PRESS = {{ (question.cilantro_press_image or 'cilantro-hand.png') | tojson }};
+  const LC_MEAT_GRILLED   = {{ (question.meat_grilled_image or 'fajita-meat-grilled.png') | tojson }};
+  const LC_MEAT_CILANTRO  = {{ (question.meat_with_cilantro_image or 'fajita-meat-with-cilantro.png') | tojson }};
   const GARNISH_ENABLED = {{ 'true' if question.garnish_after_plate else 'false' }};
   const GARNISH_PANEL_LABEL = {{ (question.garnish_panel_label or '') | tojson }};
   const GARNISH_DRAG_KEY = {{ (question.garnish_drag_key or 'scallions_board') | tojson }};
@@ -1003,6 +1192,10 @@ if (INTERACTION === 'grease') {
   const DRAG_SPEED = {{ question.drag_speed | default(1.0) }};
   const REQUIRES_SETUP = {{ 'true' if question.requires_tray_setup else 'false' }};
   const REQUIRES_SECOND_SETUP = {{ 'true' if question.requires_second_setup else 'false' }};
+  const SWIPE_WITH_HAND = {{ 'true' if question.swipe_with_hand else 'false' }};
+  const SWIPE_HAND_IDLE  = {{ (question.hand_idle_image  or 'hand-mozarella.png')   | tojson }};
+  const SWIPE_HAND_PRESS = {{ (question.hand_press_image or 'lime-squeeze-hand.png') | tojson }};
+  const SWIPE_TOOLTIP    = {{ (question.swipe_tooltip    or 'Move your hand<br>left &amp; right ← →<br>to squeeze') | tojson }};
   const QUIET_INTERMEDIATE = {{ 'true' if question.quiet_intermediate else 'false' }};
   let setupDone = !REQUIRES_SETUP && !REQUIRES_SECOND_SETUP;
 
@@ -1045,7 +1238,7 @@ if (INTERACTION === 'grease') {
       stopBtn.style.display = 'none';
       const isRight = mins >= BAKE_COUNT_UP_MIN && mins <= BAKE_COUNT_UP_MAX;
       const msg = isRight ? FEEDBACK_OK : (mins < BAKE_COUNT_UP_MIN ? BAKE_WRONG_EARLY : BAKE_WRONG_LATE);
-      playSound(isRight);
+      if (isRight) playSound(true); else playBuzzer();
       saveAnswer({ baked: true, correct: isRight, stopped_at: pad(mins) + ':' + pad(secs) });
       if (isRight) {
         showFeedback(true, msg, '');
@@ -1129,9 +1322,28 @@ if (INTERACTION === 'grease') {
       if (SOUND_SPRAY) { try { SOUND_SPRAY.pause(); } catch (_) {} }
       if (spray) { spray.src = spray.dataset.done || idleSrc; spray.classList.remove('is-spraying'); }
       if (hint) hint.textContent = '';
-      showFeedback(true, FEEDBACK_OK, '');
+      // Optional finish-sound + finish-text on the very last step.
+      if (SOUND_FINISH) {
+        try { SOUND_FINISH.currentTime = 0; SOUND_FINISH.play().catch(()=>{}); } catch (_) {}
+        // Render feedback inline so we don't double-play the regular correct chime.
+        const box = $('#feedback-box');
+        box.removeClass('correct wrong').addClass('correct');
+        $('#feedback-text').text(FEEDBACK_FINISH || FEEDBACK_OK);
+        $('#hint-text').text('');
+        box.show();
+        // Hide the spray (chopped-avocado pinned at top-left) on success.
+        if (spray) spray.style.display = 'none';
+      } else {
+        showFeedback(true, FEEDBACK_OK, '');
+      }
       saveAnswer({ greased: true, correct: true });
       unlockNext();
+      // Swipe-with-hand finale: restore system cursor + remove follower.
+      if (SWIPE_WITH_HAND) {
+        const f = document.getElementById('lc-follower');
+        if (f) f.style.display = 'none';
+        document.body.classList.remove('lc-cursor-none');
+      }
     }
   }
 
@@ -1238,10 +1450,12 @@ if (INTERACTION === 'grease') {
             // Hide the greased overlay so the new base image is fully visible.
             if (greased) greased.style.display = 'none';
           }
-          // If a plate slot is configured, enter the plate phase; otherwise finish.
+          // If a plate slot is configured, enter the plate phase; otherwise check finale; else finish.
           const plateSlot = document.getElementById('grease-left-plate-slot');
           if (plateSlot) {
             enterAwaitPlatePhase();
+          } else if (LIME_CILANTRO_FINALE) {
+            enterLimeCilantroFinale();
           } else {
             done = true;
             bakePhase = 'done';
@@ -1259,6 +1473,222 @@ if (INTERACTION === 'grease') {
     };
     overlay.addEventListener('mousedown', onDown);
   }
+
+  // ── Lime / Cilantro finale (fajitas step 8) ──────────────────────────
+  function enterLimeCilantroFinale() {
+    bakePhase = 'lime_cilantro';
+    if (hint) hint.textContent = '';
+    // Hide every existing element inside grease-stage so we can rebuild it.
+    if (trayBaseImg) trayBaseImg.style.display = 'none';
+    if (greased)     greased.style.display = 'none';
+    const glove = document.getElementById('cursor-follower');
+    if (glove) glove.style.display = 'none';
+    const overlayTray = document.getElementById('grease-overlay-tray');
+    if (overlayTray) overlayTray.style.display = 'none';
+    // Hide the right panel entirely — finale uses a single panel.
+    const rightPanel = document.getElementById('grease-right-panel');
+    if (rightPanel) rightPanel.style.display = 'none';
+    // Ensure cursor is normal (override .bake-variant cursor:none) until follower activates.
+    const greaseGame = document.getElementById('grease-game');
+    if (greaseGame) greaseGame.classList.add('lc-finale');
+    // Hide any remaining whisk-tooltips that belong to the oven phase.
+    document.querySelectorAll('#grease-stage .whisk-tooltip').forEach(t => t.style.display = 'none');
+
+    const stage = document.getElementById('grease-stage');
+
+    // Background meat image (full panel)
+    const meatBg = document.createElement('img');
+    meatBg.id = 'lc-meat-bg';
+    meatBg.className = 'lc-meat-bg';
+    meatBg.src = STATIC_PREFIX + LC_MEAT_GRILLED;
+    meatBg.draggable = false;
+    stage.appendChild(meatBg);
+
+    // Centered drop zone (matches muffins/6 second-slot dimensions)
+    const zone = document.createElement('div');
+    zone.id = 'lc-zone';
+    zone.className = 'lc-drop-zone';
+    zone.textContent = 'Drag lime here from aside panel';
+    stage.appendChild(zone);
+
+    // Top-right tooltip (after drop) — "Move lime left & right ← → to squeeze"
+    const tip = document.createElement('div');
+    tip.id = 'lc-tip';
+    tip.className = 'whisk-tooltip lc-tip';
+    tip.style.display = 'none';
+    tip.innerHTML = 'Move lime<br>left &amp; right ← →<br>to squeeze';
+    stage.appendChild(tip);
+
+    // Progress (bottom)
+    const prog = document.createElement('div');
+    prog.id = 'lc-progress';
+    prog.className = 'lime-cilantro-progress';
+    prog.style.display = 'none';
+    prog.innerHTML = '<div class="lc-label" id="lc-label">Squeeze 0%</div>'
+                   + '<div class="lc-track"><div class="lc-fill" id="lc-fill"></div></div>';
+    stage.appendChild(prog);
+
+    // Persistent hand follower
+    const follower = document.createElement('img');
+    follower.id = 'lc-follower';
+    follower.src = STATIC_PREFIX + LC_LIME_PRESS;
+    follower.draggable = false;
+    document.body.appendChild(follower);
+    let _lcX = (window.__lastMouseX != null) ? window.__lastMouseX : (window.innerWidth / 2);
+    let _lcY = (window.__lastMouseY != null) ? window.__lastMouseY : (window.innerHeight / 2);
+    follower.style.left = (_lcX - 90) + 'px';
+    follower.style.top  = (_lcY - 90) + 'px';
+    document.addEventListener('mousemove', (e) => {
+      window.__lastMouseX = e.clientX;
+      window.__lastMouseY = e.clientY;
+      if (follower.style.display === 'none') return;
+      follower.style.left = (e.clientX - 90) + 'px';
+      follower.style.top  = (e.clientY - 90) + 'px';
+    });
+
+    // Reveal lime in side panel
+    document.querySelectorAll('.set-aside-item.lime-only').forEach(el => el.classList.remove('lime-hidden'));
+
+    let phase = 'await_lime';   // 'await_lime' | 'squeeze_lime' | 'await_cilantro' | 'sprinkle_cilantro' | 'done'
+
+    // Pour sound (matches muffins/6 mechanic)
+    const SOUND_POUR = new Audio("{{ url_for('static', filename='sounds/pour.wav') }}");
+    SOUND_POUR.volume = 0.5;
+
+    function setProgress(pct, label) {
+      prog.style.display = '';
+      const clamped = Math.max(0, Math.min(100, pct));
+      document.getElementById('lc-label').textContent = label + ' ' + Math.round(clamped) + '%';
+      document.getElementById('lc-fill').style.width = clamped + '%';
+    }
+
+    function showFollower() {
+      document.body.classList.add('lc-cursor-none');
+      follower.style.display = 'block';
+    }
+
+    // ── Swing-based swipe tracker (left/right motion accumulates progress) ──
+    let lastX = null, lastDir = 0, accumulated = 0;
+    const SWIPE_TARGET = 1600;  // total px of L↔R swings to fully complete
+    let soundCooldown = 0;
+    function trackSwipe(e) {
+      if (phase !== 'squeeze_lime' && phase !== 'sprinkle_cilantro') return;
+      const x = e.clientX;
+      if (lastX == null) { lastX = x; return; }
+      const dx = x - lastX;
+      if (Math.abs(dx) < 2) return;
+      const dir = dx > 0 ? 1 : -1;
+      accumulated += Math.abs(dx);
+      if (dir !== lastDir && lastDir !== 0) {
+        // Direction change — play sound (rate-limited)
+        const now = Date.now();
+        if (now - soundCooldown > 220) {
+          try { SOUND_POUR.currentTime = 0; SOUND_POUR.play(); } catch(_) {}
+          soundCooldown = now;
+        }
+      }
+      lastDir = dir;
+      lastX = x;
+      const pct = (accumulated / SWIPE_TARGET) * 100;
+      const label = (phase === 'squeeze_lime') ? 'Squeeze' : 'Sprinkle';
+      setProgress(pct, label);
+      if (pct >= 100) {
+        if (phase === 'squeeze_lime') finishLimePhase();
+        else if (phase === 'sprinkle_cilantro') finishCilantroPhase();
+      }
+    }
+    document.addEventListener('mousemove', trackSwipe);
+
+    function finishLimePhase() {
+      phase = 'await_cilantro';
+      lastX = null; lastDir = 0; accumulated = 0;
+      // Hide follower, restore cursor; show next drop zone
+      follower.style.display = 'none';
+      document.body.classList.remove('lc-cursor-none');
+      tip.style.display = 'none';
+      prog.style.display = 'none';
+      zone.style.display = '';
+      zone.textContent = 'Drag cilantro here from aside panel';
+      document.querySelectorAll('.set-aside-item.cilantro-only').forEach(el => el.classList.remove('cilantro-hidden'));
+    }
+
+    function finishCilantroPhase() {
+      phase = 'done';
+      lastX = null; lastDir = 0; accumulated = 0;
+      meatBg.src = STATIC_PREFIX + LC_MEAT_CILANTRO;
+      follower.style.display = 'none';
+      document.body.classList.remove('lc-cursor-none');
+      tip.style.display = 'none';
+      prog.style.display = 'none';
+      done = true;
+      bakePhase = 'done';
+      showFeedback(true, FEEDBACK_OK, '');
+      saveAnswer({ finished: true, correct: true });
+      unlockNext();
+    }
+
+    // ── Drag from side panel into the zone ──
+    function wireDrag(dragKey, onDrop) {
+      const items = document.querySelectorAll('.set-aside-item[data-drag-key="' + dragKey + '"]');
+      items.forEach(item => {
+        let ghost = null;
+        const onDown = (e) => {
+          e.preventDefault();
+          const rect = item.getBoundingClientRect();
+          ghost = item.cloneNode(true);
+          ghost.style.position = 'fixed';
+          ghost.style.left = rect.left + 'px';
+          ghost.style.top  = rect.top + 'px';
+          ghost.style.width = rect.width + 'px';
+          ghost.style.pointerEvents = 'none';
+          ghost.style.opacity = '0.9';
+          ghost.style.zIndex = '9999';
+          document.body.appendChild(ghost);
+          const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+          const onMove = (ev) => {
+            ghost.style.left = (ev.clientX - offX) + 'px';
+            ghost.style.top  = (ev.clientY - offY) + 'px';
+          };
+          const onUp = (ev) => {
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            const r = zone.getBoundingClientRect();
+            const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                        ev.clientY >= r.top  && ev.clientY <= r.bottom;
+            if (ghost) { ghost.remove(); ghost = null; }
+            if (hit) { item.classList.add('is-used'); onDrop(); }
+          };
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+        };
+        item.addEventListener('mousedown', onDown);
+      });
+    }
+
+    wireDrag('lime_board', () => {
+      if (phase !== 'await_lime') return;
+      phase = 'squeeze_lime';
+      zone.style.display = 'none';
+      tip.style.display = '';
+      follower.src = STATIC_PREFIX + LC_LIME_PRESS;
+      setProgress(0, 'Squeeze');
+      showFollower();
+    });
+
+    wireDrag('cilantro_board', () => {
+      if (phase !== 'await_cilantro') return;
+      phase = 'sprinkle_cilantro';
+      zone.style.display = 'none';
+      tip.style.display = '';
+      tip.innerHTML = 'Move cilantro<br>left &amp; right ← →<br>to sprinkle';
+      follower.src = STATIC_PREFIX + LC_CILANTRO_PRESS;
+      setProgress(0, 'Sprinkle');
+      showFollower();
+    });
+  }
+
+  // STATIC_PREFIX shortcut for image URLs
+  const STATIC_PREFIX = "{{ url_for('static', filename='images/') }}";
 
   function enterAwaitPlatePhase() {
     bakePhase = 'await_plate';
@@ -1488,6 +1918,8 @@ if (INTERACTION === 'grease') {
             }
             const lbl = rightSlot.querySelector('.fill-slot-label');
             if (lbl) lbl.style.display = 'none';
+            const garnishTip = document.getElementById('garnish-instr-tip');
+            if (garnishTip) garnishTip.remove();
             enableScallionsToPlate();
           }
         };
@@ -1507,28 +1939,58 @@ if (INTERACTION === 'grease') {
     rightFinal.style.cursor = 'grab';
     rightFinal.setAttribute('draggable', 'false');
     rightFinal.addEventListener('dragstart', e => e.preventDefault());
+    // Floating red instruction so the next move is obvious.
+    const stageEl = document.getElementById('grease-stage');
+    if (stageEl && !document.getElementById('scallion-plate-tip')) {
+      const tip = document.createElement('div');
+      tip.id = 'scallion-plate-tip';
+      tip.className = 'whisk-tooltip';
+      tip.style.top = '6%';
+      tip.style.right = '6%';
+      tip.style.left = 'auto';
+      tip.innerHTML = 'Drag scallions<br>onto the plate ←';
+      stageEl.appendChild(tip);
+    }
+    // Hand follower spawns hidden — only appears while the user is actively dragging.
+    let follower = document.getElementById('scallion-follower');
+    if (!follower) {
+      follower = document.createElement('img');
+      follower.id = 'scallion-follower';
+      follower.src = "{{ url_for('static', filename='images/') }}" + (GARNISH_CURSOR_IMAGE || 'scallion-hand.png');
+      follower.draggable = false;
+      follower.style.position = 'fixed';
+      follower.style.width = '110px';
+      follower.style.height = 'auto';
+      follower.style.pointerEvents = 'none';
+      follower.style.zIndex = '99999';
+      follower.style.display = 'none';
+      document.body.appendChild(follower);
+      document.addEventListener('mousemove', (ev) => {
+        window.__lastMouseX = ev.clientX;
+        window.__lastMouseY = ev.clientY;
+        if (follower.style.display === 'none') return;
+        follower.style.left = (ev.clientX - 30) + 'px';
+        follower.style.top  = (ev.clientY - 30) + 'px';
+      });
+    }
     rightFinal.addEventListener('mousedown', function onScallionDown(e) {
       e.preventDefault();
       e.stopPropagation();
-      const ghost = document.createElement('img');
-      ghost.src = "{{ url_for('static', filename='images/') }}" + (GARNISH_CURSOR_IMAGE || 'scallion-hand.png');
-      ghost.style.position = 'fixed';
-      ghost.style.width = '110px';
-      ghost.style.height = 'auto';
-      ghost.style.pointerEvents = 'none';
-      ghost.style.zIndex = '9999';
-      ghost.style.left = (e.clientX - 30) + 'px';
-      ghost.style.top  = (e.clientY - 30) + 'px';
-      ghost.draggable = false;
-      document.body.appendChild(ghost);
-      const onMove = (ev) => {
-        ghost.style.left = (ev.clientX - 30) + 'px';
-        ghost.style.top  = (ev.clientY - 30) + 'px';
-      };
+      // Show the hand follower only while dragging; hide system cursor briefly.
+      const f = document.getElementById('scallion-follower');
+      if (f) {
+        f.style.left = (e.clientX - 30) + 'px';
+        f.style.top  = (e.clientY - 30) + 'px';
+        f.style.display = 'block';
+      }
+      document.body.classList.add('lc-cursor-none');
+      const onMove = (ev) => {};
       const onUp = (ev) => {
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onUp);
-        ghost.remove();
+        const fol = document.getElementById('scallion-follower');
+        if (fol) fol.style.display = 'none';
+        document.body.classList.remove('lc-cursor-none');
         const r = plateFinal.getBoundingClientRect();
         const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
                     ev.clientY >= r.top  && ev.clientY <= r.bottom;
@@ -1542,6 +2004,11 @@ if (INTERACTION === 'grease') {
             }
           }
           rightFinal.style.display = 'none';
+          const sTip = document.getElementById('scallion-plate-tip');
+          if (sTip) sTip.remove();
+          const sFollower = document.getElementById('scallion-follower');
+          if (sFollower) sFollower.style.display = 'none';
+          document.body.classList.remove('lc-cursor-none');
           done = true;
           bakePhase = 'done';
           if (SOUND_FINISH) { try { SOUND_FINISH.currentTime = 0; SOUND_FINISH.play().catch(() => {}); } catch (_) {} }
@@ -1768,12 +2235,23 @@ if (INTERACTION === 'grease') {
 
     // Sequence of expected drops (drag_key → drop target element)
     const sequence = [];
-    if (REQUIRES_SETUP) sequence.push({ key: 'flour_bowl', target: setupSlot, after: afterFirst });
-    if (REQUIRES_SECOND_SETUP) sequence.push({ key: 'brown_sugar_bowl', target: null /* set after first */, after: afterSecond });
+    const TRAY_DRAG_KEY   = {{ (question.tray_drag_key   or 'flour_bowl')      | tojson }};
+    const SPRAY_DRAG_KEY  = {{ (question.spray_drag_key  or 'brown_sugar_bowl') | tojson }};
+    if (REQUIRES_SETUP) sequence.push({ key: TRAY_DRAG_KEY, target: setupSlot, after: afterFirst });
+    if (REQUIRES_SECOND_SETUP) sequence.push({ key: SPRAY_DRAG_KEY, target: null /* set after first */, after: afterSecond });
     let seqIndex = 0;
 
     // Hide spray until ALL setup done; hide tray-base during phase 1
     if (spray) spray.style.display = 'none';
+
+    // Second-only mode: tray is already shown, only the second slot is needed.
+    if (!REQUIRES_SETUP && REQUIRES_SECOND_SETUP) {
+      gameEl.classList.remove('setup-pending');
+      gameEl.classList.add('setup-pending-2');
+      if (setupSlot2) setupSlot2.style.display = '';
+      if (secondTooltip) secondTooltip.style.display = '';
+      sequence[0].target = setupSlot2 || trayBase;
+    }
 
     function afterFirst() {
       // Flour dropped: show tray, hide setup slot + tooltip
@@ -1799,8 +2277,83 @@ if (INTERACTION === 'grease') {
       if (pourTooltip) pourTooltip.style.display = '';
       setupDone = true;
       stageRect = stage.getBoundingClientRect();
-      positionSprayAt(0);
-      if (window.__followerEl) window.__followerEl.classList.add('visible');
+      if (SWIPE_WITH_HAND) {
+        // Switch to hand-cursor swipe mode (fajitas step 9)
+        gameEl.classList.add('swipe-mode');
+        if (pourTooltip) pourTooltip.innerHTML = SWIPE_TOOLTIP;
+        startSwipeWithHand();
+      } else {
+        positionSprayAt(0);
+        if (window.__followerEl) window.__followerEl.classList.add('visible');
+      }
+    }
+
+    // ── Hand-cursor swipe mechanic (fajitas step 9) ────────────────────
+    function startSwipeWithHand() {
+      const stageEl = document.getElementById('grease-stage');
+      if (!stageEl) return;
+      // Spawn the hand follower; default = idle (mozarella)
+      let follower = document.getElementById('lc-follower');
+      if (!follower) {
+        follower = document.createElement('img');
+        follower.id = 'lc-follower';
+        follower.draggable = false;
+        document.body.appendChild(follower);
+      }
+      follower.src = "{{ url_for('static', filename='images/') }}" + SWIPE_HAND_IDLE;
+      follower.style.display = 'block';
+      // Position immediately at last known cursor.
+      const lx = (window.__lastMouseX != null) ? window.__lastMouseX : (window.innerWidth/2);
+      const ly = (window.__lastMouseY != null) ? window.__lastMouseY : (window.innerHeight/2);
+      follower.style.left = (lx - 90) + 'px';
+      follower.style.top  = (ly - 90) + 'px';
+      document.addEventListener('mousemove', (e) => {
+        window.__lastMouseX = e.clientX;
+        window.__lastMouseY = e.clientY;
+        if (follower.style.display === 'none') return;
+        follower.style.left = (e.clientX - 90) + 'px';
+        follower.style.top  = (e.clientY - 90) + 'px';
+      });
+      // Hide system cursor over the page
+      document.body.classList.add('lc-cursor-none');
+
+      let isDown = false;
+      let lastX = null;
+      const SOUND_POUR = SOUND_SPRAY; // already loaded with pour.wav from sound_file
+      if (SOUND_POUR) { SOUND_POUR.loop = true; }
+      document.addEventListener('mousedown', (e) => {
+        if (done) return;
+        isDown = true;
+        follower.src = "{{ url_for('static', filename='images/') }}" + SWIPE_HAND_PRESS;
+        lastX = e.clientX;
+        if (SOUND_POUR) {
+          try { SOUND_POUR.currentTime = 0; SOUND_POUR.play(); } catch(_) {}
+        }
+      });
+      document.addEventListener('mouseup', () => {
+        if (done) return;
+        isDown = false;
+        follower.src = "{{ url_for('static', filename='images/') }}" + SWIPE_HAND_IDLE;
+        if (SOUND_POUR) { try { SOUND_POUR.pause(); } catch(_) {} }
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (done || !isDown) return;
+        const x = e.clientX;
+        if (lastX == null) { lastX = x; return; }
+        const dx = x - lastX;
+        if (Math.abs(dx) < 2) return;
+        // Convert horizontal travel into existing progress (uses DRAG_SPEED + stage width)
+        if (stageRect && stageRect.width > 0) {
+          setProgress(progress + (Math.abs(dx) / stageRect.width) * DRAG_SPEED);
+        }
+        lastX = x;
+        if (done) {
+          // Cleanup once setProgress flips done = true
+          follower.style.display = 'none';
+          document.body.classList.remove('lc-cursor-none');
+          if (SOUND_POUR) { try { SOUND_POUR.pause(); } catch(_) {} }
+        }
+      });
     }
 
     function finishStepIfLast() {
@@ -1855,7 +2408,8 @@ if (INTERACTION === 'grease') {
       const current = sequence[seqIndex];
       if (!current || current.key !== key) return;
       if (sHit(x, y, current.target)) {
-        const srcEl = document.querySelector(`.set-aside-draggable[data-drag-key="${key}"]`);
+        const srcEl = document.querySelector(`.set-aside-draggable[data-drag-key="${key}"]`)
+                   || document.querySelector(`.ingredient-draggable[data-drag-key="${key}"]`);
         if (srcEl) srcEl.classList.add('is-used');
         if (typeof current.after === 'function') current.after();
         seqIndex++;
@@ -1871,6 +2425,20 @@ if (INTERACTION === 'grease') {
         sStart({ clientX: t.clientX, clientY: t.clientY, preventDefault: () => ev.preventDefault() }, el);
       }, { passive: false });
     });
+
+    // Defensive: also wire the expected ingredient cards for the current sequence step.
+    // Some flows (e.g. fajitas step 12) source the spray from the ingredients panel,
+    // and the broad query above can miss late-rendered cards or be intercepted.
+    sequence.forEach(step => {
+      const cards = document.querySelectorAll('.ingredient-draggable[data-drag-key="' + step.key + '"]');
+      cards.forEach(card => {
+        card.style.cursor = 'grab';
+        // Avoid double-binding by tagging.
+        if (card.__seqBound) return;
+        card.__seqBound = true;
+        card.addEventListener('mousedown', e => sStart(e, card));
+      });
+    });
     document.addEventListener('mousemove', sMove);
     document.addEventListener('mouseup',   sEnd);
     document.addEventListener('touchmove', ev => {
@@ -1883,6 +2451,241 @@ if (INTERACTION === 'grease') {
       sEnd({ clientX: t.clientX, clientY: t.clientY });
     });
   }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// PAIR (drag two items from aside into two side-by-side drop slots)
+// ════════════════════════════════════════════════════════════════════════════
+if (INTERACTION === 'pair') {
+  const slotL    = document.getElementById('pair-slot-left');
+  const slotR    = document.getElementById('pair-slot-right');
+  const imgL     = document.getElementById('pair-slot-left-img');
+  const imgR     = document.getElementById('pair-slot-right-img');
+  const KEY_L    = slotL ? slotL.getAttribute('data-accept') : '';
+  const KEY_R    = slotR ? slotR.getAttribute('data-accept') : '';
+  let leftDone = false, rightDone = false;
+
+  const PAIR_PHASE2_KEY    = {{ (question.phase2_drag_key    or '') | tojson }};
+  const PAIR_PHASE2_LABEL  = {{ (question.phase2_label        or '') | tojson }};
+  const PAIR_PHASE2_TARGET = {{ (question.phase2_target       or 'left') | tojson }};
+  const PAIR_PHASE2_IMAGE  = {{ (question.phase2_overlay_image or '') | tojson }};
+  const PAIR_PHASE3_COUNT  = {{ question.phase3_count | default(0) }};
+  const PAIR_PHASE3_LABEL  = {{ (question.phase3_label or 'Drag fajita meat into tortilla ↓') | tojson }};
+  const PAIR_PHASE3_HAND_IDLE  = {{ (question.phase3_hand_idle  or 'hand-mozarella.png') | tojson }};
+  const PAIR_PHASE3_HAND_PRESS = {{ (question.phase3_hand_press or 'meat-hand.png')      | tojson }};
+  const PAIR_PHASE3_FROM       = {{ (question.phase3_from_slot  or 'right') | tojson }};
+  const PAIR_PHASE3_TO         = {{ (question.phase3_to_slot    or 'left')  | tojson }};
+  const PAIR_PHASE3_STEPS      = {{ (question.phase3_step_images or []) | tojson }};
+  let phase2Done = false;
+
+  function enterPhase2() {
+    const targetSlot = (PAIR_PHASE2_TARGET === 'right') ? slotR : slotL;
+    if (!targetSlot) return;
+    // Add a fresh prompt label that floats over the dropped image.
+    const lbl = document.createElement('div');
+    lbl.className = 'pair-slot-label pair-phase2-label';
+    lbl.textContent = PAIR_PHASE2_LABEL || 'Drag here';
+    targetSlot.appendChild(lbl);
+
+    const items = document.querySelectorAll('.ingredient-draggable[data-drag-key="' + PAIR_PHASE2_KEY + '"]');
+    items.forEach(item => {
+      let ghost = null;
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top  = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.9';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          const r = targetSlot.getBoundingClientRect();
+          const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                      ev.clientY >= r.top  && ev.clientY <= r.bottom;
+          if (ghost) { ghost.remove(); ghost = null; }
+          if (hit) {
+            item.classList.add('is-dropped');
+            lbl.style.display = 'none';
+            // Overlay the phase-2 image on top of the existing slot image.
+            if (PAIR_PHASE2_IMAGE) {
+              const overlay = document.createElement('img');
+              overlay.src = "{{ url_for('static', filename='images/') }}" + PAIR_PHASE2_IMAGE;
+              overlay.className = 'pair-slot-overlay';
+              overlay.draggable = false;
+              targetSlot.appendChild(overlay);
+            }
+            phase2Done = true;
+            if (PAIR_PHASE3_COUNT > 0) {
+              enterPhase3();
+            } else {
+              finishPair();
+            }
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
+  }
+
+  function enterPhase3() {
+    const fromSlot = (PAIR_PHASE3_FROM === 'left') ? slotL : slotR;
+    const toSlot   = (PAIR_PHASE3_TO   === 'right') ? slotR : slotL;
+    if (!fromSlot || !toSlot) return;
+
+    // Red instruction floating top-center over the toSlot
+    const instr = document.createElement('div');
+    instr.className = 'pair-phase3-instr';
+    instr.innerHTML = PAIR_PHASE3_LABEL + '<br><span class="pair-phase3-count" id="pair-p3-count">0/' + PAIR_PHASE3_COUNT + '</span>';
+    const game = document.getElementById('pair-game');
+    if (game) game.appendChild(instr);
+
+    // Hand follower
+    const follower = document.createElement('img');
+    follower.id = 'pair-follower';
+    follower.src = "{{ url_for('static', filename='images/') }}" + PAIR_PHASE3_HAND_IDLE;
+    follower.draggable = false;
+    document.body.appendChild(follower);
+    const lx0 = (window.__lastMouseX != null) ? window.__lastMouseX : (window.innerWidth/2);
+    const ly0 = (window.__lastMouseY != null) ? window.__lastMouseY : (window.innerHeight/2);
+    follower.style.left = (lx0 - 90) + 'px';
+    follower.style.top  = (ly0 - 90) + 'px';
+    document.addEventListener('mousemove', (e) => {
+      window.__lastMouseX = e.clientX;
+      window.__lastMouseY = e.clientY;
+      if (follower.style.display === 'none') return;
+      follower.style.left = (e.clientX - 90) + 'px';
+      follower.style.top  = (e.clientY - 90) + 'px';
+    });
+    document.body.classList.add('lc-cursor-none');
+    follower.style.display = 'block';
+
+    // Reveal progress track now that phase 3 begins
+    const progTrack = document.getElementById('pair-progress-track');
+    const progFill  = document.getElementById('pair-progress-fill');
+    if (progTrack) progTrack.style.display = '';
+    if (progFill)  progFill.style.width = '0%';
+
+    // Reference to the tortilla overlay (added by phase 2) so we can swap it.
+    const overlayImg = toSlot.querySelector('.pair-slot-overlay');
+
+    let count = 0;
+    let isCarrying = false;
+    function inSlot(x, y, el) {
+      const r = el.getBoundingClientRect();
+      return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    }
+    document.addEventListener('mousedown', (e) => {
+      if (count >= PAIR_PHASE3_COUNT) return;
+      // Press starts a "carry" only if it begins inside the source slot
+      if (inSlot(e.clientX, e.clientY, fromSlot)) {
+        isCarrying = true;
+        follower.src = "{{ url_for('static', filename='images/') }}" + PAIR_PHASE3_HAND_PRESS;
+      }
+    });
+    document.addEventListener('mouseup', (e) => {
+      if (!isCarrying) return;
+      const dropped = inSlot(e.clientX, e.clientY, toSlot);
+      isCarrying = false;
+      if (dropped) {
+        count++;
+        const el = document.getElementById('pair-p3-count');
+        if (el) el.textContent = count + '/' + PAIR_PHASE3_COUNT;
+        // Swap overlay image to the next progression frame
+        if (overlayImg && PAIR_PHASE3_STEPS && PAIR_PHASE3_STEPS[count - 1]) {
+          overlayImg.src = "{{ url_for('static', filename='images/') }}" + PAIR_PHASE3_STEPS[count - 1];
+        }
+        // Update progress bar fill
+        if (progFill) progFill.style.width = (100 * count / PAIR_PHASE3_COUNT) + '%';
+        playSound(true);
+        if (count >= PAIR_PHASE3_COUNT) {
+          follower.style.display = 'none';
+          document.body.classList.remove('lc-cursor-none');
+          if (instr) instr.remove();
+          finishPair();
+          return;
+        }
+      }
+      follower.src = "{{ url_for('static', filename='images/') }}" + PAIR_PHASE3_HAND_IDLE;
+    });
+  }
+
+  function finishPair() {
+    showFeedback(true, FEEDBACK_OK, '');
+    saveAnswer({ paired: true, correct: true });
+    unlockNext();
+  }
+
+  function checkDone() {
+    if (leftDone && rightDone) {
+      if (PAIR_PHASE2_KEY) {
+        enterPhase2();
+      } else {
+        finishPair();
+      }
+    }
+  }
+
+  function wireDrag(key, slot, img) {
+    if (!slot) return;
+    const items = document.querySelectorAll('.set-aside-item[data-drag-key="' + key + '"]');
+    items.forEach(item => {
+      let ghost = null;
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top  = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.9';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          const r = slot.getBoundingClientRect();
+          const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                      ev.clientY >= r.top  && ev.clientY <= r.bottom;
+          if (ghost) { ghost.remove(); ghost = null; }
+          if (hit) {
+            item.classList.add('is-used');
+            slot.classList.add('is-filled');
+            const lbl = slot.querySelector('.pair-slot-label');
+            if (lbl) lbl.style.display = 'none';
+            if (img) img.style.display = '';
+            if (slot === slotL) leftDone = true;
+            if (slot === slotR) rightDone = true;
+            checkDone();
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
+  }
+  wireDrag(KEY_L, slotL, imgL);
+  wireDrag(KEY_R, slotR, imgR);
 }
 
 // ════════════════════════════════════════════════════════════════════════════
@@ -1908,32 +2711,45 @@ if (INTERACTION === 'slice') {
   }
   const stage     = document.getElementById('slice-stage');
   const applesEl  = document.getElementById('slice-apples');
-  const apples    = [
-    document.getElementById('slice-apple-1'),
-    document.getElementById('slice-apple-2')
-  ].filter(Boolean);
+  const apples    = Array.from(document.querySelectorAll('.slice-apple'));
   const knife     = document.getElementById('slice-knife');
   const tooltip   = document.getElementById('slice-tooltip');
-  const TOTAL_SLICES = 3;
+  const MULTI_TARGET = applesEl && applesEl.classList.contains('multi-target');
   const SLICE_DRAG_ID = (CORRECT_IDS && CORRECT_IDS[0]) || 'apple';
   const SLICE_TIP_KNIFE = {{ (question.slice_knife_tooltip or 'Slice the apples<br>top to bottom ↓ with the knife') | tojson }};
 
-  let applesOnBoard = false;
-  let slicesDone = [0, 0];
-  const TOTAL_PER_APPLE = TOTAL_SLICES;
+  // Per-apple slice limits: multi-target uses data-slice-count, fallback = 3
+  const slicesMax = apples.map(a => parseInt(a.getAttribute('data-slice-count') || '3', 10));
+  const slicesDone = apples.map(_ => 0);
+  let appleVisible = apples.map(_ => !MULTI_TARGET);  // single-id mode shows all upfront
+  let applesOnBoard = !MULTI_TARGET ? false : false;
   let slicing = false;
   let sliceStartY = null;
   let sliceApple = -1;
 
-  // ── Pointer-based drag for the apple card onto the cutting board ─────────
-  const appleCard = document.querySelector('.drag-item[data-id="' + SLICE_DRAG_ID + '"]');
-  let ghost = null;
-  let carrying = false;
+  // ── Pointer-based drag from ingredients onto the cutting board ───────────
+  // For multi-target, each apple is wired to its data-id ingredient card.
+  // For single-target, the original SLICE_DRAG_ID is the only source.
+  const dragSources = [];
+  if (MULTI_TARGET) {
+    apples.forEach((appleEl, idx) => {
+      const id = appleEl.getAttribute('data-id');
+      const card = document.querySelector('.drag-item[data-id="' + id + '"]');
+      if (card) dragSources.push({ card, appleEl, idx });
+    });
+  } else {
+    const card = document.querySelector('.drag-item[data-id="' + SLICE_DRAG_ID + '"]');
+    if (card) dragSources.push({ card, appleEl: null, idx: -1 });
+  }
 
-  function startCarry(e) {
-    if (applesOnBoard) return;
-    carrying = true;
-    ghost = appleCard.cloneNode(true);
+  let ghost = null;
+  let carrying = null;  // {card, appleEl, idx} or null
+
+  function startCarry(e, src) {
+    if (src.appleEl && appleVisible[src.idx]) return;  // already on board
+    if (!src.appleEl && applesOnBoard) return;
+    carrying = src;
+    ghost = src.card.cloneNode(true);
     ghost.style.position = 'fixed';
     ghost.style.pointerEvents = 'none';
     ghost.style.opacity = '0.85';
@@ -1941,7 +2757,7 @@ if (INTERACTION === 'slice') {
     ghost.style.left = (e.clientX - 40) + 'px';
     ghost.style.top  = (e.clientY - 40) + 'px';
     document.body.appendChild(ghost);
-    appleCard.classList.add('dragging');
+    src.card.classList.add('dragging');
     e.preventDefault();
   }
   function moveCarry(e) {
@@ -1951,31 +2767,55 @@ if (INTERACTION === 'slice') {
   }
   function endCarry(e) {
     if (!carrying) return;
-    carrying = false;
+    const src = carrying;
+    carrying = null;
     const stageRect = stage.getBoundingClientRect();
     const over = e.clientX >= stageRect.left && e.clientX <= stageRect.right
               && e.clientY >= stageRect.top  && e.clientY <= stageRect.bottom;
     if (ghost) { ghost.remove(); ghost = null; }
-    appleCard.classList.remove('dragging');
-    if (over && !applesOnBoard) {
-      applesOnBoard = true;
-      applesEl.classList.add('visible');
-      knife.classList.add('visible');
-      stage.classList.add('knife-mode');
-      if (tooltip) tooltip.innerHTML = SLICE_TIP_KNIFE;
-      appleCard.classList.add('is-dropped');
+    src.card.classList.remove('dragging');
+    if (over) {
+      if (src.appleEl) {
+        // Multi-target: reveal the matched apple
+        if (!appleVisible[src.idx]) {
+          appleVisible[src.idx] = true;
+          src.appleEl.style.display = '';
+          src.card.classList.add('is-dropped');
+          const slot = src.appleEl.closest('.slice-board-slot');
+          if (slot) slot.classList.add('filled');
+        }
+        // Only enable knife once ALL multi-target apples are on the board
+        const allOn = appleVisible.every(Boolean);
+        if (allOn && !applesOnBoard) {
+          applesOnBoard = true;
+          applesEl.classList.add('visible');
+          knife.classList.add('visible');
+          stage.classList.add('knife-mode');
+          if (tooltip) {
+            tooltip.innerHTML = SLICE_TIP_KNIFE;
+            tooltip.style.display = '';
+          }
+        }
+      } else if (!applesOnBoard) {
+        applesOnBoard = true;
+        applesEl.classList.add('visible');
+        knife.classList.add('visible');
+        stage.classList.add('knife-mode');
+        if (tooltip) tooltip.innerHTML = SLICE_TIP_KNIFE;
+        src.card.classList.add('is-dropped');
+      }
     }
   }
 
-  if (appleCard) {
-    appleCard.setAttribute('draggable', 'false');  // disable HTML5 drag
-    appleCard.style.cursor = 'grab';
-    appleCard.addEventListener('mousedown', startCarry);
-    appleCard.addEventListener('touchstart', e => {
+  dragSources.forEach(src => {
+    src.card.setAttribute('draggable', 'false');
+    src.card.style.cursor = 'grab';
+    src.card.addEventListener('mousedown', e => startCarry(e, src));
+    src.card.addEventListener('touchstart', e => {
       const t = e.touches[0];
-      startCarry({ clientX: t.clientX, clientY: t.clientY, preventDefault: () => e.preventDefault() });
+      startCarry({ clientX: t.clientX, clientY: t.clientY, preventDefault: () => e.preventDefault() }, src);
     }, { passive: false });
-  }
+  });
   document.addEventListener('mousemove', moveCarry);
   document.addEventListener('mouseup',   endCarry);
   document.addEventListener('touchmove', e => {
@@ -2005,17 +2845,16 @@ if (INTERACTION === 'slice') {
 
   const sliceFill = document.getElementById('slice-progress-fill');
   const sliceLabel = document.getElementById('slice-progress-label');
-  const TOTAL_SLICE_COUNT = TOTAL_PER_APPLE * apples.length;
+  const TOTAL_SLICE_COUNT = slicesMax.reduce((a, b) => a + b, 0);
   function updateSliceProgress() {
-    if (!sliceFill) return;
     let completed = 0;
     for (let i = 0; i < apples.length; i++) completed += slicesDone[i];
-    sliceFill.style.width = `${(completed / TOTAL_SLICE_COUNT) * 100}%`;
+    if (sliceFill) sliceFill.style.width = `${(completed / TOTAL_SLICE_COUNT) * 100}%`;
     if (sliceLabel) {
       if (completed >= TOTAL_SLICE_COUNT) {
         sliceLabel.textContent = `All sliced! ${completed}/${TOTAL_SLICE_COUNT}`;
       } else {
-        sliceLabel.textContent = `Keep slicing — ${completed}/${TOTAL_SLICE_COUNT}`;
+        sliceLabel.textContent = `Slice ${completed}/${TOTAL_SLICE_COUNT}`;
       }
     }
   }
@@ -2023,13 +2862,23 @@ if (INTERACTION === 'slice') {
   // ── Slicing: a downward swipe over an apple advances THAT apple's state ──
   function advanceSlice(i) {
     if (i < 0 || i >= apples.length) return;
-    if (slicesDone[i] >= TOTAL_PER_APPLE) return;
+    if (slicesDone[i] >= slicesMax[i]) return;
+    if (MULTI_TARGET && !appleVisible[i]) return;  // can't slice an item not on the board yet
     slicesDone[i]++;
     apples[i].src = apples[i].getAttribute('data-src-' + slicesDone[i]);
     playSliceSound();
     updateSliceProgress();
     let allDone = true;
-    for (let j = 0; j < apples.length; j++) if (slicesDone[j] < TOTAL_PER_APPLE) allDone = false;
+    for (let j = 0; j < apples.length; j++) {
+      // For multi-target: only require visible apples to be done.
+      const required = MULTI_TARGET ? (appleVisible[j] ? slicesMax[j] : 0) : slicesMax[j];
+      if (MULTI_TARGET && !appleVisible[j]) continue;
+      if (slicesDone[j] < required) allDone = false;
+    }
+    // For multi-target, also require all 3 apples to be on the board
+    if (MULTI_TARGET) {
+      for (let j = 0; j < apples.length; j++) if (!appleVisible[j]) allDone = false;
+    }
     if (allDone) {
       showFeedback(true, FEEDBACK_OK, '');
       saveAnswer({ sliced: true, correct: true });
@@ -2039,7 +2888,9 @@ if (INTERACTION === 'slice') {
 
   function appleIndexAt(x, y) {
     for (let i = 0; i < apples.length; i++) {
+      if (MULTI_TARGET && !appleVisible[i]) continue;
       const r = apples[i].getBoundingClientRect();
+      if (r.width === 0) continue;  // hidden
       if (x >= r.left && x <= r.right) return i;
     }
     return -1;
@@ -2113,7 +2964,50 @@ if (INTERACTION === 'fill') {
   const PHASE3_SCOOP_COUNT          = {{ question.phase3_scoop_count | default(3) }};
   const PHASE3_SCOOP_TOOLTIP        = {{ (question.phase3_scoop_tooltip or '') | tojson }};
   const PHASE3_BATTER_SLOT_LABEL    = {{ (question.phase3_batter_slot_label or '') | tojson }};
-  const STATIC_PREFIX               = "{{ url_for('static', filename='images/') }}";
+  // Fridge finale: scoop done → drag fridge from aside → click to open → drag tray
+  // image into fridge → click to close → centered count-up timer.
+  const FRIDGE_FINALE                = {{ 'true' if question.fridge_finale else 'false' }};
+  const FRIDGE_DRAG_KEY              = {{ (question.fridge_drag_key or 'fridge') | tojson }};
+  const FRIDGE_DROP_LABEL            = {{ (question.fridge_drop_label or 'Drag fridge here from aside') | tojson }};
+  const FRIDGE_CLOSED_IMAGE          = {{ (question.fridge_closed_image or 'closed-fridge.png') | tojson }};
+  const FRIDGE_OPEN_EMPTY_IMAGE      = {{ (question.fridge_open_empty_image or 'open-fridge-empty.png') | tojson }};
+  const FRIDGE_OPEN_FULL_IMAGE       = {{ (question.fridge_open_full_image or 'open-fridge-with-fajita.png') | tojson }};
+  const FRIDGE_GLOVE_IMAGE           = {{ (question.fridge_glove_image or 'glove.png') | tojson }};
+  const FRIDGE_OPEN_TIP              = {{ (question.fridge_open_tooltip or 'Click the fridge<br>to open it') | tojson }};
+  const FRIDGE_TRANSFER_TIP          = {{ (question.fridge_transfer_tooltip or 'Drag the baggie<br>into the fridge') | tojson }};
+  const FRIDGE_CLOSE_TIP             = {{ (question.fridge_close_tooltip or 'Click the fridge<br>to close it') | tojson }};
+  const FRIDGE_TIMER_INTRO           = {{ (question.fridge_timer_intro or 'Hit START to chill, then STOP at about 30 minutes.') | tojson }};
+  const FRIDGE_TIMER_MIN             = {{ question.fridge_timer_min   | default(28) }};
+  const FRIDGE_TIMER_MAX             = {{ question.fridge_timer_max   | default(32) }};
+  const FRIDGE_TIMER_TARGET          = {{ question.fridge_timer_target | default(30) }};
+  const FRIDGE_TIMER_SPEED           = {{ question.fridge_timer_speed | default(0.001) }};
+  const FRIDGE_FINISH_OK             = {{ (question.fridge_feedback_correct or 'Marinade chilled — perfect!') | tojson }};
+  const FRIDGE_FINISH_EARLY          = {{ (question.fridge_feedback_wrong_early or 'Too soon — keep chilling!') | tojson }};
+  const FRIDGE_FINISH_LATE           = {{ (question.fridge_feedback_wrong_late or 'Too long — pull it out sooner.') | tojson }};
+  // Fridge intro: pre-stage that opens a fridge, extracts the baggie, then transitions
+  // into the standard fill setup (drag tray + scoop).
+  const FRIDGE_INTRO              = {{ 'true' if question.fridge_intro else 'false' }};
+  const FRIDGE_INTRO_CLOSED       = {{ (question.intro_closed_image or 'closed-fridge.png') | tojson }};
+  const FRIDGE_INTRO_OPEN_FULL    = {{ (question.intro_open_image or 'open-fridge-with-fajita.png') | tojson }};
+  const FRIDGE_INTRO_OPEN_EMPTY   = {{ (question.intro_open_empty_image or 'open-fridge-empty.png') | tojson }};
+  const FRIDGE_INTRO_BAGGIE       = {{ (question.intro_extracted_image or 'baggie-three-thirds.png') | tojson }};
+  const FRIDGE_INTRO_GLOVE        = {{ (question.intro_glove_image or 'glove.png') | tojson }};
+  const FRIDGE_INTRO_OPEN_TIP     = {{ (question.intro_open_tooltip or 'Drag the fridge door<br>to the right →<br>to open it') | tojson }};
+  const FRIDGE_INTRO_EXTRACT_TIP  = {{ (question.intro_extract_tooltip or 'Drag the baggie<br>out of the fridge') | tojson }};
+  // Oven outro: after fill scoop completes, drag preheated oven from aside →
+  // open door (down) → drag tray into oven → close door (up).
+  const OVEN_OUTRO              = {{ 'true' if question.oven_outro else 'false' }};
+  const OVEN_OUTRO_DROP_LABEL   = {{ (question.oven_outro_drop_label or 'Drag preheated oven here') | tojson }};
+  const OVEN_OUTRO_DRAG_KEY     = {{ (question.oven_outro_drag_key or 'oven') | tojson }};
+  const OVEN_OUTRO_CLOSED       = {{ (question.oven_outro_closed_image or 'oven-front.png') | tojson }};
+  const OVEN_OUTRO_OPEN         = {{ (question.oven_outro_open_image or 'oven-opened.png') | tojson }};
+  const OVEN_OUTRO_OPEN_WITH    = {{ (question.oven_outro_open_with_image or 'oven-opened-with-fajitas.png') | tojson }};
+  const OVEN_OUTRO_CLOSED_WITH  = {{ (question.oven_outro_closed_with_image or 'oven-closed-with-fajitas.png') | tojson }};
+  const OVEN_OUTRO_OPEN_TIP     = {{ (question.oven_outro_open_tooltip or 'Pull the oven door<br>down ↓<br>to open it') | tojson }};
+  const OVEN_OUTRO_TRANSFER_TIP = {{ (question.oven_outro_transfer_tooltip or 'Drag the tray<br>into the oven') | tojson }};
+  const OVEN_OUTRO_CLOSE_TIP    = {{ (question.oven_outro_close_tooltip or 'Pull the door up ↑<br>to close it') | tojson }};
+  const OVEN_OUTRO_FINISH_MSG   = {{ (question.oven_outro_finish_message or 'In the oven — ready to roast!') | tojson }};
+  const STATIC_PREFIX                = "{{ url_for('static', filename='images/') }}";
 
   let trayFilled = TRAY_PRE_FILLED, batterFilled = false;
   let scoops = 0;
@@ -2168,6 +3062,8 @@ if (INTERACTION === 'fill') {
     if (key === 'tray' && !trayFilled) {
       trayFilled = true;
       traySlot.classList.add('is-filled');
+      trayImg.style.display = '';
+      trayImg.style.visibility = '';
       trayImg.src = trayImg.dataset.base;
       const srcEl = document.querySelector('[data-drag-key="tray"]');
       if (srcEl) srcEl.classList.add('is-used');
@@ -2218,6 +3114,131 @@ if (INTERACTION === 'fill') {
     const t = (e.changedTouches && e.changedTouches[0]) || { clientX: 0, clientY: 0 };
     endCarry({ clientX: t.clientX, clientY: t.clientY });
   });
+
+  // ── Fridge intro (runs BEFORE normal setup): open fridge → extract baggie ──
+  // (Forward-declare so initFridgeIntro can use the persistent follower below.)
+  let fridgeFollower = null;
+  // NOTE: initFridgeIntro is invoked further down, AFTER showFridgeFollower is declared,
+  // because function declarations inside the `if (INTERACTION === 'fill')` block aren't
+  // reliably hoisted ahead of the call site.
+  function initFridgeIntro() {
+    stage = 'fridge_intro_setup';
+    // Two-panel layout from the start. Fridge sits in the LEFT (tray) slot,
+    // RIGHT (batter) slot says "Drag baggie here from fridge".
+    game.classList.remove('fridge-centered');
+    game.classList.add('fridge-intro-active');
+
+    // LEFT slot = fridge
+    trayFilled = true;
+    traySlot.classList.add('is-filled');
+    const trayLabel = traySlot.querySelector('.fill-slot-label');
+    if (trayLabel) trayLabel.style.display = 'none';
+    if (trayImg) {
+      trayImg.style.display = '';
+      trayImg.src = STATIC_PREFIX + FRIDGE_INTRO_CLOSED;
+      trayImg.style.cursor = 'grab';
+      trayImg.draggable = false;
+      trayImg.addEventListener('dragstart', e => e.preventDefault());
+    }
+
+    // RIGHT slot = empty, awaiting baggie drop
+    batterFilled = false;
+    batterSlot.classList.remove('is-filled');
+    const batterLabel = batterSlot.querySelector('.fill-slot-label');
+    if (batterLabel) {
+      batterLabel.textContent = 'Drag baggie here from fridge';
+      batterLabel.style.display = '';
+    }
+    if (batterImg) batterImg.style.display = 'none';
+
+    // Glove cursor visible from the start
+    showFridgeFollower();
+    showFridgeTooltip(FRIDGE_INTRO_OPEN_TIP);
+
+    // Drag right on fridge to open
+    function onIntroOpenDown(e) {
+      e.preventDefault();
+      const startX = e.clientX;
+      let opened = false;
+      const onMove = (ev) => {
+        if (!opened && (ev.clientX - startX) > 40) opened = true;
+      };
+      const onUp = () => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        if (opened) {
+          trayImg.removeEventListener('mousedown', onIntroOpenDown);
+          trayImg.src = STATIC_PREFIX + FRIDGE_INTRO_OPEN_FULL;
+          showFridgeTooltip(FRIDGE_INTRO_EXTRACT_TIP);
+          enableBaggieExtract();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    trayImg.addEventListener('mousedown', onIntroOpenDown);
+  }
+  function enableBaggieExtract() {
+    // Drag the baggie out of the open fridge (left tray slot) into the right batter slot
+    function onExtractDown(e) {
+      e.preventDefault();
+      const GW = 100;
+      const baggie = document.createElement('img');
+      baggie.src = STATIC_PREFIX + FRIDGE_INTRO_BAGGIE;
+      baggie.style.position = 'fixed';
+      baggie.style.width = GW + 'px';
+      baggie.style.height = 'auto';
+      baggie.style.pointerEvents = 'none';
+      baggie.style.zIndex = '9998';
+      baggie.style.left = (e.clientX - GW / 2) + 'px';
+      baggie.style.top  = (e.clientY - GW / 2) + 'px';
+      baggie.draggable = false;
+      document.body.appendChild(baggie);
+      const onMove = (ev) => {
+        baggie.style.left = (ev.clientX - GW / 2) + 'px';
+        baggie.style.top  = (ev.clientY - GW / 2) + 'px';
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        baggie.remove();
+        const r = batterSlot.getBoundingClientRect();
+        const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                    ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        if (hit) {
+          trayImg.removeEventListener('mousedown', onExtractDown);
+          finishFridgeIntro();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    trayImg.addEventListener('mousedown', onExtractDown);
+  }
+  function finishFridgeIntro() {
+    hideFridgeTooltip();
+    hideFridgeFollower();
+    game.classList.remove('fridge-intro-active');
+    // Place baggie in RIGHT (batter) slot
+    batterFilled = true;
+    batterSlot.classList.add('is-filled');
+    const bLabel = batterSlot.querySelector('.fill-slot-label');
+    if (bLabel) bLabel.style.display = 'none';
+    if (batterImg) {
+      batterImg.style.display = '';
+      batterImg.src = STATIC_PREFIX + (PHASE2_BATTER_IMAGE || FRIDGE_INTRO_BAGGIE);
+      batterImg.dataset.base = batterImg.src;
+    }
+    // Make LEFT (tray) slot empty again — fridge disappears, prompt to drag baking tray
+    trayFilled = false;
+    traySlot.classList.remove('is-filled');
+    if (trayImg) trayImg.style.display = 'none';
+    const tLabel = traySlot.querySelector('.fill-slot-label');
+    if (tLabel) tLabel.style.display = '';
+    // Reveal the baking tray in set-aside
+    document.querySelectorAll('.set-aside-item.intro-only').forEach(el => el.classList.remove('intro-hidden'));
+    stage = 'setup';
+  }
 
   // ── Phase 2: scooper cursor — drag batter → tray to scoop ────────────────
   function enterScoopPhase() {
@@ -2312,6 +3333,560 @@ if (INTERACTION === 'fill') {
     });
   }
 
+  // ── Fridge finale (after scoop): drag fridge → open → drag baggie → close → timer ──
+  function enterFridgeFinale() {
+    stage = 'fridge_setup';
+    // Stop the scoop cursor
+    game.classList.remove('scooper-mode', 'phase2-scoop-mode', 'phase3-scoop-mode');
+    if (scooper) scooper.classList.remove('visible');
+    if (tooltip) tooltip.style.display = 'none';
+
+    // Hide the empty bowl, reset batter slot to await fridge drop
+    if (batterImg) batterImg.style.display = 'none';
+    batterFilled = false;
+    batterSlot.classList.remove('is-filled');
+    const bLabel = batterSlot.querySelector('.fill-slot-label');
+    if (bLabel) {
+      bLabel.textContent = FRIDGE_DROP_LABEL;
+      bLabel.style.display = '';
+    }
+    // Reveal the fridge set-aside item
+    document.querySelectorAll('.set-aside-item.fridge-only').forEach(el => el.classList.remove('fridge-hidden'));
+    enableFridgeDrop();
+  }
+
+  function enableFridgeDrop() {
+    const items = document.querySelectorAll('.set-aside-item[data-drag-key="' + FRIDGE_DRAG_KEY + '"]');
+    items.forEach(item => {
+      item.style.cursor = 'grab';
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        const ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top  = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.9';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          ghost.remove();
+          const r = batterSlot.getBoundingClientRect();
+          const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                      ev.clientY >= r.top  && ev.clientY <= r.bottom;
+          if (hit) {
+            item.classList.add('is-used');
+            batterFilled = true;
+            batterSlot.classList.add('is-filled');
+            if (batterImg) {
+              batterImg.style.display = '';
+              batterImg.classList.remove('is-empty');
+              batterImg.src = STATIC_PREFIX + FRIDGE_CLOSED_IMAGE;
+            }
+            const lbl = batterSlot.querySelector('.fill-slot-label');
+            if (lbl) lbl.style.display = 'none';
+            // Activate the persistent glove follower (cursor → glove for the rest of the phase)
+            showFridgeFollower();
+            enterFridgeOpenPhase();
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
+  }
+
+  function showFridgeTooltip(html) {
+    let tip = document.getElementById('fridge-tooltip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.id = 'fridge-tooltip';
+      tip.className = 'whisk-tooltip fridge-tooltip';
+      game.appendChild(tip);
+    }
+    tip.innerHTML = html;
+    tip.style.display = '';
+  }
+  function hideFridgeTooltip() {
+    const tip = document.getElementById('fridge-tooltip');
+    if (tip) tip.style.display = 'none';
+  }
+
+  // Persistent glove "follower" that replaces the system cursor once the fridge
+  // is dropped — same idea as the cursor-follower used in casserole step 8.
+  // (`fridgeFollower` is forward-declared earlier so initFridgeIntro can use it.)
+  function ensureFridgeFollower() {
+    if (fridgeFollower) return fridgeFollower;
+    fridgeFollower = document.createElement('img');
+    fridgeFollower.id = 'fridge-follower';
+    fridgeFollower.src = STATIC_PREFIX + FRIDGE_GLOVE_IMAGE;
+    fridgeFollower.style.position = 'fixed';
+    fridgeFollower.style.width = '90px';
+    fridgeFollower.style.height = 'auto';
+    fridgeFollower.style.pointerEvents = 'none';
+    fridgeFollower.style.zIndex = '9999';
+    fridgeFollower.style.display = 'none';
+    fridgeFollower.draggable = false;
+    document.body.appendChild(fridgeFollower);
+    document.addEventListener('mousemove', (e) => {
+      if (!fridgeFollower || fridgeFollower.style.display === 'none') return;
+      fridgeFollower.style.left = (e.clientX - 45) + 'px';
+      fridgeFollower.style.top  = (e.clientY - 45) + 'px';
+    });
+    return fridgeFollower;
+  }
+  function showFridgeFollower() {
+    ensureFridgeFollower().style.display = '';
+    document.body.classList.add('fridge-cursor-none');
+  }
+  function hideFridgeFollower() {
+    if (fridgeFollower) fridgeFollower.style.display = 'none';
+    document.body.classList.remove('fridge-cursor-none');
+  }
+  function spawnGloveGhost(x, y) {
+    // Kept for compatibility; reuse the persistent follower when available.
+    showFridgeFollower();
+    if (fridgeFollower) {
+      fridgeFollower.style.left = (x - 45) + 'px';
+      fridgeFollower.style.top  = (y - 45) + 'px';
+    }
+    return fridgeFollower;
+  }
+  function destroyGloveGhost(_ghost) {
+    /* no-op: persistent follower stays until phase change */
+  }
+
+  // Now that all the helpers are declared, kick off the fridge intro if configured.
+  if (FRIDGE_INTRO) {
+    initFridgeIntro();
+  }
+
+  function enterFridgeOpenPhase() {
+    stage = 'fridge_open';
+    showFridgeTooltip(FRIDGE_OPEN_TIP);
+    batterImg.style.cursor = 'grab';
+    batterImg.draggable = false;
+    batterImg.addEventListener('dragstart', e => e.preventDefault());
+    function onOpenDown(e) {
+      e.preventDefault();
+      const startX = e.clientX;
+      const ghost = spawnGloveGhost(e.clientX, e.clientY);
+      let maxRightDelta = 0;
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - 45) + 'px';
+        ghost.style.top  = (ev.clientY - 45) + 'px';
+        const delta = ev.clientX - startX;
+        if (delta > maxRightDelta) maxRightDelta = delta;
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        destroyGloveGhost(ghost);
+        const finalDelta = (ev.clientX || 0) - startX;
+        const opened = maxRightDelta > 20 || finalDelta > 20;
+        if (opened) {
+          batterImg.removeEventListener('mousedown', onOpenDown);
+          batterImg.src = STATIC_PREFIX + FRIDGE_OPEN_EMPTY_IMAGE;
+          batterImg.style.cursor = '';
+          enterFridgeTransferPhase();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    batterImg.addEventListener('mousedown', onOpenDown);
+  }
+
+  function enterFridgeTransferPhase() {
+    stage = 'fridge_transfer';
+    showFridgeTooltip(FRIDGE_TRANSFER_TIP);
+    trayImg.style.cursor = 'grab';
+    trayImg.draggable = false;
+    trayImg.addEventListener('dragstart', e => e.preventDefault());
+    const onDown = (e) => {
+      e.preventDefault();
+      // Hide the source baggie immediately on drag-start
+      trayImg.style.visibility = 'hidden';
+      const GW = 100;  // small ghost size
+      const baggieGhost = document.createElement('img');
+      baggieGhost.src = trayImg.src;
+      baggieGhost.style.position = 'fixed';
+      baggieGhost.style.width  = GW + 'px';
+      baggieGhost.style.height = 'auto';
+      baggieGhost.style.pointerEvents = 'none';
+      baggieGhost.style.opacity = '0.95';
+      baggieGhost.style.zIndex = '9998';
+      baggieGhost.style.left = (e.clientX - GW / 2) + 'px';
+      baggieGhost.style.top  = (e.clientY - GW / 2) + 'px';
+      baggieGhost.draggable = false;
+      document.body.appendChild(baggieGhost);
+      const handGhost = spawnGloveGhost(e.clientX, e.clientY);
+      const onMove = (ev) => {
+        baggieGhost.style.left = (ev.clientX - GW / 2) + 'px';
+        baggieGhost.style.top  = (ev.clientY - GW / 2) + 'px';
+        if (handGhost) {
+          handGhost.style.left = (ev.clientX - 45) + 'px';
+          handGhost.style.top  = (ev.clientY - 45) + 'px';
+        }
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        baggieGhost.remove();
+        destroyGloveGhost(handGhost);
+        const r = batterImg.getBoundingClientRect();
+        const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                    ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        if (hit) {
+          traySlot.classList.add('is-empty');
+          trayImg.style.display = 'none';
+          batterImg.src = STATIC_PREFIX + FRIDGE_OPEN_FULL_IMAGE;
+          trayImg.removeEventListener('mousedown', onDown);
+          enterFridgeClosePhase();
+        } else {
+          // Drop missed — restore the source baggie
+          trayImg.style.visibility = '';
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    };
+    trayImg.addEventListener('mousedown', onDown);
+  }
+
+  function enterFridgeClosePhase() {
+    stage = 'fridge_close';
+    showFridgeTooltip(FRIDGE_CLOSE_TIP);
+    batterImg.style.cursor = 'grab';
+    batterImg.draggable = false;
+    batterImg.addEventListener('dragstart', e => e.preventDefault());
+    // IDENTICAL mechanic to onOpenDown — drag the fridge to the right to close it.
+    function onCloseDown(e) {
+      e.preventDefault();
+      const startX = e.clientX;
+      const ghost = spawnGloveGhost(e.clientX, e.clientY);
+      let maxRightDelta = 0;
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - 45) + 'px';
+        ghost.style.top  = (ev.clientY - 45) + 'px';
+        const delta = ev.clientX - startX;
+        if (delta > maxRightDelta) maxRightDelta = delta;
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        destroyGloveGhost(ghost);
+        const finalDelta = (ev.clientX || 0) - startX;
+        const closed = maxRightDelta > 20 || finalDelta > 20;
+        if (closed) {
+          batterImg.removeEventListener('mousedown', onCloseDown);
+          batterImg.src = STATIC_PREFIX + FRIDGE_CLOSED_IMAGE;
+          batterImg.style.cursor = '';
+          enterFridgeTimerPhase();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    batterImg.addEventListener('mousedown', onCloseDown);
+  }
+
+  function enterFridgeTimerPhase() {
+    stage = 'fridge_timer';
+    hideFridgeTooltip();
+    // Hand goes back to the system cursor — user is now interacting with buttons.
+    hideFridgeFollower();
+    // Hide tray slot, center fridge across the cook station
+    if (traySlot) traySlot.style.display = 'none';
+    game.classList.add('fridge-centered');
+    // Render timer panel + a dedicated feedback slot under the fridge
+    let timerWrap = document.getElementById('fridge-timer-wrap');
+    if (!timerWrap) {
+      timerWrap = document.createElement('div');
+      timerWrap.id = 'fridge-timer-wrap';
+      timerWrap.className = 'bake-count-up-wrap';
+      timerWrap.innerHTML = `
+        <div class="bake-count-up-intro">${FRIDGE_TIMER_INTRO}</div>
+        <div class="timer-panel">
+          <div class="timer-display" id="fridge-timer-display">00:00</div>
+          <button type="button" class="timer-start-btn" id="fridge-timer-start">&#9654; START</button>
+          <button type="button" class="timer-stop-btn" id="fridge-timer-stop" style="display:none;">&#9646; STOP</button>
+        </div>
+        <div class="fridge-feedback-slot" id="fridge-feedback-slot"></div>
+      `;
+      game.parentNode.appendChild(timerWrap);
+    }
+    const cs = document.querySelector('.quiz-cook-station .quiz-card-body');
+    if (cs) cs.classList.add('cook-overflow-visible');
+    startFridgeTimer();
+  }
+
+  function startFridgeTimer() {
+    const display = document.getElementById('fridge-timer-display');
+    const startBtn = document.getElementById('fridge-timer-start');
+    const stopBtn  = document.getElementById('fridge-timer-stop');
+    if (!display || !startBtn || !stopBtn) return;
+    const TICK_MS = Math.max(1, Math.round((FRIDGE_TIMER_SPEED * 1000) / 60));
+    const wrap = document.getElementById('fridge-timer-wrap');
+    let mins = 0, secs = 0, running = false, intervalId = null;
+    const pad = n => String(n).padStart(2, '0');
+    const update = () => { display.textContent = pad(mins) + ':' + pad(secs); };
+    function tick() {
+      secs++;
+      if (secs >= 60) { secs = 0; mins++; }
+      update();
+      if (mins > FRIDGE_TIMER_MAX) stopChill();
+    }
+    function startChill() {
+      if (running) return;
+      const line = wrap && wrap.querySelector('.bake-feedback-line');
+      if (line) line.style.display = 'none';
+      mins = 0; secs = 0; update();
+      running = true;
+      startBtn.style.display = 'none';
+      stopBtn.style.display  = '';
+      intervalId = setInterval(tick, TICK_MS);
+    }
+    function stopChill() {
+      if (!running) return;
+      running = false;
+      clearInterval(intervalId);
+      stopBtn.style.display = 'none';
+      const isRight = mins >= FRIDGE_TIMER_MIN && mins <= FRIDGE_TIMER_MAX;
+      const msg = isRight ? FRIDGE_FINISH_OK : (mins < FRIDGE_TIMER_MIN ? FRIDGE_FINISH_EARLY + ' Try again!' : FRIDGE_FINISH_LATE + ' Try again!');
+      if (isRight) playSound(true); else playBuzzer();
+      saveAnswer({ chilled: true, correct: isRight, stopped_at: pad(mins) + ':' + pad(secs) });
+      // Render feedback in the dedicated slot directly below the timer so the
+      // timer's own position never shifts.
+      const slot = document.getElementById('fridge-feedback-slot');
+      if (slot) {
+        slot.innerHTML = '';
+        const line = document.createElement('div');
+        line.className = isRight ? 'bake-feedback-line bake-feedback-line-ok' : 'bake-feedback-line';
+        line.textContent = msg;
+        slot.appendChild(line);
+      }
+      if (isRight) {
+        unlockNext();
+      } else {
+        $('#next-btn').css({ 'pointer-events': 'none', opacity: 0.5 }).addClass('disabled-link');
+        startBtn.innerHTML = '&#10227; RESTART';
+        startBtn.style.display = '';
+      }
+    }
+    update();
+    startBtn.addEventListener('click', startChill);
+    stopBtn.addEventListener('click', stopChill);
+  }
+
+  // ── Oven outro (after scoop): drag oven from aside → open down → drag tray in → close up ──
+  function enterOvenOutro() {
+    stage = 'oven_setup';
+    game.classList.remove('scooper-mode', 'phase2-scoop-mode', 'phase3-scoop-mode');
+    if (scooper) scooper.classList.remove('visible');
+    if (tooltip) tooltip.style.display = 'none';
+
+    // Hide the (now empty) baggie in the right slot
+    if (batterImg) batterImg.style.display = 'none';
+    batterFilled = false;
+    batterSlot.classList.remove('is-filled');
+    const lbl = batterSlot.querySelector('.fill-slot-label');
+    if (lbl) {
+      lbl.textContent = OVEN_OUTRO_DROP_LABEL;
+      lbl.style.display = '';
+    }
+    // Make the preheated oven aside item draggable into the right slot
+    const items = document.querySelectorAll('.set-aside-item[data-drag-key="' + OVEN_OUTRO_DRAG_KEY + '"]');
+    items.forEach(item => {
+      item.style.cursor = 'grab';
+      const onDown = (e) => {
+        e.preventDefault();
+        const rect = item.getBoundingClientRect();
+        const ghost = item.cloneNode(true);
+        ghost.style.position = 'fixed';
+        ghost.style.left = rect.left + 'px';
+        ghost.style.top  = rect.top + 'px';
+        ghost.style.width = rect.width + 'px';
+        ghost.style.pointerEvents = 'none';
+        ghost.style.opacity = '0.9';
+        ghost.style.zIndex = '9999';
+        document.body.appendChild(ghost);
+        const offX = e.clientX - rect.left, offY = e.clientY - rect.top;
+        const onMove = (ev) => {
+          ghost.style.left = (ev.clientX - offX) + 'px';
+          ghost.style.top  = (ev.clientY - offY) + 'px';
+        };
+        const onUp = (ev) => {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onUp);
+          ghost.remove();
+          const r = batterSlot.getBoundingClientRect();
+          const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                      ev.clientY >= r.top  && ev.clientY <= r.bottom;
+          if (hit) {
+            item.classList.add('is-used');
+            batterFilled = true;
+            batterSlot.classList.add('is-filled');
+            if (batterImg) {
+              batterImg.style.display = '';
+              batterImg.src = STATIC_PREFIX + OVEN_OUTRO_CLOSED;
+            }
+            if (lbl) lbl.style.display = 'none';
+            showFridgeFollower();
+            enterOvenOpenPhase();
+          }
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      };
+      item.addEventListener('mousedown', onDown);
+    });
+  }
+
+  function enterOvenOpenPhase() {
+    stage = 'oven_open';
+    showFridgeTooltip(OVEN_OUTRO_OPEN_TIP);
+    batterImg.style.cursor = 'grab';
+    batterImg.draggable = false;
+    batterImg.addEventListener('dragstart', e => e.preventDefault());
+    function onOpenDown(e) {
+      e.preventDefault();
+      const startY = e.clientY;
+      const ghost = spawnGloveGhost(e.clientX, e.clientY);
+      let maxDownDelta = 0;
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - 45) + 'px';
+        ghost.style.top  = (ev.clientY - 45) + 'px';
+        const delta = ev.clientY - startY;
+        if (delta > maxDownDelta) maxDownDelta = delta;
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        destroyGloveGhost(ghost);
+        const finalDelta = (ev.clientY || 0) - startY;
+        const opened = maxDownDelta > 20 || finalDelta > 20;
+        if (opened) {
+          batterImg.removeEventListener('mousedown', onOpenDown);
+          batterImg.src = STATIC_PREFIX + OVEN_OUTRO_OPEN;
+          batterImg.style.cursor = '';
+          enterOvenTransferPhase();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    batterImg.addEventListener('mousedown', onOpenDown);
+  }
+
+  function enterOvenTransferPhase() {
+    stage = 'oven_transfer';
+    showFridgeTooltip(OVEN_OUTRO_TRANSFER_TIP);
+    trayImg.style.cursor = 'grab';
+    trayImg.draggable = false;
+    trayImg.addEventListener('dragstart', e => e.preventDefault());
+    const onDown = (e) => {
+      e.preventDefault();
+      trayImg.style.visibility = 'hidden';
+      const GW = 100;
+      const trayGhost = document.createElement('img');
+      trayGhost.src = trayImg.src;
+      trayGhost.style.position = 'fixed';
+      trayGhost.style.width = GW + 'px';
+      trayGhost.style.height = 'auto';
+      trayGhost.style.pointerEvents = 'none';
+      trayGhost.style.opacity = '0.95';
+      trayGhost.style.zIndex = '9998';
+      trayGhost.style.left = (e.clientX - GW / 2) + 'px';
+      trayGhost.style.top  = (e.clientY - GW / 2) + 'px';
+      trayGhost.draggable = false;
+      document.body.appendChild(trayGhost);
+      const handGhost = spawnGloveGhost(e.clientX, e.clientY);
+      const onMove = (ev) => {
+        trayGhost.style.left = (ev.clientX - GW / 2) + 'px';
+        trayGhost.style.top  = (ev.clientY - GW / 2) + 'px';
+        if (handGhost) {
+          handGhost.style.left = (ev.clientX - 45) + 'px';
+          handGhost.style.top  = (ev.clientY - 45) + 'px';
+        }
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        trayGhost.remove();
+        destroyGloveGhost(handGhost);
+        const r = batterImg.getBoundingClientRect();
+        const hit = ev.clientX >= r.left && ev.clientX <= r.right &&
+                    ev.clientY >= r.top  && ev.clientY <= r.bottom;
+        if (hit) {
+          traySlot.classList.add('is-empty');
+          trayImg.style.display = 'none';
+          batterImg.src = STATIC_PREFIX + OVEN_OUTRO_OPEN_WITH;
+          trayImg.removeEventListener('mousedown', onDown);
+          enterOvenClosePhase();
+        } else {
+          trayImg.style.visibility = '';
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    };
+    trayImg.addEventListener('mousedown', onDown);
+  }
+
+  function enterOvenClosePhase() {
+    stage = 'oven_close';
+    showFridgeTooltip(OVEN_OUTRO_CLOSE_TIP);
+    batterImg.style.cursor = 'grab';
+    function onCloseDown(e) {
+      e.preventDefault();
+      const startY = e.clientY;
+      const ghost = spawnGloveGhost(e.clientX, e.clientY);
+      let maxUpDelta = 0;
+      const onMove = (ev) => {
+        ghost.style.left = (ev.clientX - 45) + 'px';
+        ghost.style.top  = (ev.clientY - 45) + 'px';
+        const delta = startY - ev.clientY;
+        if (delta > maxUpDelta) maxUpDelta = delta;
+      };
+      const onUp = (ev) => {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        destroyGloveGhost(ghost);
+        const finalDelta = startY - (ev.clientY || 0);
+        const closed = maxUpDelta > 20 || finalDelta > 20;
+        if (closed) {
+          batterImg.removeEventListener('mousedown', onCloseDown);
+          batterImg.src = STATIC_PREFIX + OVEN_OUTRO_CLOSED_WITH;
+          batterImg.style.cursor = '';
+          finishOvenOutro();
+        }
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+    batterImg.addEventListener('mousedown', onCloseDown);
+  }
+
+  function finishOvenOutro() {
+    stage = 'done';
+    hideFridgeTooltip();
+    hideFridgeFollower();
+    showFeedback(true, OVEN_OUTRO_FINISH_MSG, '');
+    saveAnswer({ filled: true, correct: true, oven: 'closed' });
+    unlockNext();
+  }
+
   function moveScooper(clientX, clientY) {
     const r = game.getBoundingClientRect();
     scooper.style.left = (clientX - r.left) + 'px';
@@ -2364,6 +3939,14 @@ if (INTERACTION === 'fill') {
         }
         if (HAS_PHASE3 && phase === 2) {
           enterPhase3Setup();
+          return;
+        }
+        if (FRIDGE_FINALE) {
+          enterFridgeFinale();
+          return;
+        }
+        if (OVEN_OUTRO) {
+          enterOvenOutro();
           return;
         }
         stage = 'done';
@@ -2443,10 +4026,43 @@ if (INTERACTION === 'timer') {
     const msg     = isRight ? FEEDBACK_OK
                   : (gameMinutes < TIMER_MIN ? WRONG_EARLY : WRONG_LATE);
 
-    playSound(isRight);
-    showFeedback(isRight, msg, isRight ? '' : HINT);
+    if (isRight) playSound(true); else playBuzzer();
     saveAnswer({ stopped_at: pad(gameMinutes) + ':' + pad(gameSeconds), correct: isRight });
 
+    // bake-style timer (e.g. fajitas roast) — feedback rendered like casserole/8:
+    //   wrong → compact red-on-pink .bake-feedback-line below the timer
+    //   right → standard green #feedback-box
+    const game = document.getElementById('timer-game');
+    const isBakeStyle = game && game.classList.contains('bake-style');
+    if (isBakeStyle) {
+      // Same as casserole/8 — let the cook-station card overflow visibly so the
+      // feedback line under the timer isn't clipped.
+      const cs = document.querySelector('.quiz-cook-station .quiz-card-body');
+      if (cs) cs.classList.add('cook-overflow-visible');
+      // Always clear any previous feedback line
+      const prior = game.querySelector('.bake-feedback-line');
+      if (prior) prior.remove();
+      if (isRight) {
+        showFeedback(true, msg, '');
+        unlockNext();
+      } else {
+        const line = document.createElement('div');
+        line.className = 'bake-feedback-line';
+        line.textContent = msg;
+        game.appendChild(line);
+        $('#next-btn').css({ 'pointer-events': 'none', opacity: 0.5 }).addClass('disabled-link');
+        if (startBtn) startBtn.innerHTML = '&#10227; RESTART';
+        if (startBtn) startBtn.style.display = '';
+        // Reset timer state so user can press RESTART
+        gameMinutes = 0;
+        gameSeconds = 0;
+        answered    = false;
+        updateDisplay();
+      }
+      return;
+    }
+
+    showFeedback(isRight, msg, isRight ? '' : HINT);
     if (isRight) {
       unlockNext();
     } else {

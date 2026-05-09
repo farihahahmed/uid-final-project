@@ -18,12 +18,12 @@
     <h2 class="slide-title">{{ slide.title }}</h2>
   {% endif %}
   {% if slide.subtitle %}
-    <p class="slide-subtitle {% if slide.subtitle_compact %}slide-subtitle-compact{% endif %}">{{ slide.subtitle }}</p>
+    <p class="slide-subtitle {% if slide.subtitle_compact %}slide-subtitle-compact{% endif %} {% if slide.subtitle_gap %}slide-subtitle-gap{% endif %}">{{ slide.subtitle | safe }}</p>
   {% endif %}
 
   <div class="slide-stage mealprep-stage">
     {% if slide.meal_table %}
-      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body | safe }}</p>{% endif %}
       <div class="meal-table-wrap">
         {% if slide.meal_table.highlights %}
           <div class="meal-table-highlights {% if slide.meal_table.batches %}with-batches{% endif %}"
@@ -95,7 +95,6 @@
       </div>
     {% elif slide.recipe_tree %}
       {% set n = slide.recipe_tree.recipes|length %}
-      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
       <div class="recipe-tree">
         {% if slide.recipe_tree.pick_one %}
           <div class="tree-label-row" style="grid-template-columns: 1fr;">
@@ -129,8 +128,9 @@
           {% endfor %}
         </div>
       </div>
+      {% if slide.body %}<p class="slide-body">{{ slide.body | safe }}</p>{% endif %}
     {% elif slide.images %}
-      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body | safe }}</p>{% endif %}
       {% if slide.center_arrows %}
         <svg class="tree-arrows-svg" viewBox="0 0 1000 60" preserveAspectRatio="none">
           <defs>
@@ -152,11 +152,11 @@
         {% endfor %}
       </div>
     {% elif slide.image %}
-      {% if slide.body %}<p class="slide-body">{{ slide.body }}</p>{% endif %}
+      {% if slide.body %}<p class="slide-body">{{ slide.body | safe }}</p>{% endif %}
       <img src="{{ url_for('static', filename='images/' + slide.image) }}"
            class="recipe-img" alt="{{ slide.title }}">
     {% else %}
-      <p class="slide-body">{{ slide.body }}</p>
+      <p class="slide-body">{{ slide.body | safe }}</p>
       <div class="img-placeholder">[ image goes here ]</div>
     {% endif %}
   </div>
