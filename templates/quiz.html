@@ -737,17 +737,11 @@ if (INTERACTION === 'drag') {
         if (MISSING_HINTS[id]) hintLines.push(MISSING_HINTS[id]);
       });
 
-      // Red box: wrong items only
+      // Red box: wrong items only — don't penalise an incomplete-but-correct bowl
       if (wrongLines.length) {
         const safeWrong = wrongLines.map(esc);
         box.removeClass('correct').addClass('wrong');
         $('#feedback-text').html('<strong>Not quite!</strong><br>' + safeWrong.join('<br>'));
-        $('#hint-text').text('');
-        box.show();
-      } else if (missingIds.length) {
-        // Nothing wrong, just missing — still prompt
-        box.removeClass('correct').addClass('wrong');
-        $('#feedback-text').html('<strong>Almost! Something is missing.</strong>');
         $('#hint-text').text('');
         box.show();
       }
@@ -881,7 +875,7 @@ if (INTERACTION === 'knob') {
 
   let lastEvaluated = null;
 
-  function evaluateKnob() {
+  function evaluateKnob(shouldSave = true) {
     if (!interacted || selected === null) return;
     const isRight = selected === CORRECT_VAL;
     ovenGame.classList.toggle('is-correct', isRight);
@@ -909,7 +903,7 @@ if (INTERACTION === 'knob') {
       $('#hint-text').text('');
       box.show();
     }
-    saveAnswer({ selected, correct: isRight });
+    if (shouldSave && valueChanged) saveAnswer({ selected, correct: isRight });
     if (isRight) unlockNext();
     lastEvaluated = selected;
   }
@@ -919,11 +913,11 @@ if (INTERACTION === 'knob') {
     interacted = true;
     selected = OPTIONS[index];
     syncKnob(index);
-    evaluateKnob();
+    evaluateKnob(false); // update UI only — don't save mid-drag positions
   });
 
   slider.addEventListener('change', () => {
-    evaluateKnob();
+    evaluateKnob(true); // save once the slider settles
   });
 
   optionLabels.forEach(label => {
@@ -933,7 +927,7 @@ if (INTERACTION === 'knob') {
       interacted = true;
       selected = OPTIONS[index];
       syncKnob(index);
-      evaluateKnob();
+      evaluateKnob(true);
     });
   });
 }
