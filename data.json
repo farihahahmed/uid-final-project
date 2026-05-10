@@ -721,7 +721,7 @@
         },
         {
           "title": "Step 3: Marinate",
-          "subtitle": "30 minutes to 2 hours in the fridge",
+          "subtitle": "30 minutes only",
           "body": "Combine oil, chili powder blend, oregano, garlic powder, onion powder, seafood spice rub, black pepper, and cayenne in a large zip-lock bag. Add chicken breast, pepper blend, and onion.",
           "image": "fajitas-step3.png",
           "display_step": 3
@@ -735,7 +735,7 @@
         },
         {
           "title": "Step 5: Roast",
-          "subtitle": "15–20 minutes, stirring halfway",
+          "subtitle": "20 minutes only",
           "body": "Chicken should reach 165°F internal temperature. Peppers should be softened.",
           "image": "fajitas-step5.png",
           "display_step": 5
@@ -2293,22 +2293,18 @@
         "reveal_direction": "down",
         "requires_tray_setup": true,
         "tray_slot_label": "Drag oven here",
-        "timer_correct_value": 25,
-        "timer_title": "Set the bake timer (min)",
-        "timer_options": [
-          10,
-          15,
-          20,
-          25,
-          30,
-          35,
-          40,
-          45
-        ],
         "post_open_muffin_image": "oven-with-muffins.png",
         "post_open_closed_image": "oven-with-muffins-closed.png",
         "post_open_tooltip_tray": "Drag muffin tray to the oven",
         "post_open_tooltip_close": "Close the oven ↑",
+        "bake_count_up_timer": true,
+        "bake_count_up_intro": "Hit START to begin baking, then STOP at about 25 minutes.",
+        "timer_min": 23,
+        "timer_max": 27,
+        "timer_target": 25,
+        "timer_speed": 0.001,
+        "feedback_wrong_early": "Too soon — the muffins need more time to bake. Try again!",
+        "feedback_wrong_late": "Too long — the muffins may burn. Try again!",
         "all_items": [
           {
             "id": "flour",
@@ -4128,7 +4124,7 @@
         "reveal_direction": "down",
         "post_open_draggable_image": "fajita-meat-grilled.png",
         "tray_after_transfer_image": "oven-opened.png",
-        "right_panel_label": "Drag tray here",
+        "right_panel_label": "Drag tray here from oven",
         "right_panel_final_image": "fajita-meat-grilled.png",
         "post_open_tooltip_tray": "Pull the door down ↓",
         "post_open_tooltip_close": "Drag the tray to the right →",
@@ -4480,7 +4476,7 @@
         "spray_drag_key": "salsa_spread",
         "swipe_with_hand": true,
         "hand_idle_image": "hand-mozarella.png",
-        "hand_press_image": "hand-mozarella.png",
+        "hand_press_image": "salsa-hand.png",
         "swipe_tooltip": "Move salsa<br>left &amp; right ← →<br>to spread",
         "quiet_intermediate": true,
         "all_items": [
@@ -4551,7 +4547,7 @@
         "spray_drag_key": "cheese_spread",
         "swipe_with_hand": true,
         "hand_idle_image": "hand-mozarella.png",
-        "hand_press_image": "hand-mozarella.png",
+        "hand_press_image": "cheese-hand.png",
         "swipe_tooltip": "Move cheese<br>left &amp; right ← →<br>to spread",
         "quiet_intermediate": true,
         "all_items": [
@@ -4615,7 +4611,7 @@
         "spray_drag_key": "avocado_spread",
         "swipe_with_hand": true,
         "hand_idle_image": "hand-mozarella.png",
-        "hand_press_image": "hand-mozarella.png",
+        "hand_press_image": "avocado-hand.png",
         "swipe_tooltip": "Move avocado<br>left &amp; right ← →<br>to spread",
         "quiet_intermediate": true,
         "all_items": [],

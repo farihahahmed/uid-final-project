@@ -226,7 +226,7 @@
             {% if question.two_panel %}
               <div class="grease-right-panel" id="grease-right-panel">
                 <div class="grease-right-slot" id="grease-right-slot">
-                  <span class="fill-slot-label">{{ question.right_panel_label }}</span>
+                  <span class="fill-slot-label" id="grease-right-slot-label" style="display:none;">{{ question.right_panel_label }}</span>
                 </div>
                 {% if question.right_panel_final_image %}
                   <img src="{{ url_for('static', filename='images/' + question.right_panel_final_image) }}"
@@ -1215,8 +1215,8 @@ if (INTERACTION === 'grease') {
     const pad = n => String(n).padStart(2, '0');
     const update = () => { display.textContent = pad(mins) + ':' + pad(secs); };
     function tick() {
-      secs++;
-      if (secs >= 60) { secs = 0; mins++; }
+      secs += 3;
+      while (secs >= 60) { secs -= 60; mins++; }
       update();
       if (mins > BAKE_COUNT_UP_MAX) stopBake();
     }
@@ -1398,6 +1398,9 @@ if (INTERACTION === 'grease') {
     // Hide the "pull door down" tooltip
     const tt = document.getElementById('handle-tooltip');
     if (tt) tt.style.display = 'none';
+    // Reveal the "Drag tray here from oven" label now that the door is open.
+    const rightLabel = document.getElementById('grease-right-slot-label');
+    if (rightLabel) rightLabel.style.display = '';
     if (hint) hint.textContent = POST_TIP_TRANSFER || 'Drag the muffin tray to the cooling rack';
     // Show the draggable muffin tray overlay on the oven
     const overlay = document.getElementById('grease-overlay-tray');
@@ -3642,8 +3645,8 @@ if (INTERACTION === 'fill') {
     const pad = n => String(n).padStart(2, '0');
     const update = () => { display.textContent = pad(mins) + ':' + pad(secs); };
     function tick() {
-      secs++;
-      if (secs >= 60) { secs = 0; mins++; }
+      secs += 3;
+      while (secs >= 60) { secs -= 60; mins++; }
       update();
       if (mins > FRIDGE_TIMER_MAX) stopChill();
     }
@@ -3999,8 +4002,8 @@ if (INTERACTION === 'timer') {
   }
 
   function tick() {
-    gameSeconds++;
-    if (gameSeconds >= 60) { gameSeconds = 0; gameMinutes++; }
+    gameSeconds += 3;
+    while (gameSeconds >= 60) { gameSeconds -= 60; gameMinutes++; }
     updateDisplay();
     if (gameMinutes > TIMER_MAX) stopClock();
   }

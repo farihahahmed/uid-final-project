@@ -2185,6 +2185,26 @@ h1, h2, h3, .display-font {
   }
 }
 
+/* Intermediate sizes (~half-screen): the fixed-height card clips when titles
+   and subtitles wrap to multiple lines — let it grow and stop the overflow. */
+@media (max-width: 1100px) {
+  .main-card {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .meal-table-wrap {
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .meal-table {
+    min-width: 640px;
+  }
+}
+
 @media (max-width: 768px) {
   .music-toggle {
     right: 12px;
@@ -2358,6 +2378,148 @@ h1, h2, h3, .display-font {
     height: auto;
     min-height: 700px;
     width: calc(100% - 32px);
+  }
+
+  /* ── Mealprep pages: shrink, stack, allow scroll ─────────────────── */
+  .main-card {
+    height: auto;
+    min-height: 0;
+    padding: 24px 18px;
+    overflow: visible;
+  }
+
+  .slide-subtitle-compact {
+    white-space: normal;
+    font-size: 1.2rem;
+  }
+
+  .mealprep-stage > .recipe-img {
+    height: auto;
+    max-height: 260px;
+  }
+
+  /* Step 1 / 6 image rows — force stacking despite the inline grid template. */
+  .mealprep-image-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    max-width: 100%;
+  }
+
+  .mealprep-side-image {
+    height: auto;
+    max-height: 220px;
+  }
+
+  /* Step 3 recipe-tree — stack the two/three option cards vertically. */
+  .tree-cards {
+    grid-template-columns: 1fr !important;
+    gap: 14px;
+    max-width: 100% !important;
+  }
+
+  .tree-card-name {
+    font-size: 1.3rem;
+    white-space: normal;
+  }
+
+  .tree-cards-single .tree-card-name {
+    white-space: normal;
+  }
+
+  .tree-card-img-wrap {
+    max-height: 220px;
+  }
+
+  /* Hide the decorative "Pick One" arrows when columns collapse. */
+  .recipe-tree .tree-arrows-svg,
+  .mealprep-stage > .tree-arrows-svg {
+    display: none;
+  }
+
+  /* Step 4 meal table — let it scroll horizontally instead of overlapping. */
+  .meal-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .meal-table {
+    min-width: 560px;
+  }
+
+  .meal-table thead th,
+  .meal-table-row-label {
+    font-size: 0.85rem;
+    padding: 8px 6px;
+  }
+
+  .meal-table tbody td {
+    height: 48px;
+    padding: 6px 4px;
+  }
+
+  .meal-cell-emoji {
+    font-size: 1.4rem;
+  }
+
+  .meal-highlight-label,
+  .batch-label {
+    font-size: 0.95rem;
+  }
+
+  /* ── Recipe step header (emoji + title) ──
+     The d-flex row keeps the emoji beside the title even when the title
+     wraps, narrowing the title's available width. Stack on mobile so the
+     title gets the full row. */
+  .recipe-centered > .d-flex {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .recipe-centered .slide-title {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* ── Remix layout (e.g. muffins step 13) ──
+     The 3-column grid (image | arrow | substitutions) doesn't fit on a
+     narrow screen — stack vertically and rotate the arrow. */
+  .remix-stage {
+    grid-template-columns: 1fr !important;
+    gap: 18px;
+    padding: 8px 4px;
+  }
+
+  .remix-arrow {
+    transform: rotate(90deg);
+    margin: 8px auto;
+  }
+
+  .remix-arrow-line {
+    width: 70px;
+    height: 18px;
+  }
+
+  .remix-arrow-head {
+    border-top-width: 22px;
+    border-bottom-width: 22px;
+    border-left-width: 30px;
+  }
+
+  .remix-image {
+    max-height: 240px;
+  }
+
+  .remix-label,
+  .remix-right-header {
+    font-size: 1.3rem;
+  }
+
+  .remix-right-subheader {
+    font-size: 1rem;
+  }
+
+  .remix-sub-item {
+    font-size: 1.1rem;
   }
 }
 
@@ -3578,6 +3740,7 @@ body.fridge-cursor-none #custom-cursor { display: none !important; }
 .whisk-tooltip.is-hidden {
   opacity: 0;
 }
+
 
 .grease-progress-track {
   position: relative;
