@@ -1,10 +1,15 @@
-minor details to do list (do later, not improtant):
+UID Final Project
 
-- re-center gif on main page
-- check bootstrap on every page
-- update fonts: make fonts better? (something more rounded?)
-- make the card size/height/width the SAME on every page!
-- recenter every image, like this: http://127.0.0.1:5000/mealprep/2
-- recenter memes?
-- clipart: fajitas recipe and casserole recipe is missing a few cliparts
-- 'if you're bored...' section is missing for fajitas and casserole both
+Contributors:
+- Farihah; farihahahmed on Github
+- Zin; zinnas on Github
+- Eduardo; e-galindomunoz on Github
+
+A Summary of our site:
+
+Welcome to your personal cooking guide! This app walks you through a smart monthly meal plan built around three easy "one pan"
+recipes: Brown Sugar Apple Muffins for breakfast, and either Chicken Casserole or Chicken Fajitas for lunch or dinner. The idea is
+simple — cook once, eat all week, and only make one grocery run a month. You'll start with a quick intro to the meal plan, then
+pick a recipe and follow it step by step with visual guides. Once you've learned the recipe, you'll put your skills to the test in
+a fun interactive cooking game where you drag ingredients, slice food, set the oven, and more. At the end, you'll get a rating
+based on how well you did — can you earn Flawless Chef?
