@@ -361,9 +361,18 @@ h1, h2, h3, .display-font {
   justify-content: flex-start;
 }
 
-/* ── Recipe centered text (non-grocery steps) ── */
+/* ── Recipe centered text (non-grocery steps) ──
+   Always wrap so the emoji sits on its own line above the title and the
+   title gets the full row — keeps alignment consistent at every viewport
+   size whether the title is short or long. */
 .recipe-centered > .d-flex {
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+.recipe-centered .slide-title {
+  text-align: center;
+  width: 100%;
 }
 
 .recipe-centered > .slide-subtitle {
@@ -1101,7 +1110,10 @@ h1, h2, h3, .display-font {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  /* Always start from the top — flex-end would pin the table to the
+     bottom and push the highlights row upward into the subtitle when
+     the subtitle wraps to extra lines at intermediate widths. */
+  justify-content: flex-start;
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
@@ -1623,7 +1635,10 @@ h1, h2, h3, .display-font {
 
 .quiz-ingredients .drag-zone {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* auto-fit + minmax: fit as many columns as can hold an ~80px card.
+     Below the squeeze point (panel narrower than ~170px) it drops to
+     2 columns and the rest of the ingredients flow into new rows. */
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
   gap: 4px 6px;
   padding: 0;
   border: none;
@@ -1634,14 +1649,21 @@ h1, h2, h3, .display-font {
 .quiz-ingredients .drag-item-card {
   padding: 1px 2px 2px;
   gap: 1px;
+  min-width: 0;
+  max-width: 100%;
 }
 .quiz-ingredients .drag-item-image {
   width: 56px;
   height: 56px;
+  max-width: 100%;
 }
 .quiz-ingredients .drag-item-text {
   font-size: 0.72rem;
   line-height: 1.05;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .drop-target {
@@ -2185,9 +2207,28 @@ h1, h2, h3, .display-font {
   }
 }
 
-/* Intermediate sizes (~half-screen): the fixed-height card clips when titles
-   and subtitles wrap to multiple lines — let it grow and stop the overflow. */
-@media (max-width: 1100px) {
+/* The cook-station's 2-column oven-console layout squeezes the slider too
+   narrow at intermediate widths — the temp labels overlap into one blob.
+   Stack the oven preview above the controls until there's real room. */
+@media (max-width: 1400px) {
+  .oven-console {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Slider labels: keep the temp options readable even when the slider
+   container is narrow (the labels would otherwise overlap into one blob). */
+.oven-slider-label {
+  font-size: 0.9rem;
+  min-width: 0;
+  word-break: keep-all;
+}
+
+
+/* Intermediate sizes: the fixed-height card clips when titles and subtitles
+   wrap to multiple lines — let it grow and stop the overflow. The threshold
+   covers the range where the meal-prep step 5 subtitle starts wrapping. */
+@media (max-width: 1280px) {
   .main-card {
     height: auto;
     min-height: 0;
@@ -2200,7 +2241,9 @@ h1, h2, h3, .display-font {
     -webkit-overflow-scrolling: touch;
   }
 
-  .meal-table {
+  .meal-table,
+  .meal-table-highlights,
+  .meal-table-batches {
     min-width: 640px;
   }
 }
@@ -2436,13 +2479,59 @@ h1, h2, h3, .display-font {
     display: none;
   }
 
-  /* Step 4 meal table — let it scroll horizontally instead of overlapping. */
+  /* ── Quiz pages: stack the 3-column layout on mobile ──
+     The quiz uses Ingredients | Cook station | Set aside side-by-side which
+     doesn't fit at narrow widths. Stack vertically and let each card breathe. */
+  .quiz-main {
+    height: auto;
+    min-height: 0;
+    padding: 18px 14px;
+  }
+
+  .quiz-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 14px;
+  }
+
+  .quiz-card {
+    padding: 14px 12px 16px;
+    min-height: 160px;
+  }
+
+  .quiz-cook-station {
+    /* The middle column is the interactive area — give it room. */
+    min-height: 360px;
+  }
+
+  .quiz-ingredients .quiz-card-body,
+  .quiz-set-aside .quiz-card-body {
+    /* Cap the ingredient/aside list heights so users can still reach the
+       cook station and nav buttons without endless scrolling. */
+    max-height: 240px;
+  }
+
+  .quiz-card-header {
+    font-size: 1.1rem;
+  }
+
+  .quiz-nav-btns .btn-next,
+  .quiz-nav-btns .btn-prev {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+
+  /* Step 4/5 meal table — let it scroll horizontally instead of overlapping.
+     The highlights and batches rows must match the table's width or their
+     column alignment drifts off the table. */
   .meal-table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
 
-  .meal-table {
+  .meal-table,
+  .meal-table-highlights,
+  .meal-table-batches {
     min-width: 560px;
   }
 
@@ -2464,20 +2553,6 @@ h1, h2, h3, .display-font {
   .meal-highlight-label,
   .batch-label {
     font-size: 0.95rem;
-  }
-
-  /* ── Recipe step header (emoji + title) ──
-     The d-flex row keeps the emoji beside the title even when the title
-     wraps, narrowing the title's available width. Stack on mobile so the
-     title gets the full row. */
-  .recipe-centered > .d-flex {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .recipe-centered .slide-title {
-    text-align: center;
-    width: 100%;
   }
 
   /* ── Remix layout (e.g. muffins step 13) ──
@@ -2533,9 +2608,46 @@ h1, h2, h3, .display-font {
     display: inline;
   }
 
+  /* Keep 2 columns at small mobile — 1-column made each card fill the
+     viewport, forcing long vertical scrolls to see all 5 items. */
   .grocery-grid,
   .grocery-grid-count-4 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .grocery-item-card {
+    padding: 12px 8px 14px;
+    border-radius: 18px;
+  }
+
+  .grocery-item-index {
+    top: 8px;
+    left: 8px;
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+    border-width: 1.5px;
+  }
+
+  .grocery-item-media {
+    height: 92px;
+    margin-top: 14px;
+  }
+
+  .grocery-item-title {
+    min-height: 2.4em;
+    font-size: 0.82rem;
+    margin-top: 8px;
+  }
+
+  .grocery-item-quantity {
+    font-size: 0.72rem;
+  }
+
+  .grocery-item-price {
+    font-size: 1.2rem;
+    padding-top: 8px;
   }
 
   .top-nav-link {
